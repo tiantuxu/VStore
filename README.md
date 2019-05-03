@@ -1,4 +1,4 @@
-# VStore
+# VStore: A Data Store for Analytics on Large Videos
 Please read our paper in EuroSys '19: [VStore: A Data Store for Analytics on Large Videos](https://web.ics.purdue.edu/~xu944/eurosys19.pdf)
 and visit out [website](https://thexsel.github.io/p/vstore/).
 
