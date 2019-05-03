@@ -7,6 +7,6 @@ VStore is a data store for supporting fast, resource efficient analytics over la
 The code is built opon 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope)
 
 ## Build VStore
-* Requirements
-ZeroMQ 2.2.x
-lmdb
+To build VStore, you need the following to be installed
+* ZeroMQ 2.2.x
+* lmdb
