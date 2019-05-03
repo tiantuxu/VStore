@@ -4,7 +4,7 @@ and visit out [website](https://thexsel.github.io/p/vstore/).
 
 ## Overview
 VStore is a data store for supporting fast, resource efficient analytics over large archival videos. 
-The code is built opon 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope)
+The code is built opon 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 
 ## Build VStore
 To build VStore, you need the following to be installed
