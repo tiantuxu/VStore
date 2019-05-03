@@ -1,0 +1,1 @@
+/usr/bin/g++-5   -fdiagnostics-color=auto -fopenmp -g -std=c++11 -g -O0 -Wall -Wfatal-errors    -rdynamic CMakeFiles/taskwork2.bin.dir/examples/taskwork2.cpp.o  -o taskwork2.bin  -L/shared/ffmpeg/lib  -L/shared/libzmq/lib -Wl,-rpath,/shared/ffmpeg/lib:/shared/libzmq/lib -lzmq 

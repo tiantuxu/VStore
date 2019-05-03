@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
+    <generated>
+      <config projectName="video-streamer" targetName="hw_decode.bin" />
+      <config projectName="video-streamer" targetName="vstreamer" />
+      <config projectName="video-streamer" targetName="test-source.bin" />
+      <config projectName="video-streamer" targetName="test-fb-recver.bin" />
+      <config projectName="video-streamer" targetName="taskwork2.bin" />
+      <config projectName="video-streamer" targetName="test-chunk-puller.bin" />
+      <config projectName="video-streamer" targetName="decode_video.bin" />
+      <config projectName="video-streamer" targetName="decode-serv.bin" />
+      <config projectName="video-streamer" targetName="test-sink.bin" />
+      <config projectName="video-streamer" targetName="test-migrate.bin" />
+      <config projectName="video-streamer" targetName="test-rt-scheduler.bin" />
+      <config projectName="video-streamer" targetName="test-decoder.bin" />
+      <config projectName="video-streamer" targetName="taskvent.bin" />
+      <config projectName="video-streamer" targetName="test-fb-sender.bin" />
+      <config projectName="video-streamer" targetName="demuxing_decoding.bin" />
+      <config projectName="video-streamer" targetName="test-db-build.bin" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="3f6fda34-a699-4066-9f66-010832f36e84" name="Default" comment="" />
+    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="test-sink.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/test-sink.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1961">
+              <caret line="621" column="0" lean-forward="true" selection-start-line="621" selection-start-column="0" selection-end-line="621" selection-end-column="0" />
+              <folding>
+                <element signature="e#894#934#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>kNumThreads_</find>
+      <find>cv_8uc</find>
+      <find>I(</find>
+      <find>recv_one_frame</find>
+      <find>continue</find>
+      <find>resolution</find>
+      <find>8uc</find>
+      <find>differe</find>
+      <find>kDistFrameSize_kYOLOFrameSize_</find>
+      <find>kNbChannels_</find>
+      <find>all_data_</find>
+      <find>kYOLOResol_</find>
+      <find>3600</find>
+      <find>NoscopeData::kYOLOFrameSize_</find>
+      <find>NoscopeData::kYOLOFrameSize</find>
+      <find>vs::Frame</find>
+      <find>-g</find>
+      <find>LoadVideo</find>
+      <find>kDiffFrameSize_</find>
+      <find>kFrameSize</find>
+      <find>kDistFrameSize_</find>
+      <find>FrameSize_</find>
+      <find>kNbFrames_</find>
+      <find>kMaxCNNImages_</find>
+      <find>yolo_</find>
+      <find>reso</find>
+      <find>kNbFrames</find>
+      <find>dist_frame_f</find>
+      <find>kYOLOFrameSize_</find>
+      <find>count3</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>sv</replace>
+      <replace>count</replace>
+      <replace>stage</replace>
+      <replace>stageNew</replace>
+      <replace>teddyxu</replace>
+    </replaceStrings>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/RxManager.h" />
+        <option value="$PROJECT_DIR$/openalpr/alpr_impl.h" />
+        <option value="$PROJECT_DIR$/rxtx.h" />
+        <option value="$PROJECT_DIR$/mydecoder.h" />
+        <option value="$PROJECT_DIR$/mydecoder.cpp" />
+        <option value="$PROJECT_DIR$/istream.h" />
+        <option value="$PROJECT_DIR$/vs-types.h" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/test/test-migrate.cpp" />
+        <option value="$PROJECT_DIR$/rxtx.cpp" />
+        <option value="$PROJECT_DIR$/decode-serv.cpp" />
+        <option value="$PROJECT_DIR$/test/test-rt-scheduler.cpp" />
+        <option value="$PROJECT_DIR$/test/test-db-build.cpp" />
+        <option value="$PROJECT_DIR$/rt-config.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data .cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/darknet/src/darknet.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rt-config.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/RxManager.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rxtx.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/vs-types.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.c" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mm.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mydecoder.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/example/noscope_motherdog.py" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/example/run.sh" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_labeler.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rxtx.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/BUILD" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/config.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_labeler.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data.cc" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data.h" />
+        <option value="$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope.cc" />
+        <option value="$PROJECT_DIR$/config.h" />
+        <option value="$PROJECT_DIR$/test/test-source.cpp" />
+        <option value="$PROJECT_DIR$/test/test-sink.cpp" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="116" />
+    <option name="y" value="185" />
+    <option name="width" value="2493" />
+    <option name="height" value="1380" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../e2ealpr-naive/video-streamer/src/test/test-sink.cpp" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///home/teddyxu/video-streamer/src/test/test-rt-scheduler.cpp" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.decode-serv.bin">
+    <configuration name="Build All" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin" EXPLICIT_BUILD_TARGET_NAME="all">
+      <envs />
+    </configuration>
+    <configuration name="decode-serv.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="decode-serv.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="decode_video.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="decode_video.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="demuxing_decoding.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="demuxing_decoding.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="hw_decode.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="hw_decode.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="taskvent.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="taskvent.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="taskwork2.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="taskwork2.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-chunk-puller.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-chunk-puller.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-db-build.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-db-build.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-decoder.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-decoder.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-fb-recver.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-fb-recver.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-fb-sender.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-fb-sender.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-migrate.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-migrate.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-rt-scheduler.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-rt-scheduler.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-sink.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-sink.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-sink.bin">
+      <envs />
+    </configuration>
+    <configuration name="test-source.bin" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="test-source.bin" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="video-streamer" RUN_TARGET_NAME="test-source.bin">
+      <envs />
+    </configuration>
+    <configuration name="vstreamer" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="video-streamer" TARGET_NAME="vstreamer" CONFIG_NAME="Debug">
+      <envs />
+    </configuration>
+    <list size="17">
+      <item index="0" class="java.lang.String" itemvalue="Application.Build All" />
+      <item index="1" class="java.lang.String" itemvalue="Application.decode-serv.bin" />
+      <item index="2" class="java.lang.String" itemvalue="Application.decode_video.bin" />
+      <item index="3" class="java.lang.String" itemvalue="Application.demuxing_decoding.bin" />
+      <item index="4" class="java.lang.String" itemvalue="Application.hw_decode.bin" />
+      <item index="5" class="java.lang.String" itemvalue="Application.taskvent.bin" />
+      <item index="6" class="java.lang.String" itemvalue="Application.taskwork2.bin" />
+      <item index="7" class="java.lang.String" itemvalue="Application.test-chunk-puller.bin" />
+      <item index="8" class="java.lang.String" itemvalue="Application.test-db-build.bin" />
+      <item index="9" class="java.lang.String" itemvalue="Application.test-decoder.bin" />
+      <item index="10" class="java.lang.String" itemvalue="Application.test-fb-recver.bin" />
+      <item index="11" class="java.lang.String" itemvalue="Application.test-fb-sender.bin" />
+      <item index="12" class="java.lang.String" itemvalue="Application.test-migrate.bin" />
+      <item index="13" class="java.lang.String" itemvalue="Application.test-rt-scheduler.bin" />
+      <item index="14" class="java.lang.String" itemvalue="Application.test-sink.bin" />
+      <item index="15" class="java.lang.String" itemvalue="Application.test-source.bin" />
+      <item index="16" class="java.lang.String" itemvalue="Application.vstreamer" />
+    </list>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3f6fda34-a699-4066-9f66-010832f36e84" name="Default" comment="" />
+      <created>1521307409582</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1521307409582</updated>
+      <workItem from="1521307411202" duration="65805000" />
+      <workItem from="1521597474186" duration="27220000" />
+      <workItem from="1522019505747" duration="13085000" />
+      <workItem from="1522675487520" duration="18399000" />
+      <workItem from="1522811283370" duration="348790000" />
+      <workItem from="1525925791941" duration="7997000" />
+      <workItem from="1526061003015" duration="147576000" />
+      <workItem from="1527624473312" duration="77081000" />
+      <workItem from="1532291613369" duration="277794000" />
+      <workItem from="1535316308923" duration="20562000" />
+      <workItem from="1535552566915" duration="9361000" />
+      <workItem from="1536252929607" duration="133809000" />
+      <workItem from="1537374253035" duration="1801000" />
+      <workItem from="1537460816573" duration="1461000" />
+      <workItem from="1537462530130" duration="5286000" />
+      <workItem from="1537491300141" duration="245000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1157417000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="116" y="185" width="2497" height="1452" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10861723" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910448" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910448" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985073" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="43" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/openalpr/motiondetector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="25" lean-forward="false" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/atomic">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="615" column="16" lean-forward="false" selection-start-line="615" selection-start-column="16" selection-end-line="615" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vs-types.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1602">
+          <caret line="122" column="11" lean-forward="false" selection-start-line="122" selection-start-column="11" selection-end-line="122" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope.cc" />
+    <entry file="file://$PROJECT_DIR$/mydecoder.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1274">
+          <caret line="165" column="34" lean-forward="false" selection-start-line="165" selection-start-column="34" selection-end-line="165" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test-rt-scheduler.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="42" column="21" lean-forward="false" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data .cc" />
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/src/test/test-sink.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3109">
+          <caret line="751" column="55" lean-forward="true" selection-start-line="750" selection-start-column="12" selection-end-line="751" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/darknet/src/list.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/darknet/src/yolo.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="5" column="16" lean-forward="false" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rxtx.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="673" column="27" lean-forward="false" selection-start-line="673" selection-start-column="27" selection-end-line="673" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/bits/shared_ptr.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="92" column="10" lean-forward="false" selection-start-line="92" selection-start-column="10" selection-end-line="92" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/darknet/src/darknet.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/log.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="9" column="15" lean-forward="false" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mm.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-414">
+          <caret line="19" column="9" lean-forward="true" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="11" lean-forward="true" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mm.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rxtx.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="9" lean-forward="true" selection-start-line="12" selection-start-column="9" selection-end-line="12" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.cc" />
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mydecoder.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="19" lean-forward="false" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/include/libavcodec/avcodec.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="3355" column="2" lean-forward="false" selection-start-line="3355" selection-start-column="2" selection-end-line="3355" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/mydecoder.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4050">
+          <caret line="249" column="33" lean-forward="true" selection-start-line="249" selection-start-column="33" selection-end-line="249" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/measure.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="31" column="5" lean-forward="true" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/RxManager.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="13" column="29" lean-forward="false" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/exp/to_avg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/example/noscope_optimizer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/data/experiments/0.25 res/jackson-town-square1/train/jackson-town-square_convnet_128_32_0.pb-non_blocked_mse.src/run_optimizerset.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/data/experiments/jackson-town-square/summary.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="112" lean-forward="true" selection-start-line="1" selection-start-column="112" selection-end-line="1" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope_data .cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="406">
+          <caret line="34" column="26" lean-forward="false" selection-start-line="34" selection-start-column="26" selection-end-line="34" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/vs-types.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-670">
+          <caret line="48" column="30" lean-forward="false" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rt-config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="23" column="25" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/rxtx.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="725" column="10" lean-forward="false" selection-start-line="725" selection-start-column="10" selection-end-line="725" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/BUILD">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="34" column="37" lean-forward="true" selection-start-line="34" selection-start-column="37" selection-end-line="34" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="400" column="8" lean-forward="false" selection-start-line="400" selection-start-column="8" selection-end-line="400" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="37" column="31" lean-forward="false" selection-start-line="37" selection-start-column="17" selection-end-line="37" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="163" column="2" lean-forward="true" selection-start-line="163" selection-start-column="2" selection-end-line="163" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="47" lean-forward="false" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_data.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="8" lean-forward="false" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="10908">
+          <caret line="606" column="58" lean-forward="false" selection-start-line="606" selection-start-column="58" selection-end-line="606" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_labeler.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="214" column="54" lean-forward="false" selection-start-line="214" selection-start-column="54" selection-end-line="214" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/tensorflow-noscope/tensorflow/noscope/noscope_labeler.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="804">
+          <caret line="47" column="9" lean-forward="false" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/example/run.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="56" column="32" lean-forward="false" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../noscope/noscopeFolder/noscope/example/noscope_motherdog.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="142" column="12" lean-forward="false" selection-start-line="142" selection-start-column="7" selection-end-line="142" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test-db-build.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="43" column="4" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="43" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/zmq.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="318" column="20" lean-forward="false" selection-start-line="318" selection-start-column="20" selection-end-line="318" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/decode-serv.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="150" column="55" lean-forward="true" selection-start-line="150" selection-start-column="55" selection-end-line="150" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="598">
+          <caret line="122" column="8" lean-forward="false" selection-start-line="122" selection-start-column="8" selection-end-line="122" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test-source.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="577" column="0" lean-forward="true" selection-start-line="577" selection-start-column="0" selection-end-line="577" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rt-config.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="23" column="8" lean-forward="false" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../e2ealpr-naive/video-streamer/src/test/test-sink.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1008">
+          <caret line="623" column="31" lean-forward="true" selection-start-line="623" selection-start-column="31" selection-end-line="623" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/test-sink.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1961">
+          <caret line="621" column="0" lean-forward="true" selection-start-line="621" selection-start-column="0" selection-end-line="621" selection-end-column="0" />
+          <folding>
+            <element signature="e#894#934#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

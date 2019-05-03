@@ -1,0 +1,33 @@
+/home/teddyxu/Documents/clion-2017.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/teddyxu/Desktop/end2end-perf-test/e2ealpr/video-streamer/src
+-- The C compiler identification is GNU 5.4.0
+-- The CXX compiler identification is GNU 5.4.0
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Warning (dev) at /home/teddyxu/Documents/clion-2017.3/bin/cmake/share/cmake-3.9/Modules/FindOpenMP.cmake:200 (if):
+  Policy CMP0054 is not set: Only interpret if() arguments as variables or
+  keywords when unquoted.  Run "cmake --help-policy CMP0054" for policy
+  details.  Use the cmake_policy command to set the policy and suppress this
+  warning.
+
+  Quoted variables like "c" will no longer be dereferenced when the policy is
+  set to NEW.  Since the policy is not set the OLD behavior will be used.
+Call Stack (most recent call first):
+  /home/teddyxu/Documents/clion-2017.3/bin/cmake/share/cmake-3.9/Modules/FindOpenMP.cmake:324 (_OPENMP_GET_FLAGS)
+  CMakeLists.txt:128 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Found OpenMP_C: -fopenmp (found version "4.0") 
+-- Found OpenMP_CXX: -fopenmp (found version "4.0") 
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/teddyxu/Desktop/end2end-perf-test/e2ealpr/video-streamer/src/cmake-build-debug
