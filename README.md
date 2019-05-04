@@ -23,16 +23,23 @@ build-all
 ```
 
 ## Run VStore
-### Build Video Footage
+### 1. Build Video Footage
 First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08).
 
 Second, build the footage to lmdb:
 
 for raw video footage,
 ```
-/tmp/vstore/Release/test-db-build.bin -r --dpath=/path/to/database --vpath=/path/to/video.yuv width height
+/tmp/vstore/Debug/test-db-build.bin -r --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ```
 for encoded video chunks,
 ```
- /tmp/vstore/Release/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
+ /tmp/vstore/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ``` 
+### 2. Run Source
+/tmp/vstore/Debug/test-source.bin
+
+### 3. Run Decoder
+/tmp/vstore/Debug/decode-serv.bin
+
+### 3. Run Sink
