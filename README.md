@@ -37,9 +37,11 @@ for encoded video chunks,
  /tmp/vstore/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ``` 
 ### 2. Run Source
+```
 /tmp/vstore/Debug/test-source.bin
-
+```
 ### 3. Run Decoder
+```
 /tmp/vstore/Debug/decode-serv.bin
-
-### 3. Run Sink
+```
+### 4. Run Sink
