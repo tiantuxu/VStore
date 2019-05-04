@@ -24,7 +24,8 @@ build-all
 
 ## Run VStore
 ### Build Video Footage
-First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08)
+First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08).
+
 Second, build the footage to lmdb:
 
 for raw video footage,
