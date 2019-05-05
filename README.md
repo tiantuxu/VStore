@@ -45,3 +45,11 @@ for encoded video chunks,
 /tmp/vstore/Debug/decode-serv.bin
 ```
 ### 4. Run Sink
+For OpenALPR, run
+```
+/tmp/vstore/Debug/test-sink.bin
+```
+
+For NoScope, 
+```
+/home/teddyxu/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION```
