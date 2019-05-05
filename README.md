@@ -52,4 +52,5 @@ For OpenALPR, run
 
 For NoScope, 
 ```
-/home/teddyxu/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION```
+/home/teddyxu/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION
+```
