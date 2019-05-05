@@ -7,13 +7,13 @@ VStore is a data store for supporting fast, resource efficient analytics over la
 The code is built opon 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 
 ## Build VStore
-### 1. VStore Requirements
+#### 1. VStore Requirements
 To build VStore, you need the following to be installed
 * ZeroMQ 2.2.x
 * lmdb
-### 2. Benchmark Requirements
+#### 2. Benchmark Requirements
 Follow the requirement of [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
-### 3. Build
+#### 3. Build
 ```
 cd ./src
 source env-teddy.sh
@@ -23,7 +23,7 @@ build-all
 ```
 
 ## Run VStore
-### 1. Build Video Footage
+#### 1. Build Video Footage
 First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08).
 
 Second, build the footage to lmdb:
@@ -36,15 +36,15 @@ for encoded video chunks,
 ```
  /tmp/vstore/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ``` 
-### 2. Run Source
+#### 2. Run Source
 ```
 /tmp/vstore/Debug/test-source.bin
 ```
-### 3. Run Decoder
+#### 3. Run Decoder
 ```
 /tmp/vstore/Debug/decode-serv.bin
 ```
-### 4. Run Sink
+#### 4. Run Sink
 For OpenALPR, run
 ```
 /tmp/vstore/Debug/test-sink.bin
