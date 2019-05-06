@@ -1,0 +1,9 @@
+target_fn, target_fp, skip_dd, skip_cnn, dd, dd_thres, cnn, cnn_upper_thres, cnn_lower_thres, accuracy, fn, fp, num_tp, num_tn, runtime
+0.25, 0.25, False, False, /dev/null, 135.720910911, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.0110091831832, 0.0110091831832, 0.970888888889, 0.03125, 0.0147655545537, 128, 8872, 0.324201
+0.1, 0.1, False, False, /dev/null, 13.1253483483, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.0110091831832, 0.0110091831832, 0.966222222222, 0.0078125, 0.0171325518485, 128, 8872, 4.88168
+0.05, 0.05, False, False, /dev/null, 7.33954574575, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.0130108528529, 0.0130108528529, 0.966222222222, 0.0, 0.0171325518485, 128, 8872, 3.77347
+0.04, 0.04, False, False, /dev/null, 5.86731367367, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.0360300540541, 0.0360300540541, 0.968222222222, 0.0, 0.0161181244364, 128, 8872, 2.20177
+0.03, 0.03, False, False, /dev/null, 6.90617997998, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.212176984985, 0.0220183663664, 0.971777777778, 0.0, 0.0143146979261, 128, 8872, 20.2415
+0.02, 0.02, False, False, /dev/null, 5.86967, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.742619447447, 0.0220183663664, 0.982222222222, 0.0, 0.00901713255185, 128, 8872, 5.71748
+0.01, 0.01, False, False, /dev/null, 1.46152452452, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.893745507508, 0.0220183663664, 0.990444444444, 0.0, 0.00484670874662, 128, 8872, 24.362
+0.0, 0.0, False, False, /dev/null, 1.46152452452, /home/luis/noscopeFolder/data/cnn-models/jackson-town-square_convnet_128_32_2.pb, 0.999834, 0.0220183663664, 1.0, 0.0, 0.0, 128, 8872, 16.3443

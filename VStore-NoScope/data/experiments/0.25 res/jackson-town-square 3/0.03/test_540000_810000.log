@@ -1,0 +1,68 @@
+2018-07-23 16:46:03.487183: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-07-23 16:46:03.487851: I tensorflow/core/common_runtime/gpu/gpu_device.cc:965] Found device 0 with properties: 
+name: Quadro P6000 major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:01:00.0
+totalMemory: 23.87GiB freeMemory: 23.46GiB
+2018-07-23 16:46:03.487871: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1055] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Quadro P6000, pci bus id: 0000:01:00.0, compute capability: 6.1)
+layer     filters    size              input                output
+    0 conv     32  3 x 3 / 1   608 x 608 x   3   ->   608 x 608 x  32
+    1 max          2 x 2 / 2   608 x 608 x  32   ->   304 x 304 x  32
+    2 conv     64  3 x 3 / 1   304 x 304 x  32   ->   304 x 304 x  64
+    3 max          2 x 2 / 2   304 x 304 x  64   ->   152 x 152 x  64
+    4 conv    128  3 x 3 / 1   152 x 152 x  64   ->   152 x 152 x 128
+    5 conv     64  1 x 1 / 1   152 x 152 x 128   ->   152 x 152 x  64
+    6 conv    128  3 x 3 / 1   152 x 152 x  64   ->   152 x 152 x 128
+    7 max          2 x 2 / 2   152 x 152 x 128   ->    76 x  76 x 128
+    8 conv    256  3 x 3 / 1    76 x  76 x 128   ->    76 x  76 x 256
+    9 conv    128  1 x 1 / 1    76 x  76 x 256   ->    76 x  76 x 128
+   10 conv    256  3 x 3 / 1    76 x  76 x 128   ->    76 x  76 x 256
+   11 max          2 x 2 / 2    76 x  76 x 256   ->    38 x  38 x 256
+   12 conv    512  3 x 3 / 1    38 x  38 x 256   ->    38 x  38 x 512
+   13 conv    256  1 x 1 / 1    38 x  38 x 512   ->    38 x  38 x 256
+   14 conv    512  3 x 3 / 1    38 x  38 x 256   ->    38 x  38 x 512
+   15 conv    256  1 x 1 / 1    38 x  38 x 512   ->    38 x  38 x 256
+   16 conv    512  3 x 3 / 1    38 x  38 x 256   ->    38 x  38 x 512
+   17 max          2 x 2 / 2    38 x  38 x 512   ->    19 x  19 x 512
+   18 conv   1024  3 x 3 / 1    19 x  19 x 512   ->    19 x  19 x1024
+   19 conv    512  1 x 1 / 1    19 x  19 x1024   ->    19 x  19 x 512
+   20 conv   1024  3 x 3 / 1    19 x  19 x 512   ->    19 x  19 x1024
+   21 conv    512  1 x 1 / 1    19 x  19 x1024   ->    19 x  19 x 512
+   22 conv   1024  3 x 3 / 1    19 x  19 x 512   ->    19 x  19 x1024
+   23 conv   1024  3 x 3 / 1    19 x  19 x1024   ->    19 x  19 x1024
+   24 conv   1024  3 x 3 / 1    19 x  19 x1024   ->    19 x  19 x1024
+   25 route  16
+   26 conv     64  1 x 1 / 1    38 x  38 x 512   ->    38 x  38 x  64
+   27 reorg              / 2    38 x  38 x  64   ->    19 x  19 x 256
+   28 route  27 24
+   29 conv   1024  3 x 3 / 1    19 x  19 x1280   ->    19 x  19 x1024
+   30 conv    425  1 x 1 / 1    19 x  19 x1024   ->    19 x  19 x 425
+   31 detection
+mask_scale: Using default '1.000000'
+Loading weights from /home/luis/noscopeFolder/tensorflow-noscope/tensorflow/noscope/darknet/weights/yolo.weights...Done!
+Dumping video
+Dumping 9000
+Loaded video
+Time to load (and resize) video: 56.2602 s
+Loaded NoscopeLabeler
+--------------------k2_measure_flush------#samples=2---------------
+                                     msg delta  now  delta(tod/us)        now(tod)    mb_ov
+*                                 startDF    0    0              0      3220523771        0
+                                    endDF    0    0          21500      3220545271        0
+ TOTAL: 0 64cycles 0 us(gettimeofday)
+---------------------------------------------------------------
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 5.60719 frames filtered by DF: 8258 frames unfiltered by DF: 685
+--------------------k2_measure_flush------#samples=2---------------
+                                     msg delta  now  delta(tod/us)        now(tod)    mb_ov
+*                         start small CNN    0    0              0      3220581783        0
+                            end small CNN    0    0        2180388      3222762171        0
+ TOTAL: 0 64cycles 0 us(gettimeofday)
+---------------------------------------------------------------
+frames filtered by smallCNN: 596 frames unfiltered by smallCNN: 90 True labels: 230 False labels: 366 upper thresh: 0.247692 lower thresh0.0199751
+--------------------k2_measure_flush------#samples=2---------------
+                                     msg delta  now  delta(tod/us)        now(tod)    mb_ov
+*                               StartYOLO    0    0              0      3222802228        0
+                                  EndYOLO    0    0        2692219      3225494447        0
+ TOTAL: 0 64cycles 0 us(gettimeofday)
+---------------------------------------------------------------
+labeled by yolo1: 0 labeled by yolo2: 90
+Total time: 4.97078 s

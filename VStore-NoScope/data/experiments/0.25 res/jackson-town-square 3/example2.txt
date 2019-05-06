@@ -1,0 +1,380 @@
+noscope.cc  Mon Jul 23 16:35:44 2018
+
+loading weights  Mon Jul 23 16:35:44 2018
+
+done loading weights and starting init session Mon Jul 23 16:35:44 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:35:45 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:35:56 2018
+
+done loading video  Mon Jul 23 16:36:13 2018
+
+getting df filter  Mon Jul 23 16:36:13 2018
+
+got df filter  Mon Jul 23 16:36:13 2018
+
+starting labeler  Mon Jul 23 16:36:13 2018
+
+done labeler  Mon Jul 23 16:36:13 2018
+
+starting difference filter  Mon Jul 23 16:36:13 2018
+
+done running difference filter  Mon Jul 23 16:36:13 2018
+
+starting small CNN  Mon Jul 23 16:36:13 2018
+
+done small CNN  Mon Jul 23 16:36:14 2018
+
+running yolo  Mon Jul 23 16:36:14 2018
+
+done running yolo  Mon Jul 23 16:36:14 2018
+
+dumping comfidences Mon Jul 23 16:36:14 2018
+
+done dumping confidences Mon Jul 23 16:36:14 2018
+
+exiting script  Mon Jul 23 16:36:14 2018
+
+noscope.cc  Mon Jul 23 16:36:15 2018
+
+loading weights  Mon Jul 23 16:36:15 2018
+
+done loading weights and starting init session Mon Jul 23 16:36:15 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:36:16 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:36:24 2018
+
+done loading video  Mon Jul 23 16:36:41 2018
+
+getting df filter  Mon Jul 23 16:36:41 2018
+
+got df filter  Mon Jul 23 16:36:41 2018
+
+starting labeler  Mon Jul 23 16:36:41 2018
+
+done labeler  Mon Jul 23 16:36:41 2018
+
+starting difference filter  Mon Jul 23 16:36:41 2018
+
+done running difference filter  Mon Jul 23 16:36:41 2018
+
+starting small CNN  Mon Jul 23 16:36:41 2018
+
+done small CNN  Mon Jul 23 16:36:42 2018
+
+running yolo  Mon Jul 23 16:36:42 2018
+
+done running yolo  Mon Jul 23 16:36:42 2018
+
+dumping comfidences Mon Jul 23 16:36:42 2018
+
+done dumping confidences Mon Jul 23 16:36:42 2018
+
+exiting script  Mon Jul 23 16:36:42 2018
+
+noscope.cc  Mon Jul 23 16:37:43 2018
+
+loading weights  Mon Jul 23 16:37:43 2018
+
+done loading weights and starting init session Mon Jul 23 16:37:43 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:37:43 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:37:51 2018
+
+done loading video  Mon Jul 23 16:38:08 2018
+
+getting df filter  Mon Jul 23 16:38:08 2018
+
+got df filter  Mon Jul 23 16:38:08 2018
+
+starting labeler  Mon Jul 23 16:38:08 2018
+
+done labeler  Mon Jul 23 16:38:08 2018
+
+starting difference filter  Mon Jul 23 16:38:08 2018
+
+done running difference filter  Mon Jul 23 16:38:08 2018
+
+starting small CNN  Mon Jul 23 16:38:08 2018
+
+done small CNN  Mon Jul 23 16:38:09 2018
+
+running yolo  Mon Jul 23 16:38:09 2018
+
+done running yolo  Mon Jul 23 16:38:09 2018
+
+dumping comfidences Mon Jul 23 16:38:09 2018
+
+done dumping confidences Mon Jul 23 16:38:09 2018
+
+exiting script  Mon Jul 23 16:38:09 2018
+
+noscope.cc  Mon Jul 23 16:39:14 2018
+
+loading weights  Mon Jul 23 16:39:14 2018
+
+done loading weights and starting init session Mon Jul 23 16:39:14 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:39:15 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:39:23 2018
+
+done loading video  Mon Jul 23 16:39:49 2018
+
+getting df filter  Mon Jul 23 16:39:49 2018
+
+got df filter  Mon Jul 23 16:39:49 2018
+
+starting labeler  Mon Jul 23 16:39:49 2018
+
+done labeler  Mon Jul 23 16:39:49 2018
+
+starting difference filter  Mon Jul 23 16:39:49 2018
+
+done running difference filter  Mon Jul 23 16:39:49 2018
+
+starting small CNN  Mon Jul 23 16:39:49 2018
+
+done small CNN  Mon Jul 23 16:39:54 2018
+
+running yolo  Mon Jul 23 16:39:54 2018
+
+done running yolo  Mon Jul 23 16:39:54 2018
+
+dumping comfidences Mon Jul 23 16:39:54 2018
+
+done dumping confidences Mon Jul 23 16:39:54 2018
+
+exiting script  Mon Jul 23 16:39:54 2018
+
+noscope.cc  Mon Jul 23 16:41:10 2018
+
+loading weights  Mon Jul 23 16:41:10 2018
+
+done loading weights and starting init session Mon Jul 23 16:41:10 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:41:11 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:41:22 2018
+
+done loading video  Mon Jul 23 16:42:16 2018
+
+getting df filter  Mon Jul 23 16:42:16 2018
+
+got df filter  Mon Jul 23 16:42:16 2018
+
+starting labeler  Mon Jul 23 16:42:16 2018
+
+done labeler  Mon Jul 23 16:42:16 2018
+
+starting difference filter  Mon Jul 23 16:42:16 2018
+
+done running difference filter  Mon Jul 23 16:42:16 2018
+
+starting small CNN  Mon Jul 23 16:42:16 2018
+
+done small CNN  Mon Jul 23 16:42:23 2018
+
+running yolo  Mon Jul 23 16:42:23 2018
+
+done running yolo  Mon Jul 23 16:42:23 2018
+
+dumping comfidences Mon Jul 23 16:42:23 2018
+
+done dumping confidences Mon Jul 23 16:42:23 2018
+
+exiting script  Mon Jul 23 16:42:23 2018
+
+noscope.cc  Mon Jul 23 16:43:40 2018
+
+loading weights  Mon Jul 23 16:43:40 2018
+
+done loading weights and starting init session Mon Jul 23 16:43:40 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:43:40 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:43:52 2018
+
+done loading video  Mon Jul 23 16:44:41 2018
+
+getting df filter  Mon Jul 23 16:44:41 2018
+
+got df filter  Mon Jul 23 16:44:41 2018
+
+starting labeler  Mon Jul 23 16:44:41 2018
+
+done labeler  Mon Jul 23 16:44:41 2018
+
+starting difference filter  Mon Jul 23 16:44:41 2018
+
+done running difference filter  Mon Jul 23 16:44:41 2018
+
+starting small CNN  Mon Jul 23 16:44:41 2018
+
+done small CNN  Mon Jul 23 16:44:44 2018
+
+running yolo  Mon Jul 23 16:44:44 2018
+
+done running yolo  Mon Jul 23 16:44:45 2018
+
+dumping comfidences Mon Jul 23 16:44:45 2018
+
+done dumping confidences Mon Jul 23 16:44:45 2018
+
+exiting script  Mon Jul 23 16:44:45 2018
+
+noscope.cc  Mon Jul 23 16:46:03 2018
+
+loading weights  Mon Jul 23 16:46:03 2018
+
+done loading weights and starting init session Mon Jul 23 16:46:03 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:46:03 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:46:15 2018
+
+done loading video  Mon Jul 23 16:47:12 2018
+
+getting df filter  Mon Jul 23 16:47:12 2018
+
+got df filter  Mon Jul 23 16:47:12 2018
+
+starting labeler  Mon Jul 23 16:47:12 2018
+
+done labeler  Mon Jul 23 16:47:12 2018
+
+starting difference filter  Mon Jul 23 16:47:12 2018
+
+done running difference filter  Mon Jul 23 16:47:12 2018
+
+starting small CNN  Mon Jul 23 16:47:12 2018
+
+done small CNN  Mon Jul 23 16:47:14 2018
+
+running yolo  Mon Jul 23 16:47:14 2018
+
+done running yolo  Mon Jul 23 16:47:17 2018
+
+dumping comfidences Mon Jul 23 16:47:17 2018
+
+done dumping confidences Mon Jul 23 16:47:17 2018
+
+exiting script  Mon Jul 23 16:47:17 2018
+
+noscope.cc  Mon Jul 23 16:48:36 2018
+
+loading weights  Mon Jul 23 16:48:36 2018
+
+done loading weights and starting init session Mon Jul 23 16:48:36 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:48:36 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:48:48 2018
+
+done loading video  Mon Jul 23 16:49:45 2018
+
+getting df filter  Mon Jul 23 16:49:45 2018
+
+got df filter  Mon Jul 23 16:49:45 2018
+
+starting labeler  Mon Jul 23 16:49:45 2018
+
+done labeler  Mon Jul 23 16:49:45 2018
+
+starting difference filter  Mon Jul 23 16:49:45 2018
+
+done running difference filter  Mon Jul 23 16:49:45 2018
+
+starting small CNN  Mon Jul 23 16:49:45 2018
+
+done small CNN  Mon Jul 23 16:49:57 2018
+
+running yolo  Mon Jul 23 16:49:57 2018
+
+done running yolo  Mon Jul 23 16:50:00 2018
+
+dumping comfidences Mon Jul 23 16:50:00 2018
+
+done dumping confidences Mon Jul 23 16:50:00 2018
+
+exiting script  Mon Jul 23 16:50:00 2018
+
+noscope.cc  Mon Jul 23 16:51:26 2018
+
+loading weights  Mon Jul 23 16:51:26 2018
+
+done loading weights and starting init session Mon Jul 23 16:51:26 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:51:27 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:51:38 2018
+
+done loading video  Mon Jul 23 16:52:38 2018
+
+getting df filter  Mon Jul 23 16:52:38 2018
+
+got df filter  Mon Jul 23 16:52:38 2018
+
+starting labeler  Mon Jul 23 16:52:38 2018
+
+done labeler  Mon Jul 23 16:52:38 2018
+
+starting difference filter  Mon Jul 23 16:52:38 2018
+
+done running difference filter  Mon Jul 23 16:52:39 2018
+
+starting small CNN  Mon Jul 23 16:52:39 2018
+
+done small CNN  Mon Jul 23 16:52:45 2018
+
+running yolo  Mon Jul 23 16:52:45 2018
+
+done running yolo  Mon Jul 23 16:53:18 2018
+
+dumping comfidences Mon Jul 23 16:53:18 2018
+
+done dumping confidences Mon Jul 23 16:53:18 2018
+
+exiting script  Mon Jul 23 16:53:18 2018
+
+noscope.cc  Mon Jul 23 16:54:41 2018
+
+loading weights  Mon Jul 23 16:54:41 2018
+
+done loading weights and starting init session Mon Jul 23 16:54:41 2018
+
+done starting init session and starting new yolo Mon Jul 23 16:54:41 2018
+
+loading video and done starting new yolo  Mon Jul 23 16:54:53 2018
+
+done loading video  Mon Jul 23 16:56:08 2018
+
+getting df filter  Mon Jul 23 16:56:08 2018
+
+got df filter  Mon Jul 23 16:56:08 2018
+
+starting labeler  Mon Jul 23 16:56:08 2018
+
+done labeler  Mon Jul 23 16:56:08 2018
+
+starting difference filter  Mon Jul 23 16:56:08 2018
+
+done running difference filter  Mon Jul 23 16:56:08 2018
+
+starting small CNN  Mon Jul 23 16:56:08 2018
+
+done small CNN  Mon Jul 23 16:56:20 2018
+
+running yolo  Mon Jul 23 16:56:20 2018
+
+done running yolo  Mon Jul 23 16:56:57 2018
+
+dumping comfidences Mon Jul 23 16:56:57 2018
+
+done dumping confidences Mon Jul 23 16:56:58 2018
+
+exiting script  Mon Jul 23 16:56:58 2018
+

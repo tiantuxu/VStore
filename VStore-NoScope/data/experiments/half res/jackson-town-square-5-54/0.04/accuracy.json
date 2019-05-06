@@ -1,0 +1,11 @@
+{
+    "accuracy": 0.9686666666666667, 
+    "false_negative": 0.0, 
+    "false_positive": 0.015892696122633002, 
+    "num_true_negatives": 8872, 
+    "num_true_positives": 128, 
+    "num_windows": 9000, 
+    "runtime": 2.51349, 
+    "window_size": 30, 
+    "window_thres": 28
+}

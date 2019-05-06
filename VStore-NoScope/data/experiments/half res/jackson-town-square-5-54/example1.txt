@@ -1,0 +1,170 @@
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:16:17 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:16:17 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 0 frames filtered by DF: 0 frames unfiltered by DF: 8999
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:16:17 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:16:18 2018
+
+frames filtered by smallCNN: 9000 frames unfiltered by smallCNN: 0 True labels: 9000 False labels: 0 upper thresh: 0 lower thresh0
+
+noscope_labeler.cc runYOLOFri Jul 20 17:16:18 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:16:18 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:17:00 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:17:00 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 0 frames filtered by DF: 0 frames unfiltered by DF: 8999
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:17:00 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:17:00 2018
+
+frames filtered by smallCNN: 9000 frames unfiltered by smallCNN: 0 True labels: 9000 False labels: 0 upper thresh: 0 lower thresh0
+
+noscope_labeler.cc runYOLOFri Jul 20 17:17:00 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:17:00 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:18:42 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:18:42 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 135.721 frames filtered by DF: 8665 frames unfiltered by DF: 275
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:18:42 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:18:42 2018
+
+frames filtered by smallCNN: 276 frames unfiltered by smallCNN: 0 True labels: 255 False labels: 21 upper thresh: 0.0980837 lower thresh0.0980837
+
+noscope_labeler.cc runYOLOFri Jul 20 17:18:42 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:18:42 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:20:34 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:20:34 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 13.1253 frames filtered by DF: 8504 frames unfiltered by DF: 413
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:20:34 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:20:44 2018
+
+frames filtered by smallCNN: 414 frames unfiltered by smallCNN: 0 True labels: 272 False labels: 142 upper thresh: 0.0980837 lower thresh0.0980837
+
+noscope_labeler.cc runYOLOFri Jul 20 17:20:44 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:20:44 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:23:11 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:23:11 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 7.33955 frames filtered by DF: 8423 frames unfiltered by DF: 503
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:23:11 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:23:14 2018
+
+frames filtered by smallCNN: 504 frames unfiltered by smallCNN: 0 True labels: 272 False labels: 232 upper thresh: 0.104089 lower thresh0.104089
+
+noscope_labeler.cc runYOLOFri Jul 20 17:23:14 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:23:14 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:25:47 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:25:48 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 7.20408 frames filtered by DF: 8425 frames unfiltered by DF: 511
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:25:48 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:25:50 2018
+
+frames filtered by smallCNN: 512 frames unfiltered by smallCNN: 0 True labels: 269 False labels: 243 upper thresh: 0.139119 lower thresh0.139119
+
+noscope_labeler.cc runYOLOFri Jul 20 17:25:50 2018
+
+labeled by yolo1: 0 labeled by yolo2: 0
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:25:50 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:28:23 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:28:23 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 6.90618 frames filtered by DF: 8410 frames unfiltered by DF: 522
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:28:23 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:28:26 2018
+
+frames filtered by smallCNN: 501 frames unfiltered by smallCNN: 22 True labels: 240 False labels: 261 upper thresh: 0.396338 lower thresh0.196167
+
+noscope_labeler.cc runYOLOFri Jul 20 17:28:26 2018
+
+labeled by yolo1: 0 labeled by yolo2: 22
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:28:26 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:31:02 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:31:02 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 5.86967 frames filtered by DF: 8154 frames unfiltered by DF: 798
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:31:02 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:31:05 2018
+
+frames filtered by smallCNN: 737 frames unfiltered by smallCNN: 62 True labels: 200 False labels: 537 upper thresh: 0.685585 lower thresh0.196167
+
+noscope_labeler.cc runYOLOFri Jul 20 17:31:07 2018
+
+labeled by yolo1: 0 labeled by yolo2: 62
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:31:07 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:35:13 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:35:13 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 1.46152 frames filtered by DF: 0 frames unfiltered by DF: 8999
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:35:13 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:35:20 2018
+
+frames filtered by smallCNN: 8873 frames unfiltered by smallCNN: 127 True labels: 135 False labels: 8738 upper thresh: 0.86774 lower thresh0.196167
+
+noscope_labeler.cc runYOLOFri Jul 20 17:35:24 2018
+
+labeled by yolo1: 0 labeled by yolo2: 127
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:35:24 2018
+
+noscope_labeler.cc NoscopeLabelerFri Jul 20 17:38:49 2018
+
+noscope_labeler.cc RunDifferenceFilter end Fri Jul 20 17:38:49 2018
+
+kDiffDelay_ 1 kNbFrames_ 9000 lower_thresh 1.46152 frames filtered by DF: 0 frames unfiltered by DF: 8999
+
+noscope_labeler.cc populate CNN FramesFri Jul 20 17:38:49 2018
+
+noscope_labeler.cc run small CNNFri Jul 20 17:38:57 2018
+
+frames filtered by smallCNN: 8740 frames unfiltered by smallCNN: 260 True labels: 2 False labels: 8738 upper thresh: 0.999853 lower thresh0.196167
+
+noscope_labeler.cc runYOLOFri Jul 20 17:39:05 2018
+
+labeled by yolo1: 0 labeled by yolo2: 260
+noscope_labeler.cc dumpconfidencesFri Jul 20 17:39:05 2018
+
