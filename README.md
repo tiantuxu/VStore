@@ -50,7 +50,8 @@ For OpenALPR, run
 /tmp/vstore/Debug/test-sink.bin
 ```
 
-For NoScope, follwo their isntructions and download the videos and YOLO weights as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
+For NoScope, follwo their isntructions and download the videos/csv/YOLO weights as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
+After that, revoke the sink by running samples like
 ```
-./VStore-NoScope/data/experiments/[video name]/[error]/run_testset.sh 0 VIDEO_LEN RESOLUTION
+./VStore-NoScope/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION
 ```
