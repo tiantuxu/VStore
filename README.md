@@ -50,7 +50,7 @@ For OpenALPR, run
 /tmp/vstore/Debug/test-sink.bin
 ```
 
-For NoScope, 
+For NoScope, follwo their isntructions and download the videos and YOLO weights as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
 ```
-/home/teddyxu/noscopeFolder/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION
+./VStore-NoScope/data/experiments/[video name]/[error]/run_testset.sh 0 VIDEO_LEN RESOLUTION
 ```
