@@ -574,27 +574,7 @@ int main (int argc, char *argv[])
                 }
             }
             k2_measure("receive ends");
-#if 0
-            k2_measure("retrieve begins");
 
-            if ((rd.db_seq == NVME_RAW_180) || (rd.db_seq == SSD_RAW_180) || (rd.db_seq == HDD_RAW_180)) {
-                // Retrieving frames
-                for (int i = rd.start_fnum; i < rd.start_fnum + rd.total_fnum; i++) {
-                    mg.GetWatermarks(&wm_c, &wm_f);
-
-                    //I("watermarks:  chunk %u frame %u", wm_c, wm_f);
-                    rc = mg.RetrieveAFrame(&f);
-
-                    frame[count1+i] = f;
-
-                    if (rc == VS_ERR_EOF_CHUNKS)
-                        break;
-
-                    //xzl_bug_on(rc != 0);
-                }
-            }
-            k2_measure("retrieve ends");
-#endif
             zmq::message_t reply(5);
             s_request.recv(&reply);
 
@@ -649,122 +629,6 @@ int main (int argc, char *argv[])
             char *imagedata = nullptr;
             if (j % stoi(argv[4], NULL, 10) != 0) continue;
 
-#if 0
-            zmq::message_t rq_desc180(sizeof(request_desc));
-            request_desc rd_one_frame_md;
-
-            //Specify the frame wants to retrieve
-            rd_one_frame_md.db_seq = NVME_CHUNK_180;
-            rd_one_frame_md.start_fnum = j;
-            rd_one_frame_md.total_fnum = CHUNK_SIZE;
-            rd_one_frame_md.id = id;
-
-            memcpy(rq_desc180.data(), &rd_one_frame_md, sizeof(request_desc));
-
-            //init_raw_chunks(j, id, status_180, pre_buf_180,worker_socket, HDD_RAW_180, &rd_one_frame_md, flag_180);
-
-
-            /********* Initializing CHUNKS of Encoded Frames (180p)  **********/
-
-            if(j-status_180[id] > chunk_num_encode*CHUNK_SIZE){
-                for(int i=0;i<chunk_num_encode;i++)
-                {
-                    worker_socket[id]->send(rq_desc180);
-
-                    I("Initial request sent, start: %d, frame: %d", rd_one_frame_md.start_fnum, rd_one_frame_md.total_fnum);
-                    zmq::message_t reply(5);
-                    worker_socket[id]->recv(&reply);
-
-                    for (int iter = 0; iter < rd_one_frame_md.total_fnum; iter++) {
-                        data_desc desc;
-                        msg_ptr1 = recv_one_frame(*worker_chunk_socket[id], &desc);
-                        pre_buf_180[id][iter+CHUNK_SIZE*i] = msg_ptr1;
-                    }
-
-                    rd_one_frame_md.db_seq = NVME_CHUNK_180;
-                    rd_one_frame_md.start_fnum = j + CHUNK_SIZE*(i+1);
-                    rd_one_frame_md.total_fnum = CHUNK_SIZE;
-                    rd_one_frame_md.id = id;
-                    memcpy(rq_desc180.data(), &rd_one_frame_md, sizeof(request_desc));
-                }
-                status_180[id] = j;
-                flag_180[id]=false;
-            }
-
-            if(j-status_180[id]<=CHUNK_SIZE)
-                flag_180[id]=false;
-
-            /********** Requesting 180 New Frames **********/
-            if(j - status_180[id] == (chunk_num_encode-1)*CHUNK_SIZE||flag_180[id]==true) {
-                flag_180[id]=true;
-                rd_one_frame_md.db_seq = NVME_CHUNK_180;
-
-                int N=chunk_num*CHUNK_SIZE-(j-status_180[id]);
-                rd_one_frame_md.start_fnum=j+N;
-                rd_one_frame_md.total_fnum = CHUNK_SIZE;
-                rd_one_frame_md.id = id;
-
-                memcpy(rq_desc180.data(), &rd_one_frame_md, sizeof(request_desc));
-                worker_socket[id]->send(rq_desc180);
-                I("------prefetch180p %d, thread %d------", j, id);
-                I("Request sent, db: %d, frame: %d", rd_one_frame_md.db_seq, rd_one_frame_md.start_fnum);
-                zmq::message_t reply(5);
-                worker_socket[id]->recv(&reply);
-            }
-
-            msg_ptr1 = pre_buf_180[id][j%(chunk_num*CHUNK_SIZE)];
-#endif
-
-#if 0
-            /********* Initializing 5 CHUNKS of RAW Frames (180p)  **********/
-            if(j-status_180[id] > chunk_num*CHUNK_SIZE){
-                for(int i=0;i<chunk_num;i++)
-                {
-                    worker_socket[id]->send(rq_desc180);
-                    request_desc *rd;
-                    rd = (request_desc *)(rq_desc180.data()), rq_desc180.size();
-                    I("Initial request sent, start: %d, frame: %d", rd->start_fnum, rd->total_fnum);
-
-                    for (int iter = 0; iter < rd_one_frame_md.total_fnum; iter++) {
-                        msg_ptr1 = recv_one_chunk_720(*worker_socket[id]);
-                        pre_buf_180[id][iter+CHUNK_SIZE*i] = msg_ptr1;
-                    }
-                    rd_one_frame_md.db_seq = HDD_RAW_180;
-                    rd_one_frame_md.start_fnum = j + CHUNK_SIZE*(i+1);
-                    rd_one_frame_md.total_fnum = CHUNK_SIZE;
-                    rd_one_frame_md.id = id;
-                    memcpy(rq_desc180.data(), &rd_one_frame_md, sizeof(request_desc));
-
-                }
-                status_180[id] = j;
-                flag_180[id]=false;
-            }
-
-            if(j-status_180[id]<=CHUNK_SIZE)
-                flag_180[id]=false;                                   //terminate streaming
-
-            /********** Requesting 180 New Frames **********/
-            if(j - status_180[id] == (chunk_num - 1)*CHUNK_SIZE||flag_180[id]==true) {
-                flag_180[id]=true;
-                rd_one_frame_md.db_seq = HDD_RAW_180;
-
-                int N=chunk_num*CHUNK_SIZE-(j-status_180[id]);
-                rd_one_frame_md.start_fnum=j+N;
-
-                //rd_one_frame.start_fnum = j+CHUNK_SIZE;
-                rd_one_frame_md.total_fnum = CHUNK_SIZE;
-                memcpy(rq_desc180.data(), &rd_one_frame_md, sizeof(request_desc));
-                worker_socket[id]->send(rq_desc180);
-                I("------prefetch720p %d, thread %d------", j, id);
-                I("Request sent, db: %d, frame: %d", rd_one_frame_md.db_seq, rd_one_frame_md.start_fnum);
-            }
-
-            msg_ptr1 = pre_buf_180[id][j%(chunk_num*CHUNK_SIZE)];
-
-            if(msg_ptr1 == nullptr){
-                continue;
-            }
-#endif
 
             if(frame[j].msg_p == nullptr) continue;
             imagedata = static_cast<char *>(frame[j].msg_p->data()), frame[j].msg_p->size();
@@ -773,27 +637,6 @@ int main (int argc, char *argv[])
             memcpy(frm.data, imagedata, framesize_180);
 
             std::vector<AlprRegionOfInterest> regionsOfInterest = detectmotion(alpr[id], frm, "", outputJson, id, j, stoi(argv[2], nullptr, 10));
-
-#if 0
-            /********** Prefetching one chunk of 180p New Frames after the computation **********/
-            if(j - status_180[id] == (chunk_num_encode-1)*CHUNK_SIZE||flag_180[id]==true) {
-                for (int iter = 0; iter < rd_one_frame_md.total_fnum; iter++) {
-#if 0
-                    msg_ptr1 = recv_one_chunk_720(*worker_socket[id]);
-#endif
-
-                    //add this in encoded case
-#if 1
-                    data_desc desc;
-                    msg_ptr1 = recv_one_frame(*worker_chunk_socket[id], &desc);
-#endif
-                    pre_buf_180[id][(status_180[id]+iter) % (chunk_num_encode*CHUNK_SIZE)]=msg_ptr1;
-                }
-                /********** = TO += **********/
-                status_180[id] +=CHUNK_SIZE;
-            }
-#endif
-            continue;
 
             if (j % stoi(argv[4], NULL, 10) != 0) continue;
             zmq::message_t rq_desc720(sizeof(vs::sv));
@@ -994,11 +837,6 @@ int main (int argc, char *argv[])
         cout << "count2 = " << count2 << endl;
         cout << "count3 = " << count3 << endl;
 
-        //break;
-    //}
-
-	/* XXX stop the stat collector */
-	//stat_collector.stop();
     exit(0);
 	return 0;
 }
