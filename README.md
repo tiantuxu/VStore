@@ -30,24 +30,24 @@ Second, build the footage to lmdb:
 
 for raw video footage,
 ```
-/tmp/vstore/Debug/test-db-build.bin -r --dpath=/path/to/database --vpath=/path/to/video.yuv width height
+/tmp/teddyxu/Debug/test-db-build.bin -r --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ```
 for encoded video chunks,
 ```
- /tmp/vstore/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
+ /tmp/teddyxu/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video.yuv width height
 ``` 
 #### 2. Run Source
 ```
-/tmp/vstore/Debug/test-source.bin
+/tmp/teddyxu/Debug/test-source.bin
 ```
 #### 3. Run Decoder
 ```
-/tmp/vstore/Debug/decode-serv.bin
+/tmp/teddyxu/Debug/decode-serv.bin
 ```
 #### 4. Run Sink
 For OpenALPR, After building NoScope sink, revoke OpenALPR sink by running
 ```
-/tmp/vstore/Debug/test-sink.bin
+/tmp/teddyxu/Debug/test-sink.bin
 ```
 
 For NoScope, follwo their isntructions and download the videos/csv/YOLO weights and build the sink by bazel as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
