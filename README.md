@@ -16,6 +16,7 @@ To build VStore, you need the following to be installed
 Follow the requirement of [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 #### 3. Build
 Before building VStore, merge the sink towards the current code:
+
 For OpenALPR, under ./VStore-OpenALPR, donwload [OpenALPR](https://github.com/openalpr/openalpr); merge ./VStore-OpenALPR/src into [OpenALPR](https://github.com/openalpr/openalpr) src directory, details could be found in ./VStore-OpenALPR/ALPR_DIFF.diff.
 
 For NoScope, under ./VStore-NoScope/vstore, donwload [OpenALPR](https://github.com/openalpr/openalpr); merge ./VStore-NoScope/vstore/src into [OpenALPR](https://github.com/openalpr/openalpr) src directory, details could be found in ./VStore-NoScope/vstore/ALPR_DIFF.diff; 
