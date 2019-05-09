@@ -4,8 +4,8 @@ Please read our paper in EuroSys '19: [VStore: A Data Store for Analytics on Lar
 and visit out [website](https://thexsel.github.io/p/vstore/).
 
 ## Overview
-This source code implements VStore's query platform based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope). Starting from video footage storage, the source code provides the features of video retrieval (source) and video consumption (sink).
-VStore's configuration, including the derivation of consumption formats, storage formats, and data erosion is not included.
+This source code orchestrates VStore's ingestion, storage, retrieval and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
+VStore's configuration, including the derivation of consumption formats, storage formats, and data erosion planning is not included.
 
 ## Build VStore
 #### 1. VStore Requirements
@@ -46,15 +46,15 @@ for encoded video chunks,
 ```
  /tmp/teddyxu/Debug/test-db-build.bin -e --dpath=/path/to/database --vpath=/path/to/video-chunks width height
 ``` 
-#### 2. Run Source
+#### 2. Run Retrieval Stage (source)
 ```
 /tmp/teddyxu/Debug/test-source.bin
 ```
-#### 3. Run Decoder
+#### 3. Put the Decoder Online
 ```
 /tmp/teddyxu/Debug/decode-serv.bin
 ```
-#### 4. Run Sink
+#### 4. Run Consumption Stage (sink)
 For OpenALPR, revoke OpenALPR sink by running
 ```
 /tmp/teddyxu/Debug/test-sink.bin
