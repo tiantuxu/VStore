@@ -24,7 +24,7 @@ build-all
 ```
 
 ## Run VStore
-#### 1. Build Video Footage
+#### 1. Ingestion (Footage)
 First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08).
 
 To generate raw video footage, 
@@ -35,7 +35,7 @@ To generate encoded video chunks,
 ```
 ffmpeg -i input.mp4 -acodec copy -f segment -vcodec copy -reset_timestamps 1 -map 0 ./video-chunks/output%04d.mp4
 ```
-
+#### 1. Build Video Footage
 Second, build the footage to lmdb:
 
 for raw video footage,
