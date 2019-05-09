@@ -57,7 +57,7 @@ For OpenALPR, revoke OpenALPR sink by running
 /tmp/teddyxu/Debug/test-sink.bin
 ```
 
-For NoScope, follow their instructions and download the videos/csv/YOLO weights and build the sink by bazel as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
+For NoScope, follow their instructions and download the videos/csv/YOLO weights. Build the sink by bazel as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
 After building NoScope sink, revoke the sink by running sample a command like
 ```
 ./VStore-NoScope/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION
