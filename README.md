@@ -5,7 +5,7 @@ and visit out [website](https://thexsel.github.io/p/vstore/) for more details.
 
 ## Overview
 This source code orchestrates VStore's ingestion, storage, retrieval and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
-VStore's configuration, including the derivation of consumption formats, storage formats, and data erosion planning are not included.
+VStore's configurations, including the derivation of consumption formats, the derivation of storage formats, and data erosion planning are not included.
 
 ## Build VStore
 #### 1. VStore Requirements
@@ -24,7 +24,7 @@ build-all
 ```
 
 ## Run VStore
-#### 1. Ingestion (Build Video Footage by Transcoding)
+#### 1. Ingestion (Build video footage by transcoding)
 First, transcode the videos to the target formats: Follow the guides [here](https://gist.github.com/tiantuxu/6dca1b86f5ad5f7386d242f001a1cf08).
 
 To generate raw video footage, 
