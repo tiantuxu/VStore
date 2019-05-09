@@ -1,7 +1,7 @@
 # VStore: A Data Store for Analytics on Large Videos
 VStore is a data store for supporting fast, resource efficient analytics over large archival videos.
 Please read our paper in EuroSys '19: [VStore: A Data Store for Analytics on Large Videos](https://web.ics.purdue.edu/~xu944/eurosys19.pdf)
-and visit out [website](https://thexsel.github.io/p/vstore/).
+and visit out [website](https://thexsel.github.io/p/vstore/) for more details.
 
 ## Overview
 This source code orchestrates VStore's ingestion, storage, retrieval and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
