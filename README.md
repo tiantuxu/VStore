@@ -15,6 +15,12 @@ To build VStore, you need the following to be installed
 #### 2. Benchmark Requirements
 Follow the requirement of [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 #### 3. Build
+Before building VStore, merge the sink towards the current code:
+For OpenALPR, under ./VStore-OpenALPR, donwload [OpenALPR](https://github.com/openalpr/openalpr); merge ./VStore-OpenALPR/src into [OpenALPR](https://github.com/openalpr/openalpr) src directory, details could be found in ./VStore-OpenALPR/ALPR_DIFF.diff.
+
+For NoScope, under ./VStore-NoScope/vstore, donwload [OpenALPR](https://github.com/openalpr/openalpr); merge ./VStore-NoScope/vstore/src into [OpenALPR](https://github.com/openalpr/openalpr) src directory, details could be found in ./VStore-NoScope/vstore/ALPR_DIFF.diff; 
+Under ./VStore-NoScope/, download [NoScope](https://github.com/stanford-futuredata/noscope) code from their repo, and follow their instructions for details; 
+Build the sink by bazel as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope), of which the details could be found in ./VStore-NoScope/TF_DIFF.diff.
 ```
 cd ./src
 source env-teddy.sh
@@ -57,7 +63,7 @@ For OpenALPR, revoke OpenALPR sink by running
 /tmp/teddyxu/Debug/test-sink.bin
 ```
 
-For NoScope, follow their instructions and download the videos/csv/YOLO weights. Build the sink by bazel as described in [NoScope GitHub Page](https://github.com/stanford-futuredata/noscope).
+For NoScope, follow their instructions and configure the data directory.
 After building NoScope sink, revoke the sink by running sample a command like
 ```
 ./VStore-NoScope/data/experiments/jackson-town-square/0.02/run_testset.sh 0 VIDEO_LEN RESOLUTION

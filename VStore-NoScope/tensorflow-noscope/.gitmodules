@@ -1,3 +1,0 @@
-[submodule "tensorflow/noscope/darknet"]
-	path = tensorflow/noscope/darknet
-	url = https://github.com/stanford-futuredata/darknet.git

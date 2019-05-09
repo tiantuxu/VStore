@@ -1,0 +1,3405 @@
+diff tensorflow/AUTHORS VStore-Source/VStore-NoScope/tensorflow-noscope/AUTHORS
+10c10
+< Yuan Tang <terrytangyuan@gmail.com>
+---
+> Yuan Tang terrytangyuan@gmail.com
+diff tensorflow/.bazelrc VStore-Source/VStore-NoScope/tensorflow-noscope/.bazelrc
+1,114c1
+< # Android configs. Bazel needs to have --cpu and --fat_apk_cpu both set to the
+< # target CPU to build transient dependencies correctly. See
+< # https://docs.bazel.build/versions/master/user-manual.html#flag--fat_apk_cpu
+< build:android --crosstool_top=//external:android/crosstool
+< build:android --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+< build:android_arm --config=android
+< build:android_arm --cpu=armeabi-v7a
+< build:android_arm --fat_apk_cpu=armeabi-v7a
+< build:android_arm64 --config=android
+< build:android_arm64 --cpu=arm64-v8a
+< build:android_arm64 --fat_apk_cpu=arm64-v8a
+< 
+< # Sets the default Apple platform to macOS.
+< build --apple_platform_type=macos
+< 
+< # Config to use a mostly-static build and disable modular op registration
+< # support (this will revert to loading TensorFlow with RTLD_GLOBAL in Python).
+< # By default, TensorFlow will build with a dependence on
+< # //tensorflow:libtensorflow_framework.so.
+< build:monolithic --define framework_shared_object=false
+< 
+< # For projects which use TensorFlow as part of a Bazel build process, putting
+< # nothing in a bazelrc will default to a monolithic build. The following line
+< # opts in to modular op registration support by default.
+< build --define framework_shared_object=true
+< 
+< # Please note that MKL on MacOS or windows is still not supported.
+< # If you would like to use a local MKL instead of downloading, please set the
+< # environment variable "TF_MKL_ROOT" every time before build.
+< build:mkl --define=build_with_mkl=true --define=enable_mkl=true
+< build:mkl --define=tensorflow_mkldnn_contraction_kernel=0
+< build:mkl -c opt
+< 
+< # This config option is used to enable MKL-DNN open source library only,
+< # without depending on MKL binary version.
+< build:mkl_open_source_only --define=build_with_mkl_dnn_only=true
+< build:mkl_open_source_only --define=build_with_mkl=true --define=enable_mkl=true
+< build:mkl_open_source_only --define=tensorflow_mkldnn_contraction_kernel=0
+< 
+< build:download_clang --crosstool_top=@local_config_download_clang//:toolchain
+< build:download_clang --define=using_clang=true
+< # Instruct clang to use LLD for linking.
+< # This only works with GPU builds currently, since Bazel sets -B/usr/bin in
+< # auto-generated CPU crosstool, forcing /usr/bin/ld.lld to be preferred over
+< # the downloaded one.
+< build:download_clang_use_lld --linkopt='-fuse-ld=lld'
+< 
+< build:cuda --crosstool_top=@local_config_cuda//crosstool:toolchain
+< build:cuda --define=using_cuda=true --define=using_cuda_nvcc=true
+< 
+< build:rocm --crosstool_top=@local_config_rocm//crosstool:toolchain
+< build:rocm --define=using_rocm=true --define=using_rocm_hipcc=true
+< 
+< build:cuda_clang --crosstool_top=@local_config_cuda//crosstool:toolchain
+< build:cuda_clang --define=using_cuda=true --define=using_cuda_clang=true --define=using_clang=true
+< 
+< build:sycl --crosstool_top=@local_config_sycl//crosstool:toolchain
+< build:sycl --define=using_sycl=true --define=using_trisycl=false
+< 
+< build:sycl_nodouble --crosstool_top=@local_config_sycl//crosstool:toolchain
+< build:sycl_nodouble --define=using_sycl=true --cxxopt -DTENSORFLOW_SYCL_NO_DOUBLE
+< 
+< build:sycl_asan --crosstool_top=@local_config_sycl//crosstool:toolchain
+< build:sycl_asan --define=using_sycl=true --define=using_trisycl=false --copt -fno-omit-frame-pointer --copt -fsanitize-coverage=3 --copt -DGPR_NO_DIRECT_SYSCALLS --linkopt -fPIC --linkopt -fsanitize=address
+< 
+< build:sycl_trisycl --crosstool_top=@local_config_sycl//crosstool:toolchain
+< build:sycl_trisycl --define=using_sycl=true --define=using_trisycl=true
+< 
+< # Options extracted from configure script
+< build:gdr --define=with_gdr_support=true
+< build:ngraph --define=with_ngraph_support=true
+< build:verbs --define=with_verbs_support=true
+< build:numa --define=with_numa_support=true
+< 
+< # Options to disable default on features
+< build:noaws --define=no_aws_support=true
+< build:nogcp --define=no_gcp_support=true
+< build:nohdfs --define=no_hdfs_support=true
+< build:nokafka --define=no_kafka_support=true
+< build:noignite --define=no_ignite_support=true
+< build:nonccl --define=no_nccl_support=true
+< 
+< build --define=use_fast_cpp_protos=true
+< build --define=allow_oversize_protos=true
+< 
+< build --spawn_strategy=standalone
+< build --strategy=Genrule=standalone
+< build -c opt
+< 
+< # Other build flags.
+< build --define=grpc_no_ares=true
+< 
+< # Modular TF build options
+< build:dynamic_kernels --define=dynamic_loaded_kernels=true
+< build:dynamic_kernels --copt=-DAUTOLOAD_DYNAMIC_KERNELS
+< 
+< # Build TF with C++ 17 features.
+< build:c++17 --cxxopt=-std=c++1z
+< build:c++17 --cxxopt=-stdlib=libc++
+< build:c++1z --cxxopt=-std=c++1z
+< build:c++1z --cxxopt=-stdlib=libc++
+< 
+< # Default paths for TF_SYSTEM_LIBS
+< build --define=PREFIX=/usr
+< build --define=LIBDIR=$(PREFIX)/lib
+< build --define=INCLUDEDIR=$(PREFIX)/include
+< 
+< # Default options should come above this line
+< 
+< # Options from ./configure
+< try-import %workspace%/.tf_configure.bazelrc
+< 
+< # Put user-specific options in .bazelrc.user
+< try-import %workspace%/.bazelrc.user
+---
+> import %workspace%/.tf_configure.bazelrc
+diff tensorflow/BUILD VStore-Source/VStore-NoScope/tensorflow-noscope/BUILD
+1,8d0
+< exports_files(
+<     [
+<         "LICENSE",
+<         "ACKNOWLEDGEMENTS",
+<         "configure",
+<         "configure.py",
+<     ],
+< )
+diff tensorflow/CODE_OF_CONDUCT.md VStore-Source/VStore-NoScope/tensorflow-noscope/CODE_OF_CONDUCT.md
+10,14c10,14
+< *   Using welcoming and inclusive language.
+< *   Being respectful of differing viewpoints and experiences.
+< *   Gracefully accepting constructive criticism.
+< *   Focusing on what is best for the community.
+< *   Showing empathy towards other community members.
+---
+> * Using welcoming and inclusive language
+> * Being respectful of differing viewpoints and experiences
+> * Gracefully accepting constructive criticism
+> * Focusing on what is best for the community
+> * Showing empathy towards other community members
+18,25c18,22
+< *   The use of sexualized language or imagery and unwelcome sexual attention or
+<     advances.
+< *   Trolling, insulting/derogatory comments, and personal or political attacks.
+< *   Public or private harassment.
+< *   Publishing others' private information, such as a physical or electronic
+<     address, without explicit permission.
+< *   Conduct which could reasonably be considered inappropriate for the forum in
+<     which it occurs.
+---
+> * The use of sexualized language or imagery and unwelcome sexual attention or advances
+> * Trolling, insulting/derogatory comments, and personal or political attacks
+> * Public or private harassment
+> * Publishing others' private information, such as a physical or electronic address, without explicit permission
+> * Conduct which could reasonably be considered inappropriate for the forum in which it occurs. 
+48c45
+< If the behavior is threatening or harassing, or for other reasons requires immediate escalation, please see below.
+---
+> If the behaviour is threatening or harassing, or for other reasons requires immediate escalation, please see below.
+54,59c51,54
+< 1.  Address the perceived conflict directly with those involved, preferably in a
+<     real-time medium.
+< 2.  If this fails, get a third party (e.g. a mutual friend, and/or someone with
+<     background on the issue, but not involved in the conflict) to intercede.
+< 3.  If you are still unable to resolve the conflict, and you believe it rises to
+<     harassment or another code of conduct violation, report it.
+---
+> 1. Address the perceived conflict directly with those involved, preferably in a real-time medium. 
+> 2. If this fails, get a third party (e.g. a mutual friend, and/or someone with background on the issue, but not involved in conflict) to intercede.
+> 3. If you are still unable to resolve the conflict, and you believe it rises to harassment or another code of conduct violation, report it.
+> 
+63c58
+< Violations of the Code of Conduct can be reported to TensorFlow’s Project Stewards, Edd Wilder-James (ewj@google.com) and Sarah Novotny (sarahnovotny@google.com). The Project Steward will determine whether the Code of Conduct was violated, and will issue an appropriate sanction, possibly including a written warning or expulsion from the project, project sponsored spaces, or project forums. We ask that you make a good-faith effort to resolve your conflict via the conflict resolution policy before submitting a report.
+---
+> Violations of the Code of Conduct can be reported to TensorFlow’s Project Steward at conduct@tensorflow.org. The Project Steward will determine whether the Code of Conduct was violated, and will issue an appropriate sanction, possibly including a written warning or expulsion from the project, project sponsored spaces, or project forums. We ask that you make a good-faith effort to resolve your conflict via the conflict resolution policy before submitting a report.
+70c65
+< If the Project Stewards receive a report alleging a violation of the Code of Conduct, the Project Stewards will notify the accused of the report, and provide them an opportunity to discuss the report before a sanction is issued. The Project Stewards will do their utmost to keep the reporter anonymous. If the act is ongoing (such as someone engaging in harassment), or involves a threat to anyone's safety (e.g. threats of violence), the Project Stewards may issue sanctions without notice.
+---
+> If the Project Steward receives a report alleging a violation of the Code of Conduct, the Project Steward will notify the accused of the report, and provide them an opportunity to discuss the report before a sanction is issued. The Project Steward will do their utmost to keep the reporter anonymous. If the act is ongoing (such as someone engaging in harassment), or involves a threat to anyone's safety (e.g. threats of violence), the Project Steward may issue sanctions without notice.
+75c70
+< This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at https://contributor-covenant.org/version/1/4, and includes some aspects of the Geek Feminism Code of Conduct and the Drupal Code of Conduct.
+---
+> This Code of Conduct is adapted from the Contributor Covenant, version 1.4, available at http://contributor-covenant.org/version/1/4, and includes some aspects of the Geek Feminism Code of Conduct and the Drupal Code of Conduct.
+diff tensorflow/CODEOWNERS VStore-Source/VStore-NoScope/tensorflow-noscope/CODEOWNERS
+0a1
+> # NOTE: Disabled temporarily because it's too noisy on pushes.
+3,12c4,7
+< /tenosrflow/core/debug @caisq
+< /tensorflow/core/nccl/ @azaks2 @chsigg
+< /tensorflow/core/platform/windows/ @mrry
+< /tensorflow/core/platform/s3 @yongtang
+< /tensorflow/go @asimshankar
+< /tensorflow/java/ @asimshankar
+< /tensorflow/python/debug @caisq
+< /tensorflow/python/tools/api/generator/ @annarev
+< /tensorflow/tensorboard/ @jart
+< /tensorflow/tools/docs/ @markdaoust
+---
+> #tensorflow/core/platform/windows/* @mrry
+> #tensorflow/java/* @asimshankar
+> #tensorflow/tensorboard/* @jart @dandelionmane
+> #tensorflow/tools/docs/* @markdaoust
+16,67c11,53
+< # NEED OWNER: /tensorflow/contrib/all_reduce
+< /tensorflow/contrib/batching/ @alextp @chrisolston
+< /tensorflow/contrib/bayesflow/ @ebrevdo @rsepassi @jvdillon
+< /tensorflow/contrib/boosted_trees/ @sshrdp @yk5 @nataliaponomareva
+< /tensorflow/contrib/checkpoint/ @allenlavoie
+< /tensorflow/contrib/contrib/cluster_resolver/ @frankchn
+< /tensorflow/contrib/cmake/ @mrry
+< /tensorflow/contrib/copy_graph/ @tucker @poxvoculi
+< /tensorflow/contrib/crf/ @kentonl
+< /tensorflow/contrib/data/ @mrry
+< /tensorflow/tensorflow/contrib/distribute @joshl @priyag @sourabhbajaj @frankchn
+< /tensorflow/contrib/distributions/ @jvdillon @langmore @rsepassi
+< /tensorflow/contrib/eager @alextp @asimshankar
+< /tensorflow/contrib/factorization/ @agarwal-ashish @xavigonzalvo
+< /tensorflow/contrib/ffmpeg/ @fredbertsch
+< /tensorflow/contrib/framework/ @ebrevdo
+< /tensorflow/contrib/gan/ @joel-shor
+< /tensorflow/contrib/graph_editor/ @purpledog
+< # NEED OWNER: /tensorflow/contrib/grid_rnn/
+< /tensorflow/contrib/hadoop @yongtang
+< /tensorflow/contrib/hvx/ @satok16
+< /tensorflow/contrib/integrate/ @shoyer
+< /tensorflow/contrib/kafka @yongtang
+< /tensorflow/contrib/kernel_methods/ @petrosmol
+< /tensorflow/contrib/kinesis @yongtang
+< /tensorflow/contrib/ios_examples/ @petewarden
+< /tensorflow/contrib/labeled_tensor/ @shoyer
+< /tensorflow/contrib/layers/ @fchollet @martinwicke
+< /tensorflow/contrib/learn/ @martinwicke @ispirmustafa @alextp
+< /tensorflow/contrib/linear_optimizer/ @petrosmol @andreasst @katsiapis
+< /tensorflow/contrib/lookup/ @ysuematsu @andreasst
+< /tensorflow/contrib/losses/ @alextp @ispirmustafa
+< /tensorflow/contrib/makefile/ @petewarden @satok16 @wolffg
+< /tensorflow/contrib/metrics/ @alextp @honkentuber @ispirmustafa
+< /tensorflow/contrib/opt/ @strategist333 @alextp
+< /tensorflow/contrib/pi_examples/ @maciekcc
+< /tensorflow/contrib/quantization/ @petewarden
+< /tensorflow/contrib/rnn/ @ebrevdo @scottzhu
+< /tensorflow/contrib/saved_model/ @nfiedel @sukritiramesh @allenlavoie
+< /tensorflow/contrib/seq2seq/ @ebrevdo @lmthang
+< /tensorflow/contrib/session_bundle/ @nfiedel @sukritiramesh
+< /tensorflow/contrib/slim/ @sguada @thenbasilmanran
+< /tensorflow/contrib/stateless/ @girving @alextp
+< /tensorflow/contrib/tensor_forest/ @gilberthendry @thomascolthurst @yupbank
+< /tensorflow/contrib/tensorrt/ @aaroey @smit-hinsu @azaks2
+< # NEED OWNER: /tensorflow/contrib/testing/
+< /tensorflow/contrib/timeseries/ @allenlavoie
+< /tensorflow/contrib/tpu/ @frankchn @saeta @jhseu @sourabhbajaj
+< /tensorflow/contrib/training/ @joel-shor @ebrevdo
+< /tensorflow/contrib/util/ @sherrym
+< 
+< /third_party/systemlibs/ @perfinion
+---
+> # NEED OWNER: tensorflow/contrib/avro/*
+> #tensorflow/contrib/batching/* @alextp @chrisolston
+> #tensorflow/contrib/bayesflow/* @ebrevdo @rsepassi @jvdillon
+> #tensorflow/contrib/cmake/* @mrry @benoitsteiner
+> #tensorflow/contrib/copy_graph/* @tucker @poxvoculi
+> #tensorflow/contrib/crf/* @kentonl
+> #tensorflow/contrib/data/* @mrry
+> #tensorflow/contrib/distributions/* @jvdillon @langmore @rsepassi
+> #tensorflow/contrib/factorization/* @agarwal-ashish @xavigonzalvo
+> #tensorflow/contrib/ffmpeg/* @fredbertsch
+> # NEED OWNER: tensorflow/contrib/framework/*
+> #tensorflow/contrib/graph_editor/* @purpledog
+> # NEED OWNER: tensorflow/contrib/grid_rnn/*
+> #tensorflow/contrib/hvx/* @satok16
+> #tensorflow/contrib/imperative/* @keveman
+> #tensorflow/contrib/integrate/* @shoyer
+> #tensorflow/contrib/kernel_methods/* @petrosmol
+> #tensorflow/contrib/ios_examples/* @petewarden
+> #tensorflow/contrib/labeled_tensor/* @shoyer
+> #tensorflow/contrib/layers/* @fchollet @martinwicke
+> #tensorflow/contrib/learn/* @martinwicke @ispirmustafa @alextp
+> #tensorflow/contrib/linalg/* @langmore
+> #tensorflow/contrib/linear_optimizer/* @petrosmol @andreasst @katsiapis
+> #tensorflow/contrib/lookup/* @ysuematsu @andreasst
+> #tensorflow/contrib/losses/* @alextp @ispirmustafa
+> #tensorflow/contrib/makefile/* @petewarden @satok16 @wolffg
+> #tensorflow/contrib/metrics/* @alextp @honkentuber @ispirmustafa
+> #tensorflow/contrib/nccl/* @cwhipkey @zheng-xq
+> #tensorflow/contrib/opt/* @strategist333
+> #tensorflow/contrib/pi_examples/* @maciekcc
+> #tensorflow/contrib/quantization/* @petewarden @cwhipkey @keveman
+> #tensorflow/contrib/rnn/* @ebrevdo
+> #tensorflow/contrib/saved_model/* @nfiedel @sukritiramesh
+> #tensorflow/contrib/seq2seq/* @lukaszkaiser
+> #tensorflow/contrib/session_bundle/* @nfiedel @sukritiramesh
+> #tensorflow/contrib/slim/* @sguada @thenbasilmanran
+> #tensorflow/contrib/stateless/* @girving
+> #tensorflow/contrib/tensor_forest/* @gilberthendry @thomascolthurst
+> #tensorflow/contrib/testing/* @dandelionmane
+> #tensorflow/contrib/timeseries/* @allenlavoie
+> #tensorflow/contrib/tpu/* @frankchn @saeta @jhseu
+> #tensorflow/contrib/training/* @joel-shor @ebrevdo
+> #tensorflow/contrib/util/* @sherrym
+diff tensorflow/configure VStore-Source/VStore-NoScope/tensorflow-noscope/configure
+11,12c11
+< CONFIGURE_DIR=$(dirname "$0")
+< "$PYTHON_BIN_PATH" "${CONFIGURE_DIR}/configure.py" "$@"
+---
+> "$PYTHON_BIN_PATH" configure.py
+diff tensorflow/configure.py VStore-Source/VStore-NoScope/tensorflow-noscope/configure.py
+21d20
+< import argparse
+29d27
+< # pylint: disable=g-import-not-at-top
+34,39d31
+< # pylint: enable=g-import-not-at-top
+< 
+< _DEFAULT_CUDA_VERSION = '10'
+< _DEFAULT_CUDNN_VERSION = '7'
+< _DEFAULT_TENSORRT_VERSION = '5'
+< _DEFAULT_CUDA_COMPUTE_CAPABILITIES = '3.5,7.0'
+40a33,40
+> _TF_BAZELRC = '.tf_configure.bazelrc'
+> _DEFAULT_CUDA_VERSION = '8.0'
+> _DEFAULT_CUDNN_VERSION = '6'
+> _DEFAULT_CUDA_COMPUTE_CAPABILITIES = '3.5,5.2'
+> _DEFAULT_CUDA_PATH = '/usr/local/cuda'
+> _DEFAULT_CUDA_PATH_LINUX = '/opt/cuda'
+> _DEFAULT_CUDA_PATH_WIN = ('C:/Program Files/NVIDIA GPU Computing '
+>                           'Toolkit/CUDA/v%s' % _DEFAULT_CUDA_VERSION)
+43,72d42
+< _DEFAULT_TRISYCL_INCLUDE_DIR = '/usr/local/triSYCL/include'
+< _SUPPORTED_ANDROID_NDK_VERSIONS = [10, 11, 12, 13, 14, 15, 16, 17, 18]
+< 
+< _DEFAULT_PROMPT_ASK_ATTEMPTS = 10
+< 
+< _TF_BAZELRC_FILENAME = '.tf_configure.bazelrc'
+< _TF_WORKSPACE_ROOT = ''
+< _TF_BAZELRC = ''
+< _TF_CURRENT_BAZEL_VERSION = None
+< 
+< NCCL_LIB_PATHS = [
+<     'lib64/', 'lib/powerpc64le-linux-gnu/', 'lib/x86_64-linux-gnu/', ''
+< ]
+< 
+< # List of files to configure when building Bazel on Apple platforms.
+< APPLE_BAZEL_FILES = [
+<     'tensorflow/lite/experimental/ios/BUILD',
+<     'tensorflow/lite/experimental/objc/BUILD',
+<     'tensorflow/lite/experimental/swift/BUILD'
+< ]
+< 
+< # List of files to move when building for iOS.
+< IOS_FILES = [
+<     'tensorflow/lite/experimental/objc/TensorFlowLiteObjC.podspec',
+<     'tensorflow/lite/experimental/swift/TensorFlowLiteSwift.podspec',
+< ]
+< 
+< 
+< class UserInputError(Exception):
+<   pass
+137a108,123
+> def remove_line_with(filename, token):
+>   """Remove lines that contain token from file.
+> 
+>   Args:
+>     filename: string for filename.
+>     token: string token to check if to remove a line from file or not.
+>   """
+>   with open(filename, 'r') as f:
+>     filedata = f.read()
+> 
+>   with open(filename, 'w') as f:
+>     for line in filedata.strip().split('\n'):
+>       if token not in line:
+>         f.write(line + '\n')
+> 
+> 
+169,172c155,157
+<     library_paths = run_shell([
+<         python_bin_path, '-c',
+<         'import site; print("\\n".join(site.getsitepackages()))'
+<     ]).split('\n')
+---
+>     library_paths = run_shell(
+>         [python_bin_path, '-c',
+>          'import site; print("\\n".join(site.getsitepackages()))']).split("\n")
+174,180c159,162
+<     library_paths = [
+<         run_shell([
+<             python_bin_path, '-c',
+<             'from distutils.sysconfig import get_python_lib;'
+<             'print(get_python_lib())'
+<         ])
+<     ]
+---
+>     library_paths = [run_shell(
+>         [python_bin_path, '-c',
+>          'from distutils.sysconfig import get_python_lib;'
+>          'print(get_python_lib())'])]
+196c178
+< def setup_python(environ_cp):
+---
+> def setup_python(environ_cp, bazel_version):
+203,206c185,187
+<     python_bin_path = get_from_env_or_user_or_default(environ_cp,
+<                                                       'PYTHON_BIN_PATH',
+<                                                       ask_python_bin_path,
+<                                                       default_python_bin_path)
+---
+>     python_bin_path = get_from_env_or_user_or_default(
+>         environ_cp, 'PYTHON_BIN_PATH', ask_python_bin_path,
+>         default_python_bin_path)
+208c189,190
+<     if os.path.isfile(python_bin_path) and os.access(python_bin_path, os.X_OK):
+---
+>     if os.path.isfile(python_bin_path) and os.access(
+>         python_bin_path, os.X_OK):
+237c219
+<   _ = get_python_major_version(python_bin_path)
+---
+>   python_major_version = get_python_major_version(python_bin_path)
+246c228,248
+<   write_to_bazelrc('build --python_path=\"%s"' % python_bin_path)
+---
+>   write_to_bazelrc('build --define PYTHON_BIN_PATH="%s"' % python_bin_path)
+>   write_to_bazelrc('build --define PYTHON_LIB_PATH="%s"' % python_lib_path)
+>   write_to_bazelrc('build --force_python=py%s' % python_major_version)
+>   write_to_bazelrc('build --host_force_python=py%s' % python_major_version)
+>   bazel_version_int = convert_version_to_int(bazel_version)
+>   version_0_5_3_int = convert_version_to_int('0.5.3')
+>   # If bazel_version_int is None, we are testing a release Bazel, then the
+>   # version should be higher than 0.5.3
+>   # TODO(pcloudy): remove this after required min bazel version is higher
+>   # than 0.5.3
+>   if not bazel_version_int or bazel_version_int >= version_0_5_3_int:
+>     write_to_bazelrc('build --python_path=\"%s"' % python_bin_path)
+>   else:
+>     write_to_bazelrc('build --python%s_path=\"%s"' % (python_major_version,
+>                                                       python_bin_path))
+>   write_to_bazelrc('test --force_python=py%s' % python_major_version)
+>   write_to_bazelrc('test --host_force_python=py%s' % python_major_version)
+>   write_to_bazelrc('test --define PYTHON_BIN_PATH="%s"' % python_bin_path)
+>   write_to_bazelrc('test --define PYTHON_LIB_PATH="%s"' % python_lib_path)
+>   write_to_bazelrc('run --define PYTHON_BIN_PATH="%s"' % python_bin_path)
+>   write_to_bazelrc('run --define PYTHON_LIB_PATH="%s"' % python_lib_path)
+249,255d250
+<   # If choosen python_lib_path is from a path specified in the PYTHONPATH
+<   # variable, need to tell bazel to include PYTHONPATH
+<   if environ_cp.get('PYTHONPATH'):
+<     python_paths = environ_cp.get('PYTHONPATH').split(':')
+<     if python_lib_path in python_paths:
+<       write_action_env_to_bazelrc('PYTHONPATH', environ_cp.get('PYTHONPATH'))
+< 
+257,259c252
+<   with open(
+<       os.path.join(_TF_WORKSPACE_ROOT, 'tools', 'python_bin_path.sh'),
+<       'w') as f:
+---
+>   with open('tools/python_bin_path.sh', 'w') as f:
+266a260,284
+>   home = os.path.expanduser('~')
+>   if not os.path.exists('.bazelrc'):
+>     if os.path.exists(os.path.join(home, '.bazelrc')):
+>       with open('.bazelrc', 'a') as f:
+>         f.write('import %s/.bazelrc\n' % home)
+>     else:
+>       open('.bazelrc', 'w').close()
+> 
+>   remove_line_with('.bazelrc', 'tf_configure')
+>   with open('.bazelrc', 'a') as f:
+>     f.write('import %workspace%/.tf_configure.bazelrc\n')
+> 
+> 
+> def run_gen_git_source(environ_cp):
+>   """Run the gen_git_source to create links.
+> 
+>   The links are for bazel to track dependencies for git hash propagation.
+> 
+>   Args:
+>     environ_cp: copy of the os.environ.
+>   """
+>   cmd = '"%s" tensorflow/tools/git/gen_git_source.py --configure %s' % (
+>       environ_cp.get('PYTHON_BIN_PATH'), os.getcwd())
+>   os.system(cmd)
+> 
+273,274c291
+<   makefile_download_dir = os.path.join(_TF_WORKSPACE_ROOT, 'tensorflow',
+<                                        'contrib', 'makefile', 'downloads')
+---
+>   makefile_download_dir = 'tensorflow/contrib/makefile/downloads'
+296,298c313,315
+<     var_name: string for name of environment variable, e.g. "TF_NEED_CUDA".
+<     query_item: string for feature related to the variable, e.g. "CUDA for
+<       Nvidia GPUs".
+---
+>     var_name: string for name of environment variable, e.g. "TF_NEED_HDFS".
+>     query_item: string for feature related to the variable, e.g. "Hadoop File
+>       System".
+301c318
+<     yes_reply: optional string for reply when feature is enabled.
+---
+>     yes_reply: optionanl string for reply when feature is enabled.
+306,311d322
+< 
+<   Raises:
+<     UserInputError: if an environment variable is set, but it cannot be
+<       interpreted as a boolean indicator, assume that the user has made a
+<       scripting error, and will continue to provide invalid input.
+<       Raise the error to avoid infinitely looping.
+329,344d339
+<   if var is not None:
+<     var_content = var.strip().lower()
+<     true_strings = ('1', 't', 'true', 'y', 'yes')
+<     false_strings = ('0', 'f', 'false', 'n', 'no')
+<     if var_content in true_strings:
+<       var = True
+<     elif var_content in false_strings:
+<       var = False
+<     else:
+<       raise UserInputError(
+<           'Environment variable %s must be set as a boolean indicator.\n'
+<           'The following are accepted as TRUE : %s.\n'
+<           'The following are accepted as FALSE: %s.\n'
+<           'Current value is %s.' %
+<           (var_name, ', '.join(true_strings), ', '.join(false_strings), var))
+< 
+366,371c361,362
+< def set_build_var(environ_cp,
+<                   var_name,
+<                   query_item,
+<                   option_name,
+<                   enabled_by_default,
+<                   bazel_config_name=None):
+---
+> def set_build_var(environ_cp, var_name, query_item, option_name,
+>                   enabled_by_default, bazel_config_name=None):
+379,381c370,372
+<     var_name: string for name of environment variable, e.g. "TF_NEED_CUDA".
+<     query_item: string for feature related to the variable, e.g. "CUDA for
+<       Nvidia GPUs".
+---
+>     var_name: string for name of environment variable, e.g. "TF_NEED_HDFS".
+>     query_item: string for feature related to the variable, e.g. "Hadoop File
+>       System".
+390,392c381
+<     write_to_bazelrc('build:%s --define %s=true' %
+<                      (bazel_config_name, option_name))
+<     write_to_bazelrc('build --config=%s' % bazel_config_name)
+---
+>     write_to_bazelrc('build --define %s=true' % option_name)
+396,397c385,386
+<     write_to_bazelrc('build:%s --define %s=true' %
+<                      (bazel_config_name, option_name))
+---
+>     write_to_bazelrc('build:%s --define %s=true'
+>                      % (bazel_config_name, option_name))
+414,416c403,405
+<     var_name: string for name of environment variable, e.g. "TF_NEED_CUDA".
+<     query_item: string for feature related to the variable, e.g. "CUDA for
+<       Nvidia GPUs".
+---
+>     var_name: string for name of environment variable, e.g. "TF_NEED_HDFS".
+>     query_item: string for feature related to the variable, e.g. "Hadoop File
+>       System".
+419c408
+<     yes_reply: optional string for reply when feature is enabled.
+---
+>     yes_reply: optionanl string for reply when feature is enabled.
+444,446d432
+<   # Treat "0.24" as "0.24.0"
+<   if len(version_segments) == 2:
+<     version_segments.append('0')
+455,456c441,442
+< def check_bazel_version(min_version, max_version):
+<   """Check installed bazel version is between min_version and max_version.
+---
+> def check_bazel_version(min_version):
+>   """Check installed bezel version is at least min_version.
+459,460c445
+<     min_version: string for minimum bazel version (must exist!).
+<     max_version: string for maximum bazel version (must exist!).
+---
+>     min_version: string for minimum bazel version.
+468,469c453
+<   curr_version = run_shell(
+<       ['bazel', '--batch', '--bazelrc=/dev/null', 'version'])
+---
+>   curr_version = run_shell(['bazel', '--batch', 'version'])
+478d461
+<   max_version_int = convert_version_to_int(max_version)
+491,498c474
+<     sys.exit(1)
+<   if (curr_version_int > max_version_int and
+<       'TF_IGNORE_MAX_BAZEL_VERSION' not in os.environ):
+<     print('Please downgrade your bazel installation to version %s or lower to '
+<           'build TensorFlow! To downgrade: download the installer for the old '
+<           'version (from https://github.com/bazelbuild/bazel/releases) then '
+<           'run the installer.' % max_version)
+<     sys.exit(1)
+---
+>     sys.exit(0)
+513,514d488
+<   elif is_windows():
+<     default_cc_opt_flags = '/arch:AVX'
+516c490
+<     default_cc_opt_flags = '-march=native -Wno-sign-compare'
+---
+>     default_cc_opt_flags = '-march=native'
+523,527c497
+<     write_to_bazelrc('build:opt --copt=%s' % opt)
+<   # It should be safe on the same build host.
+<   if not is_ppc64le() and not is_windows():
+<     write_to_bazelrc('build:opt --host_copt=-march=native')
+<   write_to_bazelrc('build:opt --define with_default_optimizations=true')
+---
+>     write_to_bazelrc('build:opt --cxxopt=%s --copt=%s' % (opt, opt))
+549,563d518
+< def set_tf_download_clang(environ_cp):
+<   """Set TF_DOWNLOAD_CLANG action_env."""
+<   question = 'Do you wish to download a fresh release of clang? (Experimental)'
+<   yes_reply = 'Clang will be downloaded and used to compile tensorflow.'
+<   no_reply = 'Clang will not be downloaded.'
+<   set_action_env_var(
+<       environ_cp,
+<       'TF_DOWNLOAD_CLANG',
+<       None,
+<       False,
+<       question=question,
+<       yes_reply=yes_reply,
+<       no_reply=no_reply)
+< 
+< 
+573c528
+<     var_name: string for name of environment variable, e.g. "TF_NEED_CUDA".
+---
+>     var_name: string for name of environment variable, e.g. "TF_NEED_HDFS".
+612,813d566
+< def prompt_loop_or_load_from_env(environ_cp,
+<                                  var_name,
+<                                  var_default,
+<                                  ask_for_var,
+<                                  check_success,
+<                                  error_msg,
+<                                  suppress_default_error=False,
+<                                  n_ask_attempts=_DEFAULT_PROMPT_ASK_ATTEMPTS):
+<   """Loop over user prompts for an ENV param until receiving a valid response.
+< 
+<   For the env param var_name, read from the environment or verify user input
+<   until receiving valid input. When done, set var_name in the environ_cp to its
+<   new value.
+< 
+<   Args:
+<     environ_cp: (Dict) copy of the os.environ.
+<     var_name: (String) string for name of environment variable, e.g. "TF_MYVAR".
+<     var_default: (String) default value string.
+<     ask_for_var: (String) string for how to ask for user input.
+<     check_success: (Function) function that takes one argument and returns a
+<       boolean. Should return True if the value provided is considered valid. May
+<       contain a complex error message if error_msg does not provide enough
+<       information. In that case, set suppress_default_error to True.
+<     error_msg: (String) String with one and only one '%s'. Formatted with each
+<       invalid response upon check_success(input) failure.
+<     suppress_default_error: (Bool) Suppress the above error message in favor of
+<       one from the check_success function.
+<     n_ask_attempts: (Integer) Number of times to query for valid input before
+<       raising an error and quitting.
+< 
+<   Returns:
+<     [String] The value of var_name after querying for input.
+< 
+<   Raises:
+<     UserInputError: if a query has been attempted n_ask_attempts times without
+<       success, assume that the user has made a scripting error, and will
+<       continue to provide invalid input. Raise the error to avoid infinitely
+<       looping.
+<   """
+<   default = environ_cp.get(var_name) or var_default
+<   full_query = '%s [Default is %s]: ' % (
+<       ask_for_var,
+<       default,
+<   )
+< 
+<   for _ in range(n_ask_attempts):
+<     val = get_from_env_or_user_or_default(environ_cp, var_name, full_query,
+<                                           default)
+<     if check_success(val):
+<       break
+<     if not suppress_default_error:
+<       print(error_msg % val)
+<     environ_cp[var_name] = ''
+<   else:
+<     raise UserInputError('Invalid %s setting was provided %d times in a row. '
+<                          'Assuming to be a scripting mistake.' %
+<                          (var_name, n_ask_attempts))
+< 
+<   environ_cp[var_name] = val
+<   return val
+< 
+< 
+< def create_android_ndk_rule(environ_cp):
+<   """Set ANDROID_NDK_HOME and write Android NDK WORKSPACE rule."""
+<   if is_windows() or is_cygwin():
+<     default_ndk_path = cygpath('%s/Android/Sdk/ndk-bundle' %
+<                                environ_cp['APPDATA'])
+<   elif is_macos():
+<     default_ndk_path = '%s/library/Android/Sdk/ndk-bundle' % environ_cp['HOME']
+<   else:
+<     default_ndk_path = '%s/Android/Sdk/ndk-bundle' % environ_cp['HOME']
+< 
+<   def valid_ndk_path(path):
+<     return (os.path.exists(path) and
+<             os.path.exists(os.path.join(path, 'source.properties')))
+< 
+<   android_ndk_home_path = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='ANDROID_NDK_HOME',
+<       var_default=default_ndk_path,
+<       ask_for_var='Please specify the home path of the Android NDK to use.',
+<       check_success=valid_ndk_path,
+<       error_msg=('The path %s or its child file "source.properties" '
+<                  'does not exist.'))
+<   write_action_env_to_bazelrc('ANDROID_NDK_HOME', android_ndk_home_path)
+<   write_action_env_to_bazelrc(
+<       'ANDROID_NDK_API_LEVEL',
+<       get_ndk_api_level(environ_cp, android_ndk_home_path))
+< 
+< 
+< def create_android_sdk_rule(environ_cp):
+<   """Set Android variables and write Android SDK WORKSPACE rule."""
+<   if is_windows() or is_cygwin():
+<     default_sdk_path = cygpath('%s/Android/Sdk' % environ_cp['APPDATA'])
+<   elif is_macos():
+<     default_sdk_path = '%s/library/Android/Sdk' % environ_cp['HOME']
+<   else:
+<     default_sdk_path = '%s/Android/Sdk' % environ_cp['HOME']
+< 
+<   def valid_sdk_path(path):
+<     return (os.path.exists(path) and
+<             os.path.exists(os.path.join(path, 'platforms')) and
+<             os.path.exists(os.path.join(path, 'build-tools')))
+< 
+<   android_sdk_home_path = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='ANDROID_SDK_HOME',
+<       var_default=default_sdk_path,
+<       ask_for_var='Please specify the home path of the Android SDK to use.',
+<       check_success=valid_sdk_path,
+<       error_msg=('Either %s does not exist, or it does not contain the '
+<                  'subdirectories "platforms" and "build-tools".'))
+< 
+<   platforms = os.path.join(android_sdk_home_path, 'platforms')
+<   api_levels = sorted(os.listdir(platforms))
+<   api_levels = [x.replace('android-', '') for x in api_levels]
+< 
+<   def valid_api_level(api_level):
+<     return os.path.exists(
+<         os.path.join(android_sdk_home_path, 'platforms',
+<                      'android-' + api_level))
+< 
+<   android_api_level = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='ANDROID_API_LEVEL',
+<       var_default=api_levels[-1],
+<       ask_for_var=('Please specify the Android SDK API level to use. '
+<                    '[Available levels: %s]') % api_levels,
+<       check_success=valid_api_level,
+<       error_msg='Android-%s is not present in the SDK path.')
+< 
+<   build_tools = os.path.join(android_sdk_home_path, 'build-tools')
+<   versions = sorted(os.listdir(build_tools))
+< 
+<   def valid_build_tools(version):
+<     return os.path.exists(
+<         os.path.join(android_sdk_home_path, 'build-tools', version))
+< 
+<   android_build_tools_version = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='ANDROID_BUILD_TOOLS_VERSION',
+<       var_default=versions[-1],
+<       ask_for_var=('Please specify an Android build tools version to use. '
+<                    '[Available versions: %s]') % versions,
+<       check_success=valid_build_tools,
+<       error_msg=('The selected SDK does not have build-tools version %s '
+<                  'available.'))
+< 
+<   write_action_env_to_bazelrc('ANDROID_BUILD_TOOLS_VERSION',
+<                               android_build_tools_version)
+<   write_action_env_to_bazelrc('ANDROID_SDK_API_LEVEL', android_api_level)
+<   write_action_env_to_bazelrc('ANDROID_SDK_HOME', android_sdk_home_path)
+< 
+< 
+< def get_ndk_api_level(environ_cp, android_ndk_home_path):
+<   """Gets the appropriate NDK API level to use for the provided Android NDK path."""
+< 
+<   # First check to see if we're using a blessed version of the NDK.
+<   properties_path = '%s/source.properties' % android_ndk_home_path
+<   if is_windows() or is_cygwin():
+<     properties_path = cygpath(properties_path)
+<   with open(properties_path, 'r') as f:
+<     filedata = f.read()
+< 
+<   revision = re.search(r'Pkg.Revision = (\d+)', filedata)
+<   if revision:
+<     ndk_version = revision.group(1)
+<   else:
+<     raise Exception('Unable to parse NDK revision.')
+<   if int(ndk_version) not in _SUPPORTED_ANDROID_NDK_VERSIONS:
+<     print('WARNING: The NDK version in %s is %s, which is not '
+<           'supported by Bazel (officially supported versions: %s). Please use '
+<           'another version. Compiling Android targets may result in confusing '
+<           'errors.\n' % (android_ndk_home_path, ndk_version,
+<                          _SUPPORTED_ANDROID_NDK_VERSIONS))
+< 
+<   # Now grab the NDK API level to use. Note that this is different from the
+<   # SDK API level, as the NDK API level is effectively the *min* target SDK
+<   # version.
+<   platforms = os.path.join(android_ndk_home_path, 'platforms')
+<   api_levels = sorted(os.listdir(platforms))
+<   api_levels = [
+<       x.replace('android-', '') for x in api_levels if 'android-' in x
+<   ]
+< 
+<   def valid_api_level(api_level):
+<     return os.path.exists(
+<         os.path.join(android_ndk_home_path, 'platforms',
+<                      'android-' + api_level))
+< 
+<   android_ndk_api_level = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='ANDROID_NDK_API_LEVEL',
+<       var_default='18',  # 18 is required for GPU acceleration.
+<       ask_for_var=('Please specify the (min) Android NDK API level to use. '
+<                    '[Available levels: %s]') % api_levels,
+<       check_success=valid_api_level,
+<       error_msg='Android-%s is not present in the NDK path.')
+< 
+<   return android_ndk_api_level
+< 
+< 
+823,830c576,582
+<   gcc_host_compiler_path = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='GCC_HOST_COMPILER_PATH',
+<       var_default=default_gcc_host_compiler_path,
+<       ask_for_var='Please specify which gcc should be used by nvcc as the host compiler.',
+<       check_success=os.path.exists,
+<       error_msg='Invalid gcc path. %s cannot be found.',
+<   )
+---
+>   ask_gcc_path = (
+>       'Please specify which gcc should be used by nvcc as the '
+>       'host compiler. [Default is %s]: ') % default_gcc_host_compiler_path
+>   while True:
+>     gcc_host_compiler_path = get_from_env_or_user_or_default(
+>         environ_cp, 'GCC_HOST_COMPILER_PATH', ask_gcc_path,
+>         default_gcc_host_compiler_path)
+832c584,585
+<   write_action_env_to_bazelrc('GCC_HOST_COMPILER_PATH', gcc_host_compiler_path)
+---
+>     if os.path.exists(gcc_host_compiler_path):
+>       break
+833a587,589
+>     # Reset and retry
+>     print('Invalid gcc path. %s cannot be found' % gcc_host_compiler_path)
+>     environ_cp['GCC_HOST_COMPILER_PATH'] = ''
+835,836c591,593
+< def reformat_version_sequence(version_str, sequence_count):
+<   """Reformat the version string to have the given number of sequences.
+---
+>   # Set GCC_HOST_COMPILER_PATH
+>   environ_cp['GCC_HOST_COMPILER_PATH'] = gcc_host_compiler_path
+>   write_action_env_to_bazelrc('GCC_HOST_COMPILER_PATH', gcc_host_compiler_path)
+838,842d594
+<   For example:
+<   Given (7, 2) -> 7.0
+<         (7.0.1, 2) -> 7.0
+<         (5, 1) -> 5
+<         (5.0.3.2, 1) -> 5
+844,846c596,600
+<   Args:
+<       version_str: String, the version string.
+<       sequence_count: int, an integer.
+---
+> def set_tf_cuda_version(environ_cp):
+>   """Set CUDA_TOOLKIT_PATH and TF_CUDA_VERSION."""
+>   ask_cuda_version = (
+>       'Please specify the CUDA SDK version you want to use, '
+>       'e.g. 7.0. [Leave empty to default to CUDA %s]: ') % _DEFAULT_CUDA_VERSION
+848,866c602,628
+<   Returns:
+<       string, reformatted version string.
+<   """
+<   v = version_str.split('.')
+<   if len(v) < sequence_count:
+<     v = v + (['0'] * (sequence_count - len(v)))
+< 
+<   return '.'.join(v[:sequence_count])
+< 
+< 
+< def set_tf_cuda_paths(environ_cp):
+<   """Set TF_CUDA_PATHS."""
+<   ask_cuda_paths = (
+<       'Please specify the comma-separated list of base paths to look for CUDA '
+<       'libraries and headers. [Leave empty to use the default]: ')
+<   tf_cuda_paths = get_from_env_or_user_or_default(environ_cp, 'TF_CUDA_PATHS',
+<                                                   ask_cuda_paths, '')
+<   if tf_cuda_paths:
+<     environ_cp['TF_CUDA_PATHS'] = tf_cuda_paths
+---
+>   while True:
+>     # Configure the Cuda SDK version to use.
+>     tf_cuda_version = get_from_env_or_user_or_default(
+>         environ_cp, 'TF_CUDA_VERSION', ask_cuda_version, _DEFAULT_CUDA_VERSION)
+> 
+>     # Find out where the CUDA toolkit is installed
+>     default_cuda_path = _DEFAULT_CUDA_PATH
+>     if is_windows() or is_cygwin():
+>       default_cuda_path = cygpath(
+>           environ_cp.get('CUDA_PATH', _DEFAULT_CUDA_PATH_WIN))
+>     elif is_linux():
+>       # If the default doesn't exist, try an alternative default.
+>       if (not os.path.exists(default_cuda_path)
+>          ) and os.path.exists(_DEFAULT_CUDA_PATH_LINUX):
+>         default_cuda_path = _DEFAULT_CUDA_PATH_LINUX
+>     ask_cuda_path = ('Please specify the location where CUDA %s toolkit is'
+>                      ' installed. Refer to README.md for more details. '
+>                      '[Default is %s]: ') % (tf_cuda_version, default_cuda_path)
+>     cuda_toolkit_path = get_from_env_or_user_or_default(
+>         environ_cp, 'CUDA_TOOLKIT_PATH', ask_cuda_path, default_cuda_path)
+> 
+>     if is_windows():
+>       cuda_rt_lib_path = 'lib/x64/cudart.lib'
+>     elif is_linux():
+>       cuda_rt_lib_path = 'lib64/libcudart.so.%s' % tf_cuda_version
+>     elif is_macos():
+>       cuda_rt_lib_path = 'lib/libcudart.%s.dylib' % tf_cuda_version
+867a630,632
+>     cuda_toolkit_path_full = os.path.join(cuda_toolkit_path, cuda_rt_lib_path)
+>     if os.path.exists(cuda_toolkit_path_full):
+>       break
+869,877c634,642
+< def set_tf_cuda_version(environ_cp):
+<   """Set TF_CUDA_VERSION."""
+<   ask_cuda_version = (
+<       'Please specify the CUDA SDK version you want to use. '
+<       '[Leave empty to default to CUDA %s]: ') % _DEFAULT_CUDA_VERSION
+<   tf_cuda_version = get_from_env_or_user_or_default(environ_cp,
+<                                                     'TF_CUDA_VERSION',
+<                                                     ask_cuda_version,
+<                                                     _DEFAULT_CUDA_VERSION)
+---
+>     # Reset and retry
+>     print('Invalid path to CUDA %s toolkit. %s cannot be found' %
+>           (tf_cuda_version, cuda_toolkit_path_full))
+>     environ_cp['TF_CUDA_VERSION'] = ''
+>     environ_cp['CUDA_TOOLKIT_PATH'] = ''
+> 
+>   # Set CUDA_TOOLKIT_PATH and TF_CUDA_VERSION
+>   environ_cp['CUDA_TOOLKIT_PATH'] = cuda_toolkit_path
+>   write_action_env_to_bazelrc('CUDA_TOOLKIT_PATH', cuda_toolkit_path)
+878a644
+>   write_action_env_to_bazelrc('TF_CUDA_VERSION', tf_cuda_version)
+881,882c647,648
+< def set_tf_cudnn_version(environ_cp):
+<   """Set TF_CUDNN_VERSION."""
+---
+> def set_tf_cunn_version(environ_cp):
+>   """Set CUDNN_INSTALL_PATH and TF_CUDNN_VERSION."""
+885,890c651
+<       '[Leave empty to default to cuDNN %s]: ') % _DEFAULT_CUDNN_VERSION
+<   tf_cudnn_version = get_from_env_or_user_or_default(environ_cp,
+<                                                      'TF_CUDNN_VERSION',
+<                                                      ask_cudnn_version,
+<                                                      _DEFAULT_CUDNN_VERSION)
+<   environ_cp['TF_CUDNN_VERSION'] = tf_cudnn_version
+---
+>       '[Leave empty to default to cuDNN %s.0]: ') % _DEFAULT_CUDNN_VERSION
+891a653,717
+>   while True:
+>     tf_cudnn_version = get_from_env_or_user_or_default(
+>         environ_cp, 'TF_CUDNN_VERSION', ask_cudnn_version,
+>         _DEFAULT_CUDNN_VERSION)
+> 
+>     default_cudnn_path = environ_cp.get('CUDA_TOOLKIT_PATH')
+>     ask_cudnn_path = (r'Please specify the location where cuDNN %s library is '
+>                       'installed. Refer to README.md for more details. [Default'
+>                       ' is %s]:') % (tf_cudnn_version, default_cudnn_path)
+>     cudnn_install_path = get_from_env_or_user_or_default(
+>         environ_cp, 'CUDNN_INSTALL_PATH', ask_cudnn_path, default_cudnn_path)
+> 
+>     # Result returned from "read" will be used unexpanded. That make "~"
+>     # unusable. Going through one more level of expansion to handle that.
+>     cudnn_install_path = os.path.realpath(
+>         os.path.expanduser(cudnn_install_path))
+>     if is_windows() or is_cygwin():
+>       cudnn_install_path = cygpath(cudnn_install_path)
+> 
+>     if is_windows():
+>       cuda_dnn_lib_path = 'lib/x64/cudnn.lib'
+>       cuda_dnn_lib_alt_path = 'lib/x64/cudnn.lib'
+>     elif is_linux():
+>       cuda_dnn_lib_path = 'lib64/libcudnn.so.%s' % tf_cudnn_version
+>       cuda_dnn_lib_alt_path = 'libcudnn.so.%s' % tf_cudnn_version
+>     elif is_macos():
+>       cuda_dnn_lib_path = 'lib/libcudnn.%s.dylib' % tf_cudnn_version
+>       cuda_dnn_lib_alt_path = 'libcudnn.%s.dylib' % tf_cudnn_version
+> 
+>     cuda_dnn_lib_path_full = os.path.join(cudnn_install_path, cuda_dnn_lib_path)
+>     cuda_dnn_lib_alt_path_full = os.path.join(cudnn_install_path,
+>                                               cuda_dnn_lib_alt_path)
+>     if os.path.exists(cuda_dnn_lib_path_full) or os.path.exists(
+>         cuda_dnn_lib_alt_path_full):
+>       break
+> 
+>     # Try another alternative for Linux
+>     if is_linux():
+>       ldconfig_bin = which('ldconfig') or '/sbin/ldconfig'
+>       cudnn_path_from_ldconfig = run_shell([ldconfig_bin, '-p'])
+>       cudnn_path_from_ldconfig = re.search('.*libcudnn.so .* => (.*)',
+>                                            cudnn_path_from_ldconfig)
+>       if cudnn_path_from_ldconfig:
+>         cudnn_path_from_ldconfig = cudnn_path_from_ldconfig.group(1)
+>         if os.path.exists('%s.%s' % (cudnn_path_from_ldconfig,
+>                                      tf_cudnn_version)):
+>           cudnn_install_path = os.path.dirname(cudnn_path_from_ldconfig)
+>           break
+> 
+>     # Reset and Retry
+>     print(
+>         'Invalid path to cuDNN %s toolkit. None of the following files can be '
+>         'found:' % tf_cudnn_version)
+>     print(cuda_dnn_lib_path_full)
+>     print(cuda_dnn_lib_alt_path_full)
+>     if is_linux():
+>       print('%s.%s' % (cudnn_path_from_ldconfig, tf_cudnn_version))
+> 
+>     environ_cp['TF_CUDNN_VERSION'] = ''
+> 
+>   # Set CUDNN_INSTALL_PATH and TF_CUDNN_VERSION
+>   environ_cp['CUDNN_INSTALL_PATH'] = cudnn_install_path
+>   write_action_env_to_bazelrc('CUDNN_INSTALL_PATH', cudnn_install_path)
+>   environ_cp['TF_CUDNN_VERSION'] = tf_cudnn_version
+>   write_action_env_to_bazelrc('TF_CUDNN_VERSION', tf_cudnn_version)
+893,953d718
+< def is_cuda_compatible(lib, cuda_ver, cudnn_ver):
+<   """Check compatibility between given library and cudnn/cudart libraries."""
+<   ldd_bin = which('ldd') or '/usr/bin/ldd'
+<   ldd_out = run_shell([ldd_bin, lib], True)
+<   ldd_out = ldd_out.split(os.linesep)
+<   cudnn_pattern = re.compile('.*libcudnn.so\\.?(.*) =>.*$')
+<   cuda_pattern = re.compile('.*libcudart.so\\.?(.*) =>.*$')
+<   cudnn = None
+<   cudart = None
+<   cudnn_ok = True  # assume no cudnn dependency by default
+<   cuda_ok = True  # assume no cuda dependency by default
+<   for line in ldd_out:
+<     if 'libcudnn.so' in line:
+<       cudnn = cudnn_pattern.search(line)
+<       cudnn_ok = False
+<     elif 'libcudart.so' in line:
+<       cudart = cuda_pattern.search(line)
+<       cuda_ok = False
+<   if cudnn and len(cudnn.group(1)):
+<     cudnn = convert_version_to_int(cudnn.group(1))
+<   if cudart and len(cudart.group(1)):
+<     cudart = convert_version_to_int(cudart.group(1))
+<   if cudnn is not None:
+<     cudnn_ok = (cudnn == cudnn_ver)
+<   if cudart is not None:
+<     cuda_ok = (cudart == cuda_ver)
+<   return cudnn_ok and cuda_ok
+< 
+< 
+< def set_tf_tensorrt_version(environ_cp):
+<   """Set TF_TENSORRT_VERSION."""
+<   if not is_linux():
+<     raise ValueError('Currently TensorRT is only supported on Linux platform.')
+< 
+<   if not int(environ_cp.get('TF_NEED_TENSORRT', False)):
+<     return
+< 
+<   ask_tensorrt_version = (
+<       'Please specify the TensorRT version you want to use. '
+<       '[Leave empty to  default to TensorRT %s]: ') % _DEFAULT_TENSORRT_VERSION
+<   tf_tensorrt_version = get_from_env_or_user_or_default(
+<       environ_cp, 'TF_TENSORRT_VERSION', ask_tensorrt_version,
+<       _DEFAULT_TENSORRT_VERSION)
+<   environ_cp['TF_TENSORRT_VERSION'] = tf_tensorrt_version
+< 
+< 
+< def set_tf_nccl_version(environ_cp):
+<   """Set TF_NCCL_VERSION."""
+<   if not is_linux():
+<     raise ValueError('Currently NCCL is only supported on Linux platform.')
+< 
+<   if 'TF_NCCL_VERSION' in environ_cp:
+<     return
+< 
+<   ask_nccl_version = (
+<       'Please specify the locally installed NCCL version you want to use. '
+<       '[Leave empty to use http://github.com/nvidia/nccl]: ')
+<   tf_nccl_version = get_from_env_or_user_or_default(environ_cp,
+<                                                     'TF_NCCL_VERSION',
+<                                                     ask_nccl_version, '')
+<   environ_cp['TF_NCCL_VERSION'] = tf_nccl_version
+960d724
+< 
+991c755
+<         'CUDA compute capabilities you want to '
+---
+>         'Cuda compute capabilities you want to '
+997,999c761
+<         'build time and binary size, and that '
+<         'TensorFlow only supports compute '
+<         'capabilities >= 3.5 [Default is: %s]: ' %
+---
+>         'build time and binary size. [Default is: %s]' %
+1006,1008d767
+<     # Remove all whitespace characters before splitting the string
+<     # that users may insert by accident, as this will result in error
+<     tf_cuda_compute_capabilities = ''.join(tf_cuda_compute_capabilities.split())
+1012c771
+<         print('Invalid compute capability: %s' % compute_capability)
+---
+>         print('Invalid compute capability: ' % compute_capability)
+1015,1019c774,776
+<         ver = float(m.group(0))
+<         if ver < 3.0:
+<           print('ERROR: TensorFlow only supports CUDA compute capabilities 3.0 '
+<                 'and higher. Please re-specify the list of compute '
+<                 'capabilities excluding version %s.' % ver)
+---
+>         ver = int(m.group(0).split('.')[0])
+>         if ver < 3:
+>           print('Only compute capabilities 3.0 or higher are supported.')
+1021,1023d777
+<         if ver < 3.5:
+<           print('WARNING: XLA does not support CUDA compute capabilities '
+<                 'lower than 3.5. Disable XLA when running on older GPUs.')
+1039,1042c793,806
+<   # If CUDA is enabled, always use GPU during build and test.
+<   if environ_cp.get('TF_CUDA_CLANG') == '1':
+<     write_to_bazelrc('build --config=cuda_clang')
+<     write_to_bazelrc('test --config=cuda_clang')
+---
+>   if is_windows():
+>     # The following three variables are needed for MSVC toolchain configuration
+>     # in Bazel
+>     environ_cp['CUDA_PATH'] = environ_cp.get('CUDA_TOOLKIT_PATH')
+>     environ_cp['CUDA_COMPUTE_CAPABILITIES'] = environ_cp.get(
+>         'TF_CUDA_COMPUTE_CAPABILITIES')
+>     environ_cp['NO_WHOLE_ARCHIVE_OPTION'] = 1
+>     write_action_env_to_bazelrc('CUDA_PATH', environ_cp.get('CUDA_PATH'))
+>     write_action_env_to_bazelrc('CUDA_COMPUTE_CAPABILITIE',
+>                                 environ_cp.get('CUDA_COMPUTE_CAPABILITIE'))
+>     write_action_env_to_bazelrc('NO_WHOLE_ARCHIVE_OPTION',
+>                                 environ_cp.get('NO_WHOLE_ARCHIVE_OPTION'))
+>     write_to_bazelrc('build --config=win-cuda')
+>     write_to_bazelrc('test --config=win-cuda')
+1044,1045c808,814
+<     write_to_bazelrc('build --config=cuda')
+<     write_to_bazelrc('test --config=cuda')
+---
+>     # If CUDA is enabled, always use GPU during build and test.
+>     if environ_cp.get('TF_CUDA_CLANG') == '1':
+>       write_to_bazelrc('build --config=cuda_clang')
+>       write_to_bazelrc('test --config=cuda_clang')
+>     else:
+>       write_to_bazelrc('build --config=cuda')
+>       write_to_bazelrc('test --config=cuda')
+1050a820,822
+>   ask_cxx_host_compiler = (
+>       'Please specify which C++ compiler should be used as'
+>       ' the host C++ compiler. [Default is %s]: ') % default_cxx_host_compiler
+1052,1060c824,833
+<   host_cxx_compiler = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='HOST_CXX_COMPILER',
+<       var_default=default_cxx_host_compiler,
+<       ask_for_var=('Please specify which C++ compiler should be used as the '
+<                    'host C++ compiler.'),
+<       check_success=os.path.exists,
+<       error_msg='Invalid C++ compiler path. %s cannot be found.',
+<   )
+---
+>   while True:
+>     host_cxx_compiler = get_from_env_or_user_or_default(
+>         environ_cp, 'HOST_CXX_COMPILER', ask_cxx_host_compiler,
+>         default_cxx_host_compiler)
+>     if os.path.exists(host_cxx_compiler):
+>       break
+> 
+>     # Reset and retry
+>     print('Invalid C++ compiler path. %s cannot be found' % host_cxx_compiler)
+>     environ_cp['HOST_CXX_COMPILER'] = ''
+1061a835,836
+>   # Set HOST_CXX_COMPILER
+>   environ_cp['HOST_CXX_COMPILER'] = host_cxx_compiler
+1067a843,845
+>   ask_c_host_compiler = (
+>       'Please specify which C compiler should be used as the'
+>       ' host C compiler. [Default is %s]: ') % default_c_host_compiler
+1069,1077c847,856
+<   host_c_compiler = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='HOST_C_COMPILER',
+<       var_default=default_c_host_compiler,
+<       ask_for_var=('Please specify which C compiler should be used as the host '
+<                    'C compiler.'),
+<       check_success=os.path.exists,
+<       error_msg='Invalid C compiler path. %s cannot be found.',
+<   )
+---
+>   while True:
+>     host_c_compiler = get_from_env_or_user_or_default(
+>         environ_cp, 'HOST_C_COMPILER', ask_c_host_compiler,
+>         default_c_host_compiler)
+>     if os.path.exists(host_c_compiler):
+>       break
+> 
+>     # Reset and retry
+>     print('Invalid C compiler path. %s cannot be found' % host_c_compiler)
+>     environ_cp['HOST_C_COMPILER'] = ''
+1078a858,859
+>   # Set HOST_C_COMPILER
+>   environ_cp['HOST_C_COMPILER'] = host_c_compiler
+1083a865,868
+>   ask_computecpp_toolkit_path = ('Please specify the location where ComputeCpp '
+>                                  'for SYCL %s is installed. [Default is %s]: '
+>                                 ) % (_TF_OPENCL_VERSION,
+>                                      _DEFAULT_COMPUTECPP_TOOLKIT_PATH)
+1085,1086c870,873
+<   def toolkit_exists(toolkit_path):
+<     """Check if a computecpp toolkit path is valid."""
+---
+>   while True:
+>     computecpp_toolkit_path = get_from_env_or_user_or_default(
+>         environ_cp, 'COMPUTECPP_TOOLKIT_PATH', ask_computecpp_toolkit_path,
+>         _DEFAULT_COMPUTECPP_TOOLKIT_PATH)
+1092,1097c879,882
+<     sycl_rt_lib_path_full = os.path.join(toolkit_path, sycl_rt_lib_path)
+<     exists = os.path.exists(sycl_rt_lib_path_full)
+<     if not exists:
+<       print('Invalid SYCL %s library path. %s cannot be found' %
+<             (_TF_OPENCL_VERSION, sycl_rt_lib_path_full))
+<     return exists
+---
+>     sycl_rt_lib_path_full = os.path.join(computecpp_toolkit_path,
+>                                          sycl_rt_lib_path)
+>     if os.path.exists(sycl_rt_lib_path_full):
+>       break
+1099,1108c884,886
+<   computecpp_toolkit_path = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='COMPUTECPP_TOOLKIT_PATH',
+<       var_default=_DEFAULT_COMPUTECPP_TOOLKIT_PATH,
+<       ask_for_var=(
+<           'Please specify the location where ComputeCpp for SYCL %s is '
+<           'installed.' % _TF_OPENCL_VERSION),
+<       check_success=toolkit_exists,
+<       error_msg='Invalid SYCL compiler path. %s cannot be found.',
+<       suppress_default_error=True)
+---
+>     print('Invalid SYCL %s library path. %s cannot be found' %
+>           (_TF_OPENCL_VERSION, sycl_rt_lib_path_full))
+>     environ_cp['COMPUTECPP_TOOLKIT_PATH'] = ''
+1109a888,889
+>   # Set COMPUTECPP_TOOLKIT_PATH
+>   environ_cp['COMPUTECPP_TOOLKIT_PATH'] = computecpp_toolkit_path
+1114,1137d893
+< def set_trisycl_include_dir(environ_cp):
+<   """Set TRISYCL_INCLUDE_DIR."""
+< 
+<   ask_trisycl_include_dir = ('Please specify the location of the triSYCL '
+<                              'include directory. (Use --config=sycl_trisycl '
+<                              'when building with Bazel) '
+<                              '[Default is %s]: ') % (
+<                                  _DEFAULT_TRISYCL_INCLUDE_DIR)
+< 
+<   while True:
+<     trisycl_include_dir = get_from_env_or_user_or_default(
+<         environ_cp, 'TRISYCL_INCLUDE_DIR', ask_trisycl_include_dir,
+<         _DEFAULT_TRISYCL_INCLUDE_DIR)
+<     if os.path.exists(trisycl_include_dir):
+<       break
+< 
+<     print('Invalid triSYCL include directory, %s cannot be found' %
+<           (trisycl_include_dir))
+< 
+<   # Set TRISYCL_INCLUDE_DIR
+<   environ_cp['TRISYCL_INCLUDE_DIR'] = trisycl_include_dir
+<   write_action_env_to_bazelrc('TRISYCL_INCLUDE_DIR', trisycl_include_dir)
+< 
+< 
+1140d895
+< 
+1144,1157c899,903
+<   def valid_mpi_path(mpi_home):
+<     exists = (
+<         os.path.exists(os.path.join(mpi_home, 'include')) and
+<         (os.path.exists(os.path.join(mpi_home, 'lib')) or
+<          os.path.exists(os.path.join(mpi_home, 'lib64')) or
+<          os.path.exists(os.path.join(mpi_home, 'lib32'))))
+<     if not exists:
+<       print(
+<           'Invalid path to the MPI Toolkit. %s or %s or %s or %s cannot be found'
+<           % (os.path.join(mpi_home, 'include'),
+<              os.path.exists(os.path.join(mpi_home, 'lib')),
+<              os.path.exists(os.path.join(mpi_home, 'lib64')),
+<              os.path.exists(os.path.join(mpi_home, 'lib32'))))
+<     return exists
+---
+>   ask_mpi_home = ('Please specify the MPI toolkit folder. [Default is %s]: '
+>                  ) % default_mpi_home
+>   while True:
+>     mpi_home = get_from_env_or_user_or_default(environ_cp, 'MPI_HOME',
+>                                                ask_mpi_home, default_mpi_home)
+1159,1166c905,915
+<   _ = prompt_loop_or_load_from_env(
+<       environ_cp,
+<       var_name='MPI_HOME',
+<       var_default=default_mpi_home,
+<       ask_for_var='Please specify the MPI toolkit folder.',
+<       check_success=valid_mpi_path,
+<       error_msg='',
+<       suppress_default_error=True)
+---
+>     if os.path.exists(os.path.join(mpi_home, 'include')) and os.path.exists(
+>         os.path.join(mpi_home, 'lib')):
+>       break
+> 
+>     print('Invalid path to the MPI Toolkit. %s or %s cannot be found' %
+>           (os.path.join(mpi_home, 'include'),
+>            os.path.exists(os.path.join(mpi_home, 'lib'))))
+>     environ_cp['MPI_HOME'] = ''
+> 
+>   # Set MPI_HOME
+>   environ_cp['MPI_HOME'] = str(mpi_home)
+1197,1203d945
+<   elif os.path.exists(os.path.join(mpi_home, 'lib64/libmpi.so')):
+<     symlink_force(
+<         os.path.join(mpi_home, 'lib64/libmpi.so'), 'third_party/mpi/libmpi.so')
+<   elif os.path.exists(os.path.join(mpi_home, 'lib32/libmpi.so')):
+<     symlink_force(
+<         os.path.join(mpi_home, 'lib32/libmpi.so'), 'third_party/mpi/libmpi.so')
+< 
+1205,1363c947
+<     raise ValueError(
+<         'Cannot find the MPI library file in %s/lib or %s/lib64 or %s/lib32' %
+<         (mpi_home, mpi_home, mpi_home))
+< 
+< 
+< def system_specific_test_config(env):
+<   """Add default build and test flags required for TF tests to bazelrc."""
+<   write_to_bazelrc('test --flaky_test_attempts=3')
+<   write_to_bazelrc('test --test_size_filters=small,medium')
+<   write_to_bazelrc(
+<       'test --test_tag_filters=-benchmark-test,-no_oss,-oss_serial')
+<   write_to_bazelrc('test --build_tag_filters=-benchmark-test,-no_oss')
+<   if is_windows():
+<     if env.get('TF_NEED_CUDA', None) == '1':
+<       write_to_bazelrc(
+<           'test --test_tag_filters=-no_windows,-no_windows_gpu,-no_gpu')
+<       write_to_bazelrc(
+<           'test --build_tag_filters=-no_windows,-no_windows_gpu,-no_gpu')
+<     else:
+<       write_to_bazelrc('test --test_tag_filters=-no_windows,-gpu')
+<       write_to_bazelrc('test --build_tag_filters=-no_windows,-gpu')
+<   elif is_macos():
+<     write_to_bazelrc('test --test_tag_filters=-gpu,-nomac,-no_mac')
+<     write_to_bazelrc('test --build_tag_filters=-gpu,-nomac,-no_mac')
+<   elif is_linux():
+<     if env.get('TF_NEED_CUDA', None) == '1':
+<       write_to_bazelrc('test --test_tag_filters=-no_gpu')
+<       write_to_bazelrc('test --build_tag_filters=-no_gpu')
+<       write_to_bazelrc('test --test_env=LD_LIBRARY_PATH')
+<     else:
+<       write_to_bazelrc('test --test_tag_filters=-gpu')
+<       write_to_bazelrc('test --build_tag_filters=-gpu')
+< 
+< 
+< def set_system_libs_flag(environ_cp):
+<   syslibs = environ_cp.get('TF_SYSTEM_LIBS', '')
+<   if syslibs:
+<     if ',' in syslibs:
+<       syslibs = ','.join(sorted(syslibs.split(',')))
+<     else:
+<       syslibs = ','.join(sorted(syslibs.split()))
+<     write_action_env_to_bazelrc('TF_SYSTEM_LIBS', syslibs)
+< 
+<   if 'PREFIX' in environ_cp:
+<     write_to_bazelrc('build --define=PREFIX=%s' % environ_cp['PREFIX'])
+<   if 'LIBDIR' in environ_cp:
+<     write_to_bazelrc('build --define=LIBDIR=%s' % environ_cp['LIBDIR'])
+<   if 'INCLUDEDIR' in environ_cp:
+<     write_to_bazelrc('build --define=INCLUDEDIR=%s' % environ_cp['INCLUDEDIR'])
+< 
+< 
+< def set_windows_build_flags(environ_cp):
+<   """Set Windows specific build options."""
+<   # The non-monolithic build is not supported yet
+<   write_to_bazelrc('build --config monolithic')
+<   # Suppress warning messages
+<   write_to_bazelrc('build --copt=-w --host_copt=-w')
+<   # Fix winsock2.h conflicts
+<   write_to_bazelrc(
+<       'build --copt=-DWIN32_LEAN_AND_MEAN --host_copt=-DWIN32_LEAN_AND_MEAN '
+<       '--copt=-DNOGDI --host_copt=-DNOGDI')
+<   # Output more verbose information when something goes wrong
+<   write_to_bazelrc('build --verbose_failures')
+<   # The host and target platforms are the same in Windows build. So we don't
+<   # have to distinct them. This avoids building the same targets twice.
+<   write_to_bazelrc('build --distinct_host_configuration=false')
+< 
+<   if get_var(
+<       environ_cp, 'TF_OVERRIDE_EIGEN_STRONG_INLINE', 'Eigen strong inline',
+<       True, ('Would you like to override eigen strong inline for some C++ '
+<              'compilation to reduce the compilation time?'),
+<       'Eigen strong inline overridden.', 'Not overriding eigen strong inline, '
+<       'some compilations could take more than 20 mins.'):
+<     # Due to a known MSVC compiler issue
+<     # https://github.com/tensorflow/tensorflow/issues/10521
+<     # Overriding eigen strong inline speeds up the compiling of
+<     # conv_grad_ops_3d.cc and conv_ops_3d.cc by 20 minutes,
+<     # but this also hurts the performance. Let users decide what they want.
+<     write_to_bazelrc('build --define=override_eigen_strong_inline=true')
+< 
+< 
+< def config_info_line(name, help_text):
+<   """Helper function to print formatted help text for Bazel config options."""
+<   print('\t--config=%-12s\t# %s' % (name, help_text))
+< 
+< 
+< def configure_ios():
+<   """Configures TensorFlow for iOS builds.
+< 
+<   This function will only be executed if `is_macos()` is true.
+<   """
+<   if not is_macos():
+<     return
+<   if _TF_CURRENT_BAZEL_VERSION is None or _TF_CURRENT_BAZEL_VERSION < 23000:
+<     print(
+<         'Building Bazel rules on Apple platforms requires Bazel 0.23 or later.')
+<   for filepath in APPLE_BAZEL_FILES:
+<     existing_filepath = os.path.join(_TF_WORKSPACE_ROOT, filepath + '.apple')
+<     renamed_filepath = os.path.join(_TF_WORKSPACE_ROOT, filepath)
+<     symlink_force(existing_filepath, renamed_filepath)
+<   for filepath in IOS_FILES:
+<     filename = os.path.basename(filepath)
+<     new_filepath = os.path.join(_TF_WORKSPACE_ROOT, filename)
+<     symlink_force(filepath, new_filepath)
+< 
+< 
+< def validate_cuda_config(environ_cp):
+<   """Run find_cuda_config.py and return cuda_toolkit_path, or None."""
+< 
+<   def maybe_encode_env(env):
+<     """Encodes unicode in env to str on Windows python 2.x."""
+<     if not is_windows() or sys.version_info[0] != 2:
+<       return env
+<     for k, v in env.items():
+<       if isinstance(k, unicode):
+<         k = k.encode('ascii')
+<       if isinstance(v, unicode):
+<         v = v.encode('ascii')
+<       env[k] = v
+<     return env
+< 
+<   cuda_libraries = ['cuda', 'cudnn']
+<   if is_linux():
+<     if int(environ_cp.get('TF_NEED_TENSORRT', False)):
+<       cuda_libraries.append('tensorrt')
+<     if environ_cp.get('TF_NCCL_VERSION', None):
+<       cuda_libraries.append('nccl')
+< 
+<   proc = subprocess.Popen(
+<       [environ_cp['PYTHON_BIN_PATH'], 'third_party/gpus/find_cuda_config.py'] +
+<       cuda_libraries,
+<       stdout=subprocess.PIPE,
+<       env=maybe_encode_env(environ_cp))
+< 
+<   if proc.wait():
+<     # Errors from find_cuda_config.py were sent to stderr.
+<     print('Asking for detailed CUDA configuration...\n')
+<     return False
+< 
+<   config = dict(
+<       tuple(line.decode('ascii').rstrip().split(': ')) for line in proc.stdout)
+< 
+<   print('Found CUDA %s in:' % config['cuda_version'])
+<   print('    %s' % config['cuda_library_dir'])
+<   print('    %s' % config['cuda_include_dir'])
+< 
+<   print('Found cuDNN %s in:' % config['cudnn_version'])
+<   print('    %s' % config['cudnn_library_dir'])
+<   print('    %s' % config['cudnn_include_dir'])
+< 
+<   if 'tensorrt_version' in config:
+<     print('Found TensorRT %s in:' % config['tensorrt_version'])
+<     print('    %s' % config['tensorrt_library_dir'])
+<     print('    %s' % config['tensorrt_include_dir'])
+< 
+<   if config.get('nccl_version', None):
+<     print('Found NCCL %s in:' % config['nccl_version'])
+<     print('    %s' % config['nccl_library_dir'])
+<     print('    %s' % config['nccl_include_dir'])
+---
+>     raise ValueError('Cannot find the MPI library file in %s/lib' % mpi_home)
+1365d948
+<   print('\n')
+1367,1368c950,959
+<   environ_cp['CUDA_TOOLKIT_PATH'] = config['cuda_toolkit_path']
+<   return True
+---
+> def set_mkl():
+>   write_to_bazelrc('build:mkl --define using_mkl=true')
+>   write_to_bazelrc('build:mkl -c opt')
+>   write_to_bazelrc('build:mkl --copt="-DEIGEN_USE_VML"')
+>   print(
+>       'Add "--config=mkl" to your bazel command to build with MKL '
+>       'support.\nPlease note that MKL on MacOS or windows is still not '
+>       'supported.\nIf you would like to use a local MKL instead of '
+>       'downloading, please set the environment variable \"TF_MKL_ROOT\" every '
+>       'time before build.')
+1372,1386d962
+<   global _TF_WORKSPACE_ROOT
+<   global _TF_BAZELRC
+<   global _TF_CURRENT_BAZEL_VERSION
+< 
+<   parser = argparse.ArgumentParser()
+<   parser.add_argument(
+<       '--workspace',
+<       type=str,
+<       default=os.path.abspath(os.path.dirname(__file__)),
+<       help='The absolute path to your active Bazel workspace.')
+<   args = parser.parse_args()
+< 
+<   _TF_WORKSPACE_ROOT = args.workspace
+<   _TF_BAZELRC = os.path.join(_TF_WORKSPACE_ROOT, _TF_BAZELRC_FILENAME)
+< 
+1391,1392c967
+<   current_bazel_version = check_bazel_version('0.24.1', '0.24.1')
+<   _TF_CURRENT_BAZEL_VERSION = convert_version_to_int(current_bazel_version)
+---
+>   bazel_version = check_bazel_version('0.4.5')
+1395d969
+< 
+1397c971,972
+<   setup_python(environ_cp)
+---
+>   setup_python(environ_cp, bazel_version)
+>   run_gen_git_source(environ_cp)
+1400,1401c975,977
+<     environ_cp['TF_NEED_OPENCL_SYCL'] = '0'
+<     environ_cp['TF_NEED_COMPUTECPP'] = '0'
+---
+>     environ_cp['TF_NEED_GCP'] = '0'
+>     environ_cp['TF_NEED_HDFS'] = '0'
+>     environ_cp['TF_NEED_JEMALLOC'] = '0'
+1404,1409d979
+<     environ_cp['TF_NEED_TENSORRT'] = '0'
+<     # TODO(ibiryukov): Investigate using clang as a cpu or cuda compiler on
+<     # Windows.
+<     environ_cp['TF_DOWNLOAD_CLANG'] = '0'
+<     environ_cp['TF_NEED_MPI'] = '0'
+<     environ_cp['TF_SET_ANDROID_WORKSPACE'] = '0'
+1412,1414c982
+<     environ_cp['TF_NEED_TENSORRT'] = '0'
+<   else:
+<     environ_cp['TF_CONFIGURE_IOS'] = '0'
+---
+>     environ_cp['TF_NEED_JEMALLOC'] = '0'
+1416,1423c984,989
+<   # The numpy package on ppc64le uses OpenBLAS which has multi-threading
+<   # issues that lead to incorrect answers.  Set OMP_NUM_THREADS=1 at
+<   # runtime to allow the Tensorflow testcases which compare numpy
+<   # results to Tensorflow results to succeed.
+<   if is_ppc64le():
+<     write_action_env_to_bazelrc('OMP_NUM_THREADS', 1)
+< 
+<   xla_enabled_by_default = is_linux()
+---
+>   set_build_var(environ_cp, 'TF_NEED_JEMALLOC', 'jemalloc as malloc',
+>                 'with_jemalloc', True)
+>   set_build_var(environ_cp, 'TF_NEED_GCP', 'Google Cloud Platform',
+>                 'with_gcp_support', False, 'gcp')
+>   set_build_var(environ_cp, 'TF_NEED_HDFS', 'Hadoop File System',
+>                 'with_hdfs_support', False, 'hdfs')
+1425c991,995
+<                 xla_enabled_by_default, 'xla')
+---
+>                 False, 'xla')
+>   set_build_var(environ_cp, 'TF_NEED_GDR', 'GDR', 'with_gdr_support',
+>                 False, 'gdr')
+>   set_build_var(environ_cp, 'TF_NEED_VERBS', 'VERBS', 'with_verbs_support',
+>                 False, 'verbs')
+1427,1428c997,998
+<   set_action_env_var(environ_cp, 'TF_NEED_OPENCL_SYCL', 'OpenCL SYCL', False)
+<   if environ_cp.get('TF_NEED_OPENCL_SYCL') == '1':
+---
+>   set_action_env_var(environ_cp, 'TF_NEED_OPENCL', 'OpenCL', False)
+>   if environ_cp.get('TF_NEED_OPENCL') == '1':
+1431,1442c1001
+<     set_action_env_var(environ_cp, 'TF_NEED_COMPUTECPP', 'ComputeCPP', True)
+<     if environ_cp.get('TF_NEED_COMPUTECPP') == '1':
+<       set_computecpp_toolkit_path(environ_cp)
+<     else:
+<       set_trisycl_include_dir(environ_cp)
+< 
+<   set_action_env_var(environ_cp, 'TF_NEED_ROCM', 'ROCm', False)
+<   if (environ_cp.get('TF_NEED_ROCM') == '1' and
+<       'LD_LIBRARY_PATH' in environ_cp and
+<       environ_cp.get('LD_LIBRARY_PATH') != '1'):
+<     write_action_env_to_bazelrc('LD_LIBRARY_PATH',
+<                                 environ_cp.get('LD_LIBRARY_PATH'))
+---
+>     set_computecpp_toolkit_path(environ_cp)
+1447,1484c1006,1007
+< 
+<     set_action_env_var(environ_cp, 'TF_NEED_TENSORRT', 'TensorRT', False)
+< 
+<     environ_save = dict(environ_cp)
+<     for _ in range(_DEFAULT_PROMPT_ASK_ATTEMPTS):
+< 
+<       if validate_cuda_config(environ_cp):
+<         cuda_env_names = [
+<             'TF_CUDA_VERSION', 'TF_CUBLAS_VERSION', 'TF_CUDNN_VERSION',
+<             'TF_TENSORRT_VERSION', 'TF_NCCL_VERSION', 'TF_CUDA_PATHS',
+<             # Items below are for backwards compatibility when not using
+<             # TF_CUDA_PATHS.
+<             'CUDA_TOOLKIT_PATH', 'CUDNN_INSTALL_PATH', 'NCCL_INSTALL_PATH',
+<             'NCCL_HDR_PATH', 'TENSORRT_INSTALL_PATH'
+<         ]
+<         # Note: set_action_env_var above already writes to bazelrc.
+<         for name in cuda_env_names:
+<           if name in environ_cp:
+<             write_action_env_to_bazelrc(name, environ_cp[name])
+<         break
+< 
+<       # Restore settings changed below if CUDA config could not be validated.
+<       environ_cp = dict(environ_save)
+< 
+<       set_tf_cuda_version(environ_cp)
+<       set_tf_cudnn_version(environ_cp)
+<       if is_linux():
+<         set_tf_tensorrt_version(environ_cp)
+<         set_tf_nccl_version(environ_cp)
+< 
+<       set_tf_cuda_paths(environ_cp)
+< 
+<     else:
+<       raise UserInputError(
+<           'Invalid CUDA setting were provided %d '
+<           'times in a row. Assuming to be a scripting mistake.' %
+<           _DEFAULT_PROMPT_ASK_ATTEMPTS)
+< 
+---
+>     set_tf_cuda_version(environ_cp)
+>     set_tf_cunn_version(environ_cp)
+1486,1489d1008
+<     if 'LD_LIBRARY_PATH' in environ_cp and environ_cp.get(
+<         'LD_LIBRARY_PATH') != '1':
+<       write_action_env_to_bazelrc('LD_LIBRARY_PATH',
+<                                   environ_cp.get('LD_LIBRARY_PATH'))
+1493,1501c1012,1013
+<       # Ask whether we should download the clang toolchain.
+<       set_tf_download_clang(environ_cp)
+<       if environ_cp.get('TF_DOWNLOAD_CLANG') != '1':
+<         # Set up which clang we should use as the cuda / host compiler.
+<         set_clang_cuda_compiler_path(environ_cp)
+<       else:
+<         # Use downloaded LLD for linking.
+<         write_to_bazelrc('build:cuda_clang --config=download_clang_use_lld')
+<         write_to_bazelrc('test:cuda_clang --config=download_clang_use_lld')
+---
+>       # Set up which clang we should use as the cuda / host compiler.
+>       set_clang_cuda_compiler_path(environ_cp)
+1508,1527d1019
+<   else:
+<     # CUDA not required. Ask whether we should download the clang toolchain and
+<     # use it for the CPU build.
+<     set_tf_download_clang(environ_cp)
+<     if environ_cp.get('TF_DOWNLOAD_CLANG') == '1':
+<       write_to_bazelrc('build --config=download_clang')
+<       write_to_bazelrc('test --config=download_clang')
+< 
+<   # SYCL / ROCm / CUDA are mutually exclusive.
+<   # At most 1 GPU platform can be configured.
+<   gpu_platform_count = 0
+<   if environ_cp.get('TF_NEED_OPENCL_SYCL') == '1':
+<     gpu_platform_count += 1
+<   if environ_cp.get('TF_NEED_ROCM') == '1':
+<     gpu_platform_count += 1
+<   if environ_cp.get('TF_NEED_CUDA') == '1':
+<     gpu_platform_count += 1
+<   if gpu_platform_count >= 2:
+<     raise UserInputError('SYCL / CUDA / ROCm are mututally exclusive. '
+<                          'At most 1 GPU platform can be configured.')
+1535,1580c1027
+<   set_system_libs_flag(environ_cp)
+<   if is_windows():
+<     set_windows_build_flags(environ_cp)
+< 
+<   # Add a config option to build TensorFlow 2.0 API.
+<   write_to_bazelrc('build:v2 --define=tf_api_version=2')
+< 
+<   if get_var(environ_cp, 'TF_SET_ANDROID_WORKSPACE', 'android workspace', False,
+<              ('Would you like to interactively configure ./WORKSPACE for '
+<               'Android builds?'), 'Searching for NDK and SDK installations.',
+<              'Not configuring the WORKSPACE for Android builds.'):
+<     create_android_ndk_rule(environ_cp)
+<     create_android_sdk_rule(environ_cp)
+< 
+<   system_specific_test_config(os.environ)
+< 
+<   set_action_env_var(environ_cp, 'TF_CONFIGURE_IOS', 'iOS', False)
+<   if environ_cp.get('TF_CONFIGURE_IOS') == '1':
+<     configure_ios()
+<   else:
+<     # TODO(pcloudy): Remove BAZEL_USE_CPP_ONLY_TOOLCHAIN after Bazel is upgraded
+<     # to 0.24.0.
+<     # For working around https://github.com/bazelbuild/bazel/issues/7607
+<     if is_macos():
+<       write_to_bazelrc('build --action_env=BAZEL_USE_CPP_ONLY_TOOLCHAIN=1')
+< 
+<   print('Preconfigured Bazel build configs. You can use any of the below by '
+<         'adding "--config=<>" to your build command. See .bazelrc for more '
+<         'details.')
+<   config_info_line('mkl', 'Build with MKL support.')
+<   config_info_line('monolithic', 'Config for mostly static monolithic build.')
+<   config_info_line('gdr', 'Build with GDR support.')
+<   config_info_line('verbs', 'Build with libverbs support.')
+<   config_info_line('ngraph', 'Build with Intel nGraph support.')
+<   config_info_line('numa', 'Build with NUMA support.')
+<   config_info_line(
+<       'dynamic_kernels',
+<       '(Experimental) Build kernels into separate shared objects.')
+< 
+<   print('Preconfigured Bazel build configs to DISABLE default on features:')
+<   config_info_line('noaws', 'Disable AWS S3 filesystem support.')
+<   config_info_line('nogcp', 'Disable GCP support.')
+<   config_info_line('nohdfs', 'Disable HDFS support.')
+<   config_info_line('noignite', 'Disable Apache Ignite support.')
+<   config_info_line('nokafka', 'Disable Apache Kafka support.')
+<   config_info_line('nonccl', 'Disable NVIDIA NCCL support.')
+---
+>   set_mkl()
+diff tensorflow/CONTRIBUTING.md VStore-Source/VStore-NoScope/tensorflow-noscope/CONTRIBUTING.md
+3,13d2
+< ## Pull Request Checklist
+< 
+< Before sending your pull requests, make sure you followed this list.
+< 
+< - Read [contributing guidelines](CONTRIBUTING.md).
+< - Read [Code of Conduct](CODE_OF_CONDUCT.md).
+< - Ensure you have signed the [Contributor License Agreement (CLA)](https://cla.developers.google.com/).
+< - Check if my changes are consistent with the [guidelines](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md#general-guidelines-and-philosophy-for-contribution).
+< - Changes are consistent with the [Coding Style](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md#c-coding-style).
+< - Run [Unit Tests](https://github.com/tensorflow/tensorflow/blob/master/CONTRIBUTING.md#running-unit-tests).
+< 
+22,23c11,12
+<   * If you are an individual writing original source code and you're sure you own the intellectual property, then you'll need to sign an [individual CLA](https://code.google.com/legal/individual-cla-v1.0.html).
+<   * If you work for a company that wants to allow you to contribute your work, then you'll need to sign a [corporate CLA](https://code.google.com/legal/corporate-cla-v1.0.html).
+---
+>   * If you are an individual writing original source code and you're sure you own the intellectual property, then you'll need to sign an [individual CLA](http://code.google.com/legal/individual-cla-v1.0.html).
+>   * If you work for a company that wants to allow you to contribute your work, then you'll need to sign a [corporate CLA](http://code.google.com/legal/corporate-cla-v1.0.html).
+34,40d22
+< TensorFlow team members will be assigned to review your pull requests. Once the
+< pull requests are approved and pass continuous integration checks, a TensorFlow
+< team member will apply `ready to pull` label to your change. This means we are
+< working on getting your pull request submitted to our internal repository. After
+< the change has been submitted internally, your pull request will be merged
+< automatically on GitHub.
+< 
+58,79c40,57
+< *   Include unit tests when you contribute new features, as they help to a)
+<     prove that your code works correctly, and b) guard against future breaking
+<     changes to lower the maintenance cost.
+< *   Bug fixes also generally require unit tests, because the presence of bugs
+<     usually indicates insufficient test coverage.
+< *   Keep API compatibility in mind when you change code in core TensorFlow,
+<     e.g., code in
+<     [tensorflow/core](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/core)
+<     and
+<     [tensorflow/python](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/python).
+<     TensorFlow has reached version 1 and hence cannot make
+<     non-backward-compatible API changes without a major release. Reviewers of
+<     your pull request will comment on any API compatibility issues.
+< *   When you contribute a new feature to TensorFlow, the maintenance burden is
+<     (by default) transferred to the TensorFlow team. This means that benefit of
+<     the contribution must be compared against the cost of maintaining the
+<     feature.
+< *   Full new features (e.g., a new op implementing a cutting-edge algorithm)
+<     typically will live in
+<     [tensorflow/addons](https://github.com/tensorflow/addons) to get some
+<     airtime before decision is made regarding whether they are to be migrated to
+<     the core.
+---
+> * Include unit tests when you contribute new features, as they help to
+>   a) prove that your code works correctly, b) guard against future breaking
+>   changes to lower the maintenance cost.
+> * Bug fixes also generally require unit tests, because the presence of bugs
+>   usually indicates insufficient test coverage.
+> * Keep API compatibility in mind when you change code in core TensorFlow,
+>   e.g., code in [tensorflow/core](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/core) and  [tensorflow/python](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/python).
+>   TensorFlow has reached version 1 and hence cannot make
+>   non-backward-compatible API changes without a major release. Reviewers of your
+>   pull request will comment on any API compatibility issues.
+> * When you contribute a new feature to TensorFlow, the maintenance burden is (by
+>   default) transferred to the TensorFlow team. This means that benefit of
+>   contribution must be compared against the cost of maintaining the feature.
+> * Full new features (e.g., a new op implementing a cutting-edge algorithm)
+>   typically will live in
+>   [tensorflow/contrib](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib)
+>   to get some airtime before decision is made regarding whether they are to be
+>   migrated to the core.
+90,91c68,69
+< * [HTML license example](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/components/tf_backend/tf-backend.html#L2)
+< * [JavaScript/TypeScript license example](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/components/tf_backend/backend.ts#L1)
+---
+> * [HTML license example](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tensorboard/dist/index.html#L2)
+> * [JavaScript/TypeScript license example](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tensorboard/components/tf_backend/backend.ts#L1)
+101c79
+< Use `clang-tidy` to check your C/C++ changes. To install `clang-tidy` on ubuntu:16.04, do:
+---
+> Use `clang-tidy` to check your C/C++ changes. To install clang-tidy on ubuntu:16.04, do:
+118c96
+< [Google Python Style Guide](https://github.com/google/styleguide/blob/gh-pages/pyguide.md)
+---
+> [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
+139d116
+< * [Google Objective-C Style Guide](https://google.github.io/styleguide/objcguide.html)
+157c134,170
+< 1.  Using tools and libraries installed directly on your system.
+---
+> 1. Using tools and libraries installed directly on your system.
+> 
+>    Refer to the
+>    [CPU-only developer Dockerfile](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/docker/Dockerfile.devel) and
+>    [GPU developer Dockerfile](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/docker/Dockerfile.devel-gpu)
+>    for the required packages. Alternatively, use the said
+>    [Docker images](https://hub.docker.com/r/tensorflow/tensorflow/tags/), e.g.,
+>    `tensorflow/tensorflow:nightly-devel` and `tensorflow/tensorflow:nightly-devel-gpu`
+>    for development to avoid installing the packages directly on your system.
+> 
+>    Once you have the packages installed, you can run a specific unit test in
+>    bazel by doing as follows:
+> 
+>    If the tests are to be run on GPU, add CUDA paths to LD_LIBRARY_PATH and add
+>    the `cuda` option flag
+> 
+>    ```bash
+>    export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+> 
+>    export flags="--config=opt --config=cuda -k"
+>    ```
+> 
+>    For example, to run all tests under tensorflow/python, do:
+> 
+>    ```bash
+>    bazel test ${flags} //tensorflow/python/...
+>    ```
+> 
+> 2. Using [Docker](www.docker.com) and TensorFlow's CI scripts.
+> 
+>    ```bash
+>    # Install Docker first, then this will build and run cpu tests
+>    tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/...
+>    ```
+> 
+>    See
+>    [TensorFlow Builds](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/ci_build) for details.
+159,198d171
+<     Refer to the
+<     [CPU-only developer Dockerfile](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/docker/Dockerfile.devel)
+<     and
+<     [GPU developer Dockerfile](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/tools/docker/Dockerfile.devel-gpu)
+<     for the required packages. Alternatively, use the said
+<     [Docker images](https://hub.docker.com/r/tensorflow/tensorflow/tags/), e.g.,
+<     `tensorflow/tensorflow:nightly-devel` and
+<     `tensorflow/tensorflow:nightly-devel-gpu` for development to avoid
+<     installing the packages directly on your system (in which case remember to
+<     change directory from `/root` to `/tensorflow` once you get into the running
+<     container so `bazel` can find the `tensorflow` workspace).
+< 
+<     Once you have the packages installed, you can run a specific unit test in
+<     bazel by doing as follows:
+< 
+<     If the tests are to be run on GPU, add CUDA paths to LD_LIBRARY_PATH and add
+<     the `cuda` option flag
+< 
+<     ```bash
+<     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+< 
+<     export flags="--config=opt --config=cuda -k"
+<     ```
+< 
+<     For example, to run all tests under tensorflow/python, do:
+< 
+<     ```bash
+<     bazel test ${flags} //tensorflow/python/...
+<     ```
+< 
+< 2.  Using [Docker](https://www.docker.com) and TensorFlow's CI scripts.
+< 
+<     ```bash
+<     # Install Docker first, then this will build and run cpu tests
+<     tensorflow/tools/ci_build/ci_build.sh CPU bazel test //tensorflow/...
+<     ```
+< 
+<     See
+<     [TensorFlow Builds](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/tools/ci_build)
+<     for details.
+Only in tensorflow: .git
+Only in tensorflow: .github
+Only in tensorflow: .gitignore
+Only in VStore-Source/VStore-NoScope/tensorflow-noscope: .gitmodules
+Only in tensorflow: ISSUES.md
+diff tensorflow/ISSUE_TEMPLATE.md VStore-Source/VStore-NoScope/tensorflow-noscope/ISSUE_TEMPLATE.md
+7c7
+< 1. It must be a bug, a feature request, or a significant problem with documentation (for small docs fixes please send a PR instead).
+---
+> 1. It must be a bug or a feature request.
+18d17
+< - **Mobile device (e.g. iPhone 8, Pixel 2, Samsung Galaxy) if the issue happens on mobile device**:
+21c20
+< - **Python version**:
+---
+> - **Python version**: 
+23d21
+< - **GCC/Compiler version (if compiling from source)**:
+32c30
+< You can obtain the TensorFlow version with:
+---
+> You can obtain the TensorFlow version with
+34,36c32
+< ```bash
+< python -c "import tensorflow as tf; print(tf.version.GIT_VERSION, tf.version.VERSION)"
+< ```
+---
+> python -c "import tensorflow as tf; print(tf.GIT_VERSION, tf.VERSION)"
+diff tensorflow/LICENSE VStore-Source/VStore-NoScope/tensorflow-noscope/LICENSE
+1c1
+< Copyright 2019 The TensorFlow Authors.  All rights reserved.
+---
+> Copyright 2017 The TensorFlow Authors.  All rights reserved.
+diff tensorflow/README.md VStore-Source/VStore-NoScope/tensorflow-noscope/README.md
+2c2
+<   <img src="https://www.tensorflow.org/images/tf_logo_social.png">
+---
+>   <img src="https://www.tensorflow.org/images/tf_logo_transp.png"><br><br>
+6a7,9
+> | **`Linux CPU`** | **`Linux GPU`** | **`Mac OS CPU`** | **`Windows CPU`** | **`Android`** |
+> |-----------------|---------------------|------------------|-------------------|---------------|
+> | [![Build Status](https://ci.tensorflow.org/buildStatus/icon?job=tensorflow-master-cpu)](https://ci.tensorflow.org/job/tensorflow-master-cpu) | [![Build Status](https://ci.tensorflow.org/buildStatus/icon?job=tensorflow-master-linux-gpu)](https://ci.tensorflow.org/job/tensorflow-master-linux-gpu) | [![Build Status](https://ci.tensorflow.org/buildStatus/icon?job=tensorflow-master-mac)](https://ci.tensorflow.org/job/tensorflow-master-mac) | [![Build Status](https://ci.tensorflow.org/buildStatus/icon?job=tensorflow-master-win-cmake-py)](https://ci.tensorflow.org/job/tensorflow-master-win-cmake-py) | [![Build Status](https://ci.tensorflow.org/buildStatus/icon?job=tensorflow-master-android)](https://ci.tensorflow.org/job/tensorflow-master-android) |
+8,13c11,12
+< | **`Documentation`** |
+< |-----------------|
+< | [![Documentation](https://img.shields.io/badge/api-reference-blue.svg)](https://www.tensorflow.org/api_docs/) |
+< 
+< **TensorFlow** is an open source software library for numerical computation
+< using data flow graphs. The graph nodes represent mathematical operations, while
+---
+> **TensorFlow** is an open source software library for numerical computation using
+> data flow graphs.  The graph nodes represent mathematical operations, while
+15,19c14,16
+< between them. This flexible architecture enables you to deploy computation to
+< one or more CPUs or GPUs in a desktop, server, or mobile device without
+< rewriting code. TensorFlow also includes
+< [TensorBoard](https://github.com/tensorflow/tensorboard), a data visualization
+< toolkit.
+---
+> between them.  This flexible architecture lets you deploy computation to one
+> or more CPUs or GPUs in a desktop, server, or mobile device without rewriting
+> code.  TensorFlow also includes TensorBoard, a data visualization toolkit.
+27,28c24,27
+< TensorFlow provides stable Python and C APIs as well as non-guaranteed backwards
+< compatible API's for C++, Go, Java, JavaScript, and Swift.
+---
+> **If you want to contribute to TensorFlow, be sure to review the [contribution
+> guidelines](CONTRIBUTING.md). This project adheres to TensorFlow's
+> [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to
+> uphold this code.**
+30,32c29,32
+< Keep up to date with release announcements and security updates by
+< subscribing to
+< [announce@tensorflow.org](https://groups.google.com/a/tensorflow.org/forum/#!forum/announce).
+---
+> **We use [GitHub issues](https://github.com/tensorflow/tensorflow/issues) for
+> tracking requests and bugs. So please see 
+> [TensorFlow Discuss](https://groups.google.com/a/tensorflow.org/forum/#!forum/discuss) for general questions
+> and discussion, and please direct specific questions to [Stack Overflow](https://stackoverflow.com/questions/tagged/tensorflow).**
+35,49c35
+< 
+< To install the current release for CPU-only:
+< 
+< ```
+< pip install tensorflow
+< ```
+< 
+< Use the GPU package for CUDA-enabled GPU cards:
+< 
+< ```
+< pip install tensorflow-gpu
+< ```
+< 
+< *See [Installing TensorFlow](https://www.tensorflow.org/install) for detailed
+< instructions, and how to build from source.*
+---
+> *See [Installing TensorFlow](https://www.tensorflow.org/get_started/os_setup.html) for instructions on how to install our release binaries or how to build from source.*
+53,59c39,54
+< **Nightly pip packages** * We are pleased to announce that TensorFlow now offers
+< nightly pip packages under the
+< [tf-nightly](https://pypi.python.org/pypi/tf-nightly) and
+< [tf-nightly-gpu](https://pypi.python.org/pypi/tf-nightly-gpu) project on PyPi.
+< Simply run `pip install tf-nightly` or `pip install tf-nightly-gpu` in a clean
+< environment to install the nightly TensorFlow build. We support CPU and GPU
+< packages on Linux, Mac, and Windows.
+---
+> **Nightly pip packages**
+> * We are pleased to announce that TensorFlow now offers nightly pip packages
+> under the [tf-nightly](https://pypi.python.org/pypi/tf-nightly) project on pypi.
+> Simply run `pip install tf-nightly` in a clean environment to install the nightly
+> tensorflow  build. We currently only support CPU packages on Linux, Mac, and Windows.
+> GPU packages on all platforms will arrive soon!
+> 
+> 
+> **Individual whl files**
+> * Linux CPU-only: [Python 2](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=cpu-slave/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow-1.3.0-cp27-none-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=cpu-slave)) / [Python 3.4](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=cpu-slave/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow-1.3.0-cp34-cp34m-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=cpu-slave/)) / [Python 3.5](https://ci.tensorflow.org/view/Nightly/job/nightly-python35-linux-cpu/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow-1.3.0-cp35-cp35m-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-python35-linux-cpu/))
+> * Linux GPU: [Python 2](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=gpu-linux/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow_gpu-1.3.0-cp27-none-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=gpu-linux/)) / [Python 3.4](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=gpu-linux/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow_gpu-1.3.0-cp34-cp34m-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=gpu-linux/)) / [Python 3.5](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3.5,label=gpu-linux/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow_gpu-1.3.0-cp35-cp35m-linux_x86_64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-linux-gpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3.5,label=gpu-linux/))
+> * Mac CPU-only: [Python 2](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=mac-slave/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow-1.3.0-py2-none-any.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON2,label=mac-slave/)) / [Python 3](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=mac-slave/lastSuccessfulBuild/artifact/pip_test/whl/tensorflow-1.3.0-py3-none-any.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-matrix-cpu/TF_BUILD_IS_OPT=OPT,TF_BUILD_IS_PIP=PIP,TF_BUILD_PYTHON_VERSION=PYTHON3,label=mac-slave/))
+> * Windows CPU-only: [Python 3.5 64-bit](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows,PY=35/lastSuccessfulBuild/artifact/cmake_build/tf_python/dist/tensorflow-1.3.0-cp35-cp35m-win_amd64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows,PY=35/)) / [Python 3.6 64-bit](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows,PY=36/lastSuccessfulBuild/artifact/cmake_build/tf_python/dist/tensorflow-1.3.0-cp36-cp36m-win_amd64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows,PY=36/))
+> * Windows GPU: [Python 3.5 64-bit](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows-gpu,PY=35/lastSuccessfulBuild/artifact/cmake_build/tf_python/dist/tensorflow_gpu-1.3.0-cp35-cp35m-win_amd64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows-gpu,PY=35/)) / [Python 3.6 64-bit](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows-gpu,PY=36/lastSuccessfulBuild/artifact/cmake_build/tf_python/dist/tensorflow_gpu-1.3.0-cp36-cp36m-win_amd64.whl) ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-win/M=windows-gpu,PY=36/))
+> * Android: [demo APK](https://ci.tensorflow.org/view/Nightly/job/nightly-android/lastSuccessfulBuild/artifact/out/tensorflow_demo.apk), [native libs](http://ci.tensorflow.org/view/Nightly/job/nightly-android/lastSuccessfulBuild/artifact/out/native/)
+> ([build history](https://ci.tensorflow.org/view/Nightly/job/nightly-android/))
+62d56
+< 
+66d59
+< 
+69,71d61
+< >>> tf.enable_eager_execution()
+< >>> tf.add(1, 2).numpy()
+< 3
+73c63,64
+< >>> hello.numpy()
+---
+> >>> sess = tf.Session()
+> >>> sess.run(hello)
+74a66,70
+> >>> a = tf.constant(10)
+> >>> b = tf.constant(32)
+> >>> sess.run(a + b)
+> 42
+> >>> sess.close()
+77,127d72
+< Learn more examples about how to do specific tasks in TensorFlow at the
+< [tutorials page of tensorflow.org](https://www.tensorflow.org/tutorials/).
+< 
+< ## Contribution guidelines
+< 
+< **If you want to contribute to TensorFlow, be sure to review the [contribution
+< guidelines](CONTRIBUTING.md). This project adheres to TensorFlow's
+< [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to
+< uphold this code.**
+< 
+< **We use [GitHub issues](https://github.com/tensorflow/tensorflow/issues) for
+< tracking requests and bugs, please see
+< [TensorFlow Discuss](https://groups.google.com/a/tensorflow.org/forum/#!forum/discuss)
+< for general questions and discussion, and please direct specific questions to
+< [Stack Overflow](https://stackoverflow.com/questions/tagged/tensorflow).**
+< 
+< The TensorFlow project strives to abide by generally accepted best practices in open-source software development:
+< 
+< [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1486/badge)](https://bestpractices.coreinfrastructure.org/projects/1486)
+< 
+< 
+< ## Continuous build status
+< 
+< ### Official Builds
+< 
+< | Build Type      | Status | Artifacts |
+< | ---             | ---    | ---       |
+< | **Linux CPU**   | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-cc.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-cc.html) | [pypi](https://pypi.org/project/tf-nightly/) |
+< | **Linux GPU**   | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-gpu-py3.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-gpu-py3.html) | [pypi](https://pypi.org/project/tf-nightly-gpu/) |
+< | **Linux XLA**   | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-xla.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-xla.html) | TBA |
+< | **MacOS**       | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/macos-py2-cc.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/macos-py2-cc.html) | [pypi](https://pypi.org/project/tf-nightly/) |
+< | **Windows CPU** | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/windows-cpu.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/windows-cpu.html) | [pypi](https://pypi.org/project/tf-nightly/) |
+< | **Windows GPU** | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/windows-gpu.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/windows-gpu.html) | [pypi](https://pypi.org/project/tf-nightly-gpu/) |
+< | **Android**     | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/android.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/android.html) | [![Download](https://api.bintray.com/packages/google/tensorflow/tensorflow/images/download.svg)](https://bintray.com/google/tensorflow/tensorflow/_latestVersion) |
+< | **Raspberry Pi 0 and 1** | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi01-py2.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi01-py2.html) [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi01-py3.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi01-py3.html) | [Py2](https://storage.googleapis.com/tensorflow-nightly/tensorflow-1.10.0-cp27-none-linux_armv6l.whl) [Py3](https://storage.googleapis.com/tensorflow-nightly/tensorflow-1.10.0-cp34-none-linux_armv6l.whl) |
+< | **Raspberry Pi 2 and 3** | [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi23-py2.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi23-py2.html) [![Status](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi23-py3.svg)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/rpi23-py3.html) | [Py2](https://storage.googleapis.com/tensorflow-nightly/tensorflow-1.10.0-cp27-none-linux_armv7l.whl) [Py3](https://storage.googleapis.com/tensorflow-nightly/tensorflow-1.10.0-cp34-none-linux_armv7l.whl) |
+< 
+< 
+< ### Community Supported Builds
+< 
+< Build Type                                                                        | Status                                                                                                                                                                                        | Artifacts
+< --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------
+< **IBM s390x**                                                                     | [![Build Status](http://ibmz-ci.osuosl.org/job/TensorFlow_IBMZ_CI/badge/icon)](http://ibmz-ci.osuosl.org/job/TensorFlow_IBMZ_CI/)                                                             | TBA
+< **Linux ppc64le CPU** Nightly                                                     | [![Build Status](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Build/badge/icon)](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Build/)                                       | [Nightly](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Nightly_Artifact/)
+< **Linux ppc64le CPU** Stable Release                                              | [![Build Status](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Release_Build/badge/icon)](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Release_Build/)                       | [Release](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_CPU_Release_Build/)
+< **Linux ppc64le GPU** Nightly                                                     | [![Build Status](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Build/badge/icon)](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Build/)                                       | [Nightly](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Nightly_Artifact/)
+< **Linux ppc64le GPU** Stable Release                                              | [![Build Status](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Release_Build/badge/icon)](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Release_Build/)                       | [Release](https://powerci.osuosl.org/job/TensorFlow_PPC64LE_GPU_Release_Build/)
+< **Linux CPU with Intel® MKL-DNN** Nightly                                         | [![Build Status](https://tensorflow-ci.intel.com/job/tensorflow-mkl-linux-cpu/badge/icon)](https://tensorflow-ci.intel.com/job/tensorflow-mkl-linux-cpu/)                                     | [Nightly](https://tensorflow-ci.intel.com/job/tensorflow-mkl-build-whl-nightly/)
+< **Linux CPU with Intel® MKL-DNN** <br> **Supports Python 2.7, 3.4, 3.5, and 3.6** | [![Build Status](https://tensorflow-ci.intel.com/job/tensorflow-mkl-build-release-whl/badge/icon)](https://tensorflow-ci.intel.com/job/tensorflow-mkl-build-release-whl/lastStableBuild)      | [1.13.1 pypi](https://pypi.org/project/intel-tensorflow/)
+< **Red Hat® Enterprise Linux® 7.6 CPU & GPU** <br> Python 2.7, 3.6                 | [![Build Status](https://jenkins-tensorflow.apps.ci.centos.org/buildStatus/icon?job=tensorflow-rhel7-3.6&build=2)](https://jenkins-tensorflow.apps.ci.centos.org/job/tensorflow-rhel7-3.6/2/) | [1.13.1 pypi](https://tensorflow.pypi.thoth-station.ninja/index/)
+< 
+130,139c75,79
+< *   [TensorFlow Website](https://www.tensorflow.org)
+< *   [TensorFlow Tutorials](https://www.tensorflow.org/tutorials/)
+< *   [TensorFlow Model Zoo](https://github.com/tensorflow/models)
+< *   [TensorFlow Twitter](https://twitter.com/tensorflow)
+< *   [TensorFlow Blog](https://medium.com/tensorflow)
+< *   [TensorFlow Course at Stanford](https://web.stanford.edu/class/cs20si)
+< *   [TensorFlow Roadmap](https://www.tensorflow.org/community/roadmap)
+< *   [TensorFlow White Papers](https://www.tensorflow.org/about/bib)
+< *   [TensorFlow YouTube Channel](https://www.youtube.com/channel/UC0rqucBdTuFTjJiefW5t-IQ)
+< *   [TensorFlow Visualization Toolkit](https://github.com/tensorflow/tensorboard)
+---
+> * [TensorFlow website](https://www.tensorflow.org)
+> * [TensorFlow White Papers](https://www.tensorflow.org/about/bib)
+> * [TensorFlow Model Zoo](https://github.com/tensorflow/models)
+> * [TensorFlow MOOC on Udacity](https://www.udacity.com/course/deep-learning--ud730)
+> * [TensorFlow course at Stanford](https://web.stanford.edu/class/cs20si)
+diff tensorflow/RELEASE.md VStore-Source/VStore-NoScope/tensorflow-noscope/RELEASE.md
+1,981d0
+< # Release 1.12.2
+< 
+< ## Bug Fixes and Other Changes
+< 
+< *   Fixes a potential security vulnerability where carefully crafted GIF images
+<     can produce a null pointer dereference during decoding.
+< 
+< # Release 1.13.0
+< 
+< ## Major Features and Improvements
+< 
+< * TensorFlow Lite has moved from contrib to core. This means that Python modules are under `tf.lite` and source code is now under `tensorflow/lite` rather than `tensorflow/contrib/lite`.
+< * TensorFlow GPU binaries are now built against CUDA 10 and TensorRT 5.0.
+< * Support for Python3.7 on all operating systems.
+< * Moved NCCL to core.
+< 
+< ## Behavioral changes
+< 
+< * Disallow conversion of python floating types to uint32/64 (matching behavior of other integer types) in `tf.constant`.
+< * Make the `gain` argument of convolutional orthogonal initializers (`convolutional_delta_orthogonal`, `convolutional_orthogonal_1D`, `convolutional_orthogonal_2D`, `convolutional_orthogonal_3D`) have consistent behavior with the `tf.initializers.orthogonal` initializer, i.e. scale the output l2-norm by `gain` and NOT by `sqrt(gain)`. (Note that these functions are currently in `tf.contrib` which is not guaranteed backward compatible).
+< 
+< ## Bug Fixes and Other Changes
+< 
+< *   Documentation
+<     *   Update the doc with the details about the rounding mode used in
+<         quantize_and_dequantize_v2.
+<     *   Clarify that tensorflow::port::InitMain() _should_ be called before
+<         using the TensorFlow library. Programs failing to do this are not
+<         portable to all platforms.
+< *   Deprecations and Symbol renames.
+<     *   Removing deprecations for the following endpoints: `tf.acos`,
+<         `tf.acosh`, `tf.add`, `tf.as_string`, `tf.asin`, `tf.asinh`, `tf.atan`,
+<         `tf.atan2`, `tf.atanh`, `tf.cos`, `tf.cosh`, `tf.equal`, `tf.exp`,
+<         `tf.floor`, `tf.greater`, `tf.greater_equal`, `tf.less`,
+<         `tf.less_equal`, `tf.log`, `tf.logp1`, `tf.logical_and`,
+<         `tf.logical_not`, `tf.logical_or`, `tf.maximum`, `tf.minimum`,
+<         `tf.not_equal`, `tf.sin`, `tf.sinh`, `tf.tan`
+<     *   Deprecate `tf.data.Dataset.shard`.
+<     *   Deprecate `saved_model.loader.load` which is replaced by
+<         `saved_model.load` and `saved_model.main_op`, which will be replaced by
+<         `saved_model.main_op` in V2.
+<     *   Deprecate tf.QUANTIZED_DTYPES. The official new symbol is
+<         tf.dtypes.QUANTIZED_DTYPES.
+<     *   Update sklearn imports for deprecated packages.
+<     *   Deprecate `Variable.count_up_to` and `tf.count_up_to` in favor of
+<         `Dataset.range`.
+<     *   Export `confusion_matrix` op as `tf.math.confusion_matrix` instead of
+<         `tf.train.confusion_matrix`.
+<     *   Add `tf.dtypes.` endpoint for every constant in dtypes.py. Moving
+<         endpoints in versions.py to corresponding endpoints in `tf.sysconfig.`
+<         and `tf.version.`. Moving all constants under `tf.saved_model`
+<         submodules to `tf.saved_model` module. New endpoints are added in V1 and
+<         V2 but existing endpoint removals are only applied in V2.
+<     *   Deprecates behavior where device assignment overrides collocation
+<         constraints inside a collocation context manager.
+< *   Keras & Python API
+<     *   Add to Keras functionality analogous to
+<         `tf.register_tensor_conversion_function`.
+<     *   Subclassed Keras models can now be saved through
+<         `tf.contrib.saved_model.save_keras_model`.
+<     *   `LinearOperator.matmul` now returns a new `LinearOperator`.
+< *   New ops and improved op functionality
+<     *   Add a Nearest Neighbor Resize op.
+<     *   Add an `ignore_unknown` argument to `parse_values` which suppresses
+<         ValueError for unknown hyperparameter types. Such * Add
+<         `tf.linalg.matvec` convenience function.
+<     *   `tf.einsum()`raises `ValueError` for unsupported equations like
+<         `"ii->"`.
+<     *   Add DCT-I and IDCT-I in `tf.signal.dct` and `tf.signal.idct`.
+<     *   Add LU decomposition op.
+<     *   Add quantile loss to gradient boosted trees in estimator.
+<     *   Add `round_mode` to `QuantizeAndDequantizeV2` op to select rounding
+<         algorithm.
+<     *   Add `unicode_encode`, `unicode_decode`, `unicode_decode_with_offsets`,
+<         `unicode_split`, `unicode_split_with_offset`, and `unicode_transcode`
+<         ops. Amongst other things, this Op adds the ability to encode, decode,
+<         and transcode a variety of input text encoding formats into the main
+<         Unicode encodings (UTF-8, UTF-16-BE, UTF-32-BE)
+<     *   Add "unit" attribute to the substr op, which allows obtaining the
+<         substring of a string containing unicode characters.
+<     *   Broadcasting support for Ragged Tensors.
+<     *   `SpaceToDepth` supports uint8 data type.
+<     *   Support multi-label quantile regression in estimator.
+<     *   We now use "div" as the default partition_strategy in
+<         `tf.nn.safe_embedding_lookup_sparse`, `tf.nn.sampled_softmax` and
+<         `tf.nn.nce_loss`. hyperparameter are ignored.
+< *   Performance
+<     *   Improve performance of GPU cumsum/cumprod by up to 300x.
+<     *   Added support for weight decay in most TPU embedding optimizers,
+<         including AdamW and MomentumW.
+< *   TensorFlow 2.0 Development
+<     *   Add a command line tool to convert to TF2.0, tf_upgrade_v2
+<     *   Merge `tf.spectral` into `tf.signal` for TensorFlow 2.0.
+<     *   Change the default recurrent activation function for LSTM from
+<         'hard_sigmoid' to 'sigmoid' in 2.0. Historically recurrent activation is
+<         'hard_sigmoid' since it is fast than 'sigmoid'. With new unified backend
+<         between CPU and GPU mode, since the CuDNN kernel is using sigmoid, we
+<         change the default for CPU mode to sigmoid as well. With that, the
+<         default LSTM will be compatible with both CPU and GPU kernel. This will
+<         enable user with GPU to use CuDNN kernel by default and get a 10x
+<         performance boost in training. Note that this is checkpoint breaking
+<         change. If user want to use their 1.x pre-trained checkpoint, please
+<         construct the layer with LSTM(recurrent_activation='hard_sigmoid') to
+<         fallback to 1.x behavior.
+< *   TensorFlow Lite
+<     *   Move from `tensorflow/contrib/lite` to `tensorflow/lite`.
+<     *   Add experimental Java API for injecting TensorFlow Lite delegates
+<     *   Add support for strings in TensorFlow Lite Java API.
+< *   `tf.contrib`:
+<     *   Add Apache Ignite Filesystem plugin to support accessing Apache IGFS.
+<     *   Dropout now takes `rate` argument, `keep_prob` is deprecated.
+<     *   Estimator occurrences references `tf.contrib.estimator` were changed to
+<         `tf.estimator`:
+<     *   `tf.contrib.estimator.BaselineEstimator` with
+<         `tf.estimator.BaselineEstimator`
+<     *   `tf.contrib.estimator.DNNLinearCombinedEstimator` with
+<         `tf.estimator.DNNLinearCombinedEstimator`
+<     *   `tf.contrib.estimator.DNNEstimator` with `tf.estimator.DNNEstimator`
+<     *   `tf.contrib.estimator.LinearEstimator` with
+<         `tf.estimator.LinearEstimator`
+<     *   `tf.contrib.estimator.InMemoryEvaluatorHook` and
+<         tf.estimator.experimental.InMemoryEvaluatorHook`.
+<     *   `tf.contrib.estimator.make_stop_at_checkpoint_step_hook` with
+<         `tf.estimator.experimental.make_stop_at_checkpoint_step_hook`.
+<     *   Expose `tf.distribute.Strategy as the new name for
+<         tf.contrib.distribute.DistributionStrategy.
+<     *   Migrate linear optimizer from contrib to core.
+<     *   Move `tf.contrib.signal` to `tf.signal` (preserving aliases in
+<         tf.contrib.signal).
+<     *   Users of `tf.contrib.estimator.export_all_saved_models` and related
+<         should switch to
+<         `tf.estimator.Estimator.experimental_export_all_saved_models`.
+< *   tf.data:
+<     *   Add `tf.data.experimental.StatsOptions()`, to configure options to
+<         collect statistics from `tf.data.Dataset` pipeline using
+<         `StatsAggregator`. Add nested option, `experimental_stats` (which takes
+<         a `tf.data.experimen tal.StatsOptions` object), to `tf.data.Options`.
+<         Deprecates `tf.data.experimental.set_stats_agregator`.
+<     *   Performance optimizations:
+<     *   Add `tf.data.experimental.OptimizationOptions()`, to configure options
+<         to enable `tf.data` performance optimizations. Add nested option,
+<         `experimental_optimization` (which takes a
+<         `tf.data.experimental.OptimizationOptions` object), to
+<         `tf.data.Options`. Remove performance optimization options from
+<         `tf.data.Options`, and add them under
+<         `tf.data.experimental.OptimizationOptions` instead.
+<     *   Enable `map_and_batch_fusion` and `noop_elimination` optimizations by
+<         default. They can be disabled by configuring
+<         `tf.data.experimental.OptimizationOptions` to set `map_and_batch =
+<         False` or `noop_elimination = False` respectively. To disable all
+<         default optimizations, set `apply_default_optimizations = False`.
+<     *   Support parallel map in `map_and_filter_fusion`.
+<     *   Disable static optimizations for input pipelines that use non-resource
+<         `tf.Variable`s.
+<     *   Add NUMA-aware MapAndBatch dataset.
+<     *   Deprecate `tf.data.Dataset.make_one_shot_iterator()` in V1, removed it
+<         from V2, and added tf.compat.v1.data.make_one_shot_iterator()`.
+<     *   Deprecate `tf.data.Dataset.make_initializable_iterator()` in V1, removed
+<         it from V2, and added `tf.compat.v1.data.make_initializable_iterator()`.
+<     *   Enable nested dataset support in core `tf.data` transformations.
+<     *   For `tf.data.Dataset` implementers: Added
+<         `tf.data.Dataset._element_structured property` to replace
+<         `Dataset.output_{types,shapes,classes}`.
+<     *   Make `num_parallel_calls` of `tf.data.Dataset.interleave` and
+<         `tf.data.Dataset.map` work in Eager mode.
+< *   Toolchains
+<     *   Fixed OpenSSL compatibility by avoiding `EVP_MD_CTX_destroy`.
+<     *   Added bounds checking to printing deprecation warnings.
+<     *   Upgraded CUDA dependency to 10.0
+<     *   To build with Android NDK r14b, add "#include <linux/compiler.h>" to
+<         android-ndk-r14b/platforms/android-14/arch-*/usr/include/linux/futex.h
+<     *   Removed `:android_tensorflow_lib_selective_registration*` targets, use
+<         `:android_tensorflow_lib_lite*` targets instead.
+< *   XLA
+<     *   Move `RoundToEven` function to xla/client/lib/math.h.
+<     *   A new environment variable `TF_XLA_DEBUG_OPTIONS_PASSTHROUGH` set to "1"
+<         or "true" allows the debug options passed within an XRTCompile op to be
+<         passed directly to the XLA compilation backend. If such variable is not
+<         set (service side), only a restricted set will be passed through.
+<     *   Allow the XRTCompile op to return the ProgramShape resulted form the XLA
+<         compilation as a second return argument.
+<     *   XLA HLO graphs can now be rendered as SVG/HTML.
+< *   Estimator
+<     *   Replace all occurences of `tf.contrib.estimator.BaselineEstimator` with
+<         `tf.estimator.BaselineEstimator`
+<     *   Replace all occurences of
+<         `tf.contrib.estimator.DNNLinearCombinedEstimator` with
+<         `tf.estimator.DNNLinearCombinedEstimator`
+<     *   Replace all occurrences of `tf.contrib.estimator.DNNEstimator` with
+<         `tf.estimator.DNNEstimator`
+<     *   Replace all occurrences of `tf.contrib.estimator.LinearEstimator` with
+<         `tf.estimator.LinearEstimator`
+<     *   Users of `tf.contrib.estimator.export_all_saved_models` and related
+<         should switch to
+<         `tf.estimator.Estimator.experimental_export_all_saved_models`.
+<     *   Update `regression_head` to the new Head API for Canned Estimator V2.
+<     *   Switch `multi_class_head` to Head API for Canned Estimator V2.
+<     *   Replace all occurences of `tf.contrib.estimator.InMemoryEvaluatorHook`
+<         and `tf.contrib.estimator.make_stop_at_checkpoint_step_hook` with
+<         `tf.estimator.experimental.InMemoryEvaluatorHook` and
+<         `tf.estimator.experimental.make_stop_at_checkpoint_step_hook`
+<     *   Migrate linear optimizer from contrib to core.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< Abhinav Upadhyay, Ag Ramesh, akikaaa, Alexis Louis, Anders Huss, Andreas Madsen, Andrew Banchich, Andy Craze, Anton Dmitriev, Artem Malykh, Avijit-Nervana, Balint Cristian, Benjamin Tan Wei Hao, Bhavani Subramanian, Brendan Finan, Brian Nemsick, Bryan Cutler, By Shen, Cao Zongyan, Castiel, Chris Antaki, Christian Goll, Cibifang, Clayne Robison, Codrut Grosu, Cong Xu, Dalmo Cirne, Daniel Hunter, Dougal J. Sutherland, Edvard Fagerholm, EFanZh, Erik Smistad, Evgeniy Polyakov, Feiyang Chen, franklin5, Fred Reiss, Gautam, gehring, Geoffrey Irving, George Sterpu, Gitea, Grzegorz George Pawelczak, Guozhong Zhuang, himkt, Hoeseong Kim, Huan Li (李卓桓), HuiyangFei, hyunyoung, Isaac Burbank, jackonan, Jacky Ko, Jason Furmanek, Jason Zaman, Javier Luraschi, Jiang,Zhoulong, joaak, John Lin, Jonathan Wyatt Hoech, josephyearsley, Josh Gordon, Julian Niedermeier, Karl Lessard, Keno Fischer, lanhin, Leon Graser, leondgarse, Li, Guizi, Li, Yiqiang, lxl910915, Mahmoud Abuzaina, manhyuk, Marcela Morales Quispe, margaretmz, Matt Conley, Max Pumperla, mbhuiyan, mdfaijul, Meng, Peng, Michael, Michael Gielda, mrTsjolder, Muhammad Wildan, neargye, Nehal J Wani, NEWPLAN, Niranjan Hasabnis, Nutti, olicht, Pan Daoxin, Pedro Monreal, Peng Yu, pillarpond, Pooya Davoodi, qiezi, Rholais Lii, Richard Yu, Rin Arakaki, Roger Iyengar, sahilbadyal, Sami Kama, Sandip Giri, Scott Leishman, Serge Panev, Seunghoon Park, Shafi Dayatar, shengfuintel, Shimin Guo, Siju, silent567, Stefan Dyulgerov, steven, Tao Wei, Thor Johnsen, Tingbo Lu, tomguluson92, Tongxuan Liu, Trevor Morris, Ubuntu, Vadim Borisov, vanderliang, wangsiyu, Wen Yun, Wen-Heng (Jack) Chung, wenxizhu, William D. Irons, Xiaoming (Jason) Cui, Yan Facai (颜发才), Yanbo Liang, Yaniv Blumenfeld, Yash Gaurkar, Yicheng Fan, Yong Tang, Yongjoon Lee, Yuan (Terry) Tang, Yuxin Wu, zldrobit
+< 
+< # Release 1.12.0
+< 
+< ## Major Features and Improvements
+< 
+< *   Keras models can now be directly exported to the SavedModel
+<     format(`tf.contrib.saved_model.save_keras_model()`) and used with Tensorflow
+<     Serving.
+< *   Keras models now support evaluating with a `tf.data.Dataset`.
+< *   TensorFlow binaries are built with XLA support linked in by default.
+< *   Ignite Dataset added to contrib/ignite that allows to work with Apache
+<     Ignite.
+< 
+< ## Bug Fixes and Other Changes
+< 
+< *   tf.data:
+<     *   tf.data users can now represent, get, and set options of TensorFlow
+<         input pipelines using `tf.data.Options()`, `tf.data.Dataset.options()`,
+<         and `tf.data.Dataset.with_options()` respectively.
+<     *   New `tf.data.Dataset.reduce()` API allows users to reduce a finite
+<         dataset to a single element using a user-provided reduce function.
+<     *   New `tf.data.Dataset.window()` API allows users to create finite windows
+<         of input dataset; when combined with the `tf.data.Dataset.reduce()` API,
+<         this allows users to implement customized batching.
+<     *   All C++ code moves to the `tensorflow::data` namespace.
+<     *   Add support for `num_parallel_calls` to `tf.data.Dataset.interleave`.
+< *   `tf.contrib`:
+<     *   Remove `tf.contrib.linalg`. `tf.linalg` should be used instead.
+<     *   Replace any calls to `tf.contrib.get_signature_def_by_key(metagraph_def,
+<         signature_def_key)` with
+<         `meta_graph_def.signature_def[signature_def_key]`. Catching a ValueError
+<         exception thrown by `tf.contrib.get_signature_def_by_key` should be
+<         replaced by catching a KeyError exception.
+< *   `tf.contrib.data`
+<     *   Deprecate, and replace by tf.data.experimental.
+< *   Other:
+<     *   Instead of jemalloc, revert back to using system malloc since it
+<         simplifies build and has comparable performance.
+<     *   Remove integer types from `tf.nn.softplus` and `tf.nn.softsign` OpDefs.
+<         This is a bugfix; these ops were never meant to support integers.
+<     *   Allow subslicing Tensors with a single dimension.
+<     *   Add option to calculate string length in Unicode characters.
+<     *   Add functionality to SubSlice a tensor.
+<     *   Add searchsorted (ie lower/upper_bound) op.
+<     *   Add model explainability to Boosted Trees.
+<     *   Support negative positions for tf.substr.
+<     *   There was previously a bug in the bijector_impl where the
+<         _reduce_jacobian_det_over_event does not handle scalar ILDJ
+<         implementations properly.
+<     *   In tf eager execution, allow re-entering a GradientTape context.
+<     *   Add tf_api_version flag. If --define=tf_api_version=2 flag is passed in,
+<         then bazel will build TensorFlow API version 2.0. Note that TensorFlow
+<         2.0 is under active development and has no guarantees at this point.
+<     *   Add additional compression options to TfRecordWriter.
+<     *   Performance improvements for regex full match operations.
+<     *   Replace tf.GraphKeys.VARIABLES with `tf.GraphKeys.GLOBAL_VARIABLES`.
+<     *   Remove unused dynamic learning rate support.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< (David) Siu-Kei Muk, Ag Ramesh, Anton Dmitriev, Artem Sobolev, Avijit-Nervana,
+< Bairen Yi, Bruno Goncalves, By Shen, candy.dc, Cheng Chen, Clayne Robison,
+< coder3101, Dao Zhang, Elms, Fei Hu, feiquan, Geoffrey Irving, Guozhong Zhuang,
+< hellcom, Hoeseong Kim, imsheridan, Jason Furmanek, Jason Zaman, Jenny Sahng,
+< jiefangxuanyan, Johannes Bannhofer, Jonathan Homer, Koan-Sin Tan, kouml, Loo
+< Rong Jie, Lukas Geiger, manipopopo, Ming Li, Moritz KröGer, Naurril, Niranjan
+< Hasabnis, Pan Daoxin, Peng Yu, pengwa, rasmi, Roger Xin, Roland Fernandez, Sami
+< Kama, Samuel Matzek, Sangjung Woo, Sergei Lebedev, Sergii Khomenko, shaohua,
+< Shaohua Zhang, Shujian2015, Sunitha Kambhampati, tomguluson92, ViníCius Camargo,
+< wangsiyu, weidankong, Wen-Heng (Jack) Chung, William D. Irons, Xin Jin, Yan
+< Facai (颜发才), Yanbo Liang, Yash Katariya, Yong Tang, 在原佐为
+< 
+< # Release 1.11.0
+< 
+< ## Major Features and Improvements
+< 
+< *   Nvidia GPU:
+<     *   Prebuilt binaries are now (as of TensorFlow 1.11) built against cuDNN
+<         7.2 and TensorRT 4. See updated install guides:
+<         [Installing TensorFlow on Ubuntu](https://www.tensorflow.org/install/install_linux#tensorflow_gpu_support)
+< *   Google Cloud TPU:
+<     *   Experimental tf.data integration for Keras on Google Cloud TPUs.
+<     *   Experimental / preview support for eager execution on Google Cloud TPUs.
+< *   DistributionStrategy:
+<     *   Add multi-GPU DistributionStrategy support in tf.keras. Users can now
+<         use `fit`, `evaluate` and `predict` to distribute their model on
+<         multiple GPUs.
+<     *   Add multi-worker DistributionStrategy and standalone client support in
+<         Estimator. See
+<         [README](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/contrib/distribute)
+<         for more details.
+< *   Add C, C++, and Python functions for querying kernels.
+< 
+< ## Breaking Changes
+< 
+< * Keras:
+<   * The default values for tf.keras `RandomUniform`, `RandomNormal`, and `TruncatedNormal` initializers have been changed to match those in external Keras.
+<   * Breaking change: `model.get_config()` on a Sequential model now returns a config dictionary (consistent with other Model instances) instead of a list of configs for the underlying layers.
+< 
+< ## Bug Fixes and Other Changes
+< 
+< *   C++:
+<     *   Changed the signature of SessionFactory::NewSession so that it can
+<         return a meaningful error message on failure.
+< *   tf.data:
+<     *   Remove `num_parallel_parser_calls` argument from
+<         `tf.contrib.data.make_csv_dataset()`. [tf.data] Remove
+<         `num_parallel_parser_calls` argument from
+<         `tf.contrib.data.make_csv_dataset()`.
+<     *   `tf.data.Dataset.list_files()` raises an exception at initialization
+<         time if the argument matches no files.
+<     *   Renamed BigTable class to BigtableTable for clarity
+<     *   Document use of the Cloud Bigtable API
+<     *   Add `tf.contrib.data.reduce_dataset` which can be used to reduce a
+<         dataset to a single element.
+<     *   Generalization of `tf.contrib.data.sliding_window_batch`.
+< *   INC:
+<     *   Runtime improvements to triangular solve.
+< *   `tf.contrib`:
+<     *   Add an `implementation` argument to `tf.keras.layers.LocallyConnected2D`
+<         and `tf.keras.layers.LocallyConnected1D`. The new mode
+<         (`implementation=2`) performs forward pass as a single dense matrix
+<         multiplication, allowing dramatic speedups in certain scenarios (but
+<         worse performance in others - see docstring). The option also allows to
+<         use `padding=same`.
+<     *   Add documentation clarifying the differences between tf.fill and
+<         tf.constant.
+<     *   Add experimental IndexedDatasets.
+<     *   Add selective registration target using the lite proto runtime.
+<     *   Add simple Tensor and DataType classes to TensorFlow Lite Java
+<     *   Add support for bitcasting to/from uint32 and uint64.
+<     *   Added a subclass of Estimator that can be created from a SavedModel
+<         (SavedModelEstimator).
+<     *   Adds leaf index modes as an argument.
+<     *   Allow a different output shape from the input in
+<         tf.contrib.image.transform.
+<     *   Change the state_size order of the StackedRNNCell to be natural order.
+<         To keep the existing behavior, user can add reverse_state_order=True
+<         when constructing the StackedRNNCells.
+<     *   Deprecate self.test_session() in favor of self.session() or
+<         self.cached_session().
+<     *   Directly import tensor.proto.h (the transitive import will be removed
+<         from tensor.h soon).
+<     *   Estimator.train() now supports tf.contrib.summary.\* summaries out of
+<         the box; each call to .train() will now create a separate tfevents file
+<         rather than re-using a shared one.
+<     *   Fix FTRL L2-shrinkage behavior: the gradient from the L2 shrinkage term
+<         should not end up in the accumulator.
+<     *   Fix toco compilation/execution on Windows.
+<     *   GoogleZoneProvider class added to detect which Google Cloud Engine zone
+<         tensorflow is running in.
+<     *   It is now safe to call any of the C API's TF_Delete\* functions on
+<         nullptr.
+<     *   Log some errors on Android to logcat.
+<     *   Match FakeQuant numerics in TFLite to improve accuracy of TFLite
+<         quantized inference models.
+<     *   Optional bucket location check for the GCS Filesystem.
+<     *   Performance enhancements for StringSplitOp & StringSplitV2Op.
+<     *   Performance improvements for regex replace operations.
+<     *   TFRecordWriter now raises an error if .write() fails.
+<     *   TPU: More helpful error messages in TPUClusterResolvers.
+<     *   The legacy_init_op argument to SavedModelBuilder methods for adding
+<         MetaGraphs has been deprecated. Please use the equivalent main_op
+<         argument instead. As part of this, we now explicitly check for a single
+<         main_op or legacy_init_op at the time of SavedModel building, whereas
+<         the check on main_op was previously only done at load time.
+<     *   The protocol used for Estimator training is now configurable in
+<         RunConfig.
+<     *   Triangular solve performance improvements.
+<     *   Unify RNN cell interface between TF and Keras. Add new
+<         get_initial_state() to Keras and TF RNN cell, which will use to replace
+<         the existing zero_state() method.
+<     *   Update initialization of variables in Keras.
+<     *   Updates to "constrained_optimization" in tensorflow/contrib.
+<     *   boosted trees: adding pruning mode.
+<     *   tf.train.Checkpoint does not delete old checkpoints by default.
+<     *   tfdbg: Limit the total disk space occupied by dumped tensor data to 100
+<         GBytes. Add environment variable `TFDBG_DISK_BYTES_LIMIT` to allow
+<         adjustment of this upper limit.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< Aapeli, adoda, Ag Ramesh, Amogh Mannekote, Andrew Gibiansky, Andy Craze, Anirudh Koul, Aurelien Geron, Avijit, Avijit-Nervana, Ben, Benjamin H. Myara, bhack, Brett Koonce, Cao Zongyan, cbockman, cheerss, Chikanaga Tomoyuki, Clayne Robison, cosine0, Cui Wei, Dan J, David, David Norman, Dmitry Klimenkov, Eliel Hojman, Florian Courtial, fo40225, formath, Geoffrey Irving, gracehoney, Grzegorz Pawelczak, Guoliang Hua, Guozhong Zhuang, Herman Zvonimir DošIlović, HuiyangFei, Jacker, Jan HüNnemeyer, Jason Taylor, Jason Zaman, Jesse, Jiang,Zhoulong, Jiawei Zhang, Jie, Joe Yearsley, Johannes Schmitz, Jon Perl, Jon Triebenbach, Jonathan, Jonathan Hseu, Jongmin Park, Justin Shenk, karl@kubx.ca, Kate Hodesdon, Kb Sriram, Keishi Hattori, Kenneth Blomqvist, Koan-Sin Tan, Li Liangbin, Li, Yiqiang, Loo Rong Jie, Madiyar, Mahmoud Abuzaina, Mark Ryan, Matt Dodge, mbhuiyan, melvinljy96, Miguel Mota, Nafis Sadat, Nathan Luehr, naurril, Nehal J Wani, Niall Moran, Niranjan Hasabnis, Nishidha Panpaliya, npow, olicht, Pei Zhang, Peng Wang (Simpeng), Peng Yu, Philipp Jund, Pradeep Banavara, Pratik Kalshetti, qwertWZ, Rakesh Chada, Randy West, Ray Kim, Rholais Lii, Robin Richtsfeld, Rodrigo Silveira, Ruizhi, Santosh Kumar, Seb Bro, Sergei Lebedev, sfujiwara, Shaba Abhiram, Shashi, SneakyFish5, Soila Kavulya, Stefan Dyulgerov, Steven Winston, Sunitha Kambhampati, Surry Shome, Taehoon Lee, Thor Johnsen, Tristan Rice, TShapinsky, tucan, tucan9389, Vicente Reyes, Vilmar-Hillow, Vitaly Lavrukhin, wangershi, weidan.kong, weidankong, Wen-Heng (Jack) Chung, William D. Irons, Wim Glenn, XFeiF, Yan Facai (颜发才), Yanbo Liang, Yong Tang, Yoshihiro Yamazaki, Yuan (Terry) Tang, Yuan, Man, zhaoyongke, ÁRon
+< Ricardo Perez-Lopez, 张天启, 张晓飞
+< 
+< 
+< # Release 1.10.1
+< ## Bug Fixes and Other Changes
+< 
+< * `tf.keras`:
+<   * Fixing keras on Cloud TPUs. No new binaries will be built for Windows.
+< 
+< 
+< # Release 1.10.0
+< 
+< ## Major Features And Improvements
+< 
+< * The `tf.lite` runtime now supports `complex64`.
+< * Initial [Google Cloud Bigtable integration](https://github.com/tensorflow/tensorflow/tree/r1.10/tensorflow/contrib/bigtable) for `tf.data`.
+< * Improved local run behavior in `tf.estimator.train_and_evaluate` which does not reload checkpoints for evaluation.
+< * `RunConfig` now sets device_filters to restrict how workers and PS can communicate. This can speed up training and ensure clean shutdowns in some situations. But if you have jobs that require communication between workers, you will have to set custom session_options in your `RunConfig`.
+< * Moved Distributions and Bijectors from `tf.contrib.distributions` to [Tensorflow Probability (TFP)](https://github.com/tensorflow/probability). `tf.contrib.distributions` is now deprecated and will be removed by the end of 2018.
+< * Adding new endpoints for existing tensorflow symbols. These endpoints are going to be the preferred endpoints going forward and may replace some of the existing endpoints in the future. See below for the complete list. New symbols have been added to the following modules: [`tf.debugging`](https://www.tensorflow.org/versions/master/api_docs/python/tf/debugging), [`tf.dtypes`](https://www.tensorflow.org/versions/master/api_docs/python/tf/dtypes), [`tf.image`](https://www.tensorflow.org/versions/master/api_docs/python/tf/image), [`tf.io`](https://www.tensorflow.org/versions/master/api_docs/python/tf/io), [`tf.linalg`](https://www.tensorflow.org/versions/master/api_docs/python/tf/linalg), [`tf.manip`](https://www.tensorflow.org/versions/master/api_docs/python/tf/manip), [`tf.math`](https://www.tensorflow.org/versions/master/api_docs/python/tf/math), [`tf.quantization`](https://www.tensorflow.org/versions/master/api_docs/python/tf/quantization), [`tf.strings`](https://www.tensorflow.org/versions/master/api_docs/python/tf/strings)
+< 
+< ## Breaking Changes
+< 
+< * Prebuilt binaries are now (as of TensorFlow 1.10) built against NCCL 2.2 and no longer include NCCL in the binary install. TensorFlow usage with multiple GPUs and NCCL requires upgrade to [NCCL 2.2](https://developer.nvidia.com/nccl). See updated install guides: [TensorFlow GPU support](https://www.tensorflow.org/install/gpu) and [Build TensorFlow from source](https://www.tensorflow.org/install/source).
+< * Starting from TensorFlow 1.11, Windows builds will use Bazel. Therefore, we will drop official support for cmake.
+< 
+< ## Bug Fixes and Other Changes
+< 
+< * `tf.data`:
+<   * `tf.contrib.data.group_by_reducer()` is now available via the public API.
+<   * `tf.contrib.data.choose_from_datasets()` is now available via the public API.
+<   * Adding `drop_remainder` argument to `tf.data.Dataset.batch()` and `tf.data.Dataset.padded_batch()`, deprecating `tf.contrib.data.batch_and_drop_remainder()` and `tf.contrib.data.padded_batch_and_drop_remainder()`.
+< * `tf.estimator`:
+<   * `Estimator`s now use custom savers included in `EstimatorSpec` scaffolds for saving SavedModels during export.
+<   * `EstimatorSpec` will now add a default prediction output for export if no `export_output` is provided, eliminating the need to explicitly include a `PredictOutput` object in the `model_fn` for simple use-cases.
+<   * Support sparse_combiner in canned Linear Estimators.
+<   * Added batch normalization to `DNNClassifier`, `DNNRegressor`, and `DNNEstimator`.
+<   * Adding ranking support for boosted trees.
+<   * Adding center bias option for boosted trees.
+< * Add `synchronization` and `aggregation` args to get_variable(). These args will be used for distributed variables.
+< * Add `synchronization` and `aggregation` args to the layer `add_weight()` API. These args will be used for distributed variables.
+< * `tf.losses.*` do not add to the global collection when executing eagerly (to avoid leaking memory).
+< * Support different summary and checkpoint directories in `tf.train.MonitoredTrainingSession()`.
+< * Added IndRNN, IndyGRU, and IndyLSTM cells to `tf.contrib.rnn`.
+< * Add safe static factory functions for SparseTensor and convert all CHECKs to DCHECKs. Using the constructor directly is unsafe and deprecated.
+< * Make the Bigtable client connection pool configurable & increase the default # of connections for performance.
+< * Added derivative of `tf.random_gamma` with respect to the alpha parameter.
+< * Added derivative of `tf.igamma(a, x)` and `tf.igammac(a, x)` with respect to a.
+< * Modified Bessel functions of order zero and one.
+< * Add FillTriangular Bijector to create triangular matrices.
+< * Added support for Type III DCT, and `tf.spectral.idct(type=2|3)`.
+< * Correctly handle CuDNN RNN weight loaded when nest in `TimeDistributed`.
+< * Adding per-element weight support for `WALSComputePartialLhsAndRhsOp`.
+< * ZerosLike and OnesLike ops treated as constants by Graph Transform Tool.
+< * Gamma distribution and the derived distributions (Beta, Dirichlet, Student's t, inverse Gamma) now fully reparameterized.
+< * Java: Experimental wrapper classes to make graph generation easier. Thanks @karllessard and @kbsriram
+< * Build & link in secure gRPC components (switch from the insecure grpc dependency to secure grpc dependency).
+< * Adding new endpoints for existing tensorflow symbols. These endpoints are going to be the preferred endpoints going forward and may replace some of the existing endpoints in the future. List of new endpoints:
+<   * New endpoints in `tf.image` namespace: `tf.image.extract_image_patches`
+<   * New endpoints in `tf.debugging` namespace: `tf.debugging.check_numerics`, `tf.debugging.is_finite`, `tf.debugging.is_inf`, `tf.debugging.is_nan`.
+<   * New endpoints in `tf.dtypes` namespace: `tf.dtypes.as_string`.
+<   * New endpoints in `tf.io` namespace: `tf.io.decode_base64`, `tf.io.decode_compressed`, `tf.io.decode_json_example`, `tf.io.decode_raw`, `tf.io.encode_base64`, `tf.io.matching_files`, `tf.io.parse_tensor`, `tf.io.read_file, `tf.io.write_file`.
+<   * New endpoints in tf.linalg namespace: `tf.linalg.cross`, `tf.linalg.tensor_diag` (corresponds to `tf.diag`), `tf.linalg.tensor_diag_part` (corresponds to `tf.diag_part`).
+<   * New endpoints in tf.manip namespace: `tf.manip.batch_to_space_nd`, `tf.manip.gather_nd`, `tf.manip.reshape`, `tf.manip.reverse`, `tf.manip.scatter_nd`, `tf.manip.space_to_batch_nd`, `tf.manip.tile`
+<   * New endpoints in tf.math namespace: `tf.math.acos`, `tf.math.acosh`, `tf.math.add`, `tf.math.asin`, `tf.math.asinh`, `tf.math.atan`, `tf.math.atan2`, `tf.math.atanh`, `tf.math.betainc`, `tf.math.ceil`, `tf.math.cos`, `tf.math.cosh`, `tf.math.digamma`, `tf.math.equal`, `tf.math.erfc`, `tf.math.exp`, `tf.math.expm1`, `tf.math.floor`, `tf.math.greater`, `tf.math.greater_equal`, `tf.math.igamma`, `tf.math.igammac`, `tf.math.invert_permutation`, `tf.math.less`, `tf.math.less_equal`, `tf.math.lgamma`, `tf.math.log`, `tf.math.log1p`, `tf.math.logical_and`, `tf.math.logical_not`, `tf.math.logical_or`, `tf.math.maximum`, `tf.math.minimum`, `tf.math.not_equal`, `tf.math.polygamma`, `tf.math.reciprocal`, `tf.math.rint`, `tf.math.rsqrt`, `tf.math.segment_max`, `tf.math.segment_mean`, `tf.math.segment_min`, `tf.math.segment_prod`, `tf.math.segment_sum`, `tf.math.sin`, `tf.math.sinh`, `tf.math.softplus`, `tf.math.softsign`, `tf.math.squared_difference`, `tf.math.tan`, `tf.math.unsorted_segment_max`, `tf.math.unsorted_segment_min`, `tf.math.unsorted_segment_prod`, `tf.math.unsorted_segment_sum`, `tf.math.zeta`.
+<   * New endpoints in `tf.quantization` namespace: `tf.quantization.dequantize`, `tf.quantization.fake_quant_with_min_max_args`, `tf.quantization.fake_quant_with_min_max_args_gradient`, `tf.quantization.fake_quant_with_min_max_vars`,  `tf.quantization.fake_quant_with_min_max_vars_gradient`, `tf.quantization.fake_quant_with_min_max_vars_per_channel`,  `tf.quantization.fake_quant_with_min_max_vars_per_channel_gradient`.
+<   * New endpoints in tf.strings namespace: `tf.strings.join` (corresponds to `tf.string_join`), `tf.strings.regex_replace`, `tf.strings.to_number` (corresponds to `tf.string_to_number`), `tf.strings.strip` (corresponds to `tf.string_strip`), `tf.strings.substr`, `tf.strings.to_hash_bucket` (corresponds to `tf.string_to_hash_bucket`), `tf.strings.to_hash_bucket_fast` (corresponds to `tf.string_to_hash_bucket_fast`), `tf.strings.to_hash_bucket_strong` (corresponds to `tf.string_to_hash_bucket_strong`).
+< 
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< Ag Ramesh, Alex Wiltschko, Alexander Pantyukhin, Amogh Mannekote, An Jiaoyang, Andrei Nigmatulin, Andrew Ginns, BjøRn Moholt, Brett Koonce, Chengzhi Chen, Chinmay Das, Christian Ertler, Christoph Boeddeker, Clayne Robison, Courtial Florian, ctiijima, Dan Douthit, Dan J, Dan Ringwalt, EFanZh, Emanuele Ballarin, eqy, Evgeniy Zheltonozhskiy, Freedom" Koan-Sin Tan, FréDéRic Branchaud-Charron, G K, gracehoney, Guillaume Klein, Guozhong Zhuang, Hsien-Yang Li, hsm207, ImSheridan, Jayaram Bobba, Jiandong Ruan, Jie, Joel Shor, Jonas Rauber, Jongmin Baek, jsawruk, Karan Kaw, Karl Lessard, karl@kubx.ca, Kb Sriram, KinmanLam, leiiwang, Li, Yiqiang, Loo Rong Jie, Mahmoud Abuzaina, Mahmoud Aslan, ManHyuk, Martin Patz, Martin Zeitler, mktozk, Mohammad Ashraf Bhuiyan, mrTsjolder, Naman Bhalla, Nick Felt, Nicolas Lopez, Niranjan Hasabnis, Nishidha Panpaliya, Nitish, nrstott, Nutti, Parag Jain, PeterLee, Philipp Jund, Rach L, Rafal Wojdyla, Roland Zimmermann, Sergei Lebedev, SneakyFish5, Soila Kavulya, Sriram Veturi, Steven Schmatz, Taehoon Lee, Tang, Wenyi, Taras Sereda, Ted Chang, Tim Zaman, Tristan Rice, tucan, vchigrin, Vikram Tiwari, Vincent, WeberXie, William D. Irons, Yan Facai (颜发才), Yong Tang, Yu Yi, Yuxin Wu, Zé ViníCius
+< 
+< # Release 1.9.0
+< 
+< ## Major Features And Improvements
+< * Updated docs for `tf.keras`: New Keras-based [get started](http://tensorflow.org/versions/r1.9/get_started),
+<   and [programmers guide page](http://tensorflow.org/versions/r1.9/programmers_guide/keras).
+< * Update `tf.keras` to the Keras 2.1.6 API.
+< * Added [`tf.keras.layers.CuDNNGRU`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/keras/layers/CuDNNGRU) and [`tf.keras.layers.CuDNNLSTM`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/keras/layers/CuDNNLSTM) layers. [Try it](https://colab.sandbox.google.com/github/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/examples/nmt_with_attention/nmt_with_attention.ipynb?linkId=53292082).
+< * Adding support of core [feature columns](https://www.tensorflow.org/get_started/feature_columns) and [losses](https://www.tensorflow.org/api_docs/python/tf/losses) to [gradient boosted trees estimators](https://github.com/tensorflow/models/tree/master/official/boosted_trees).
+< * The [python interface](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/lite)
+<   for the [TFLite Optimizing Converter](https://github.com/tensorflow/tensorflow/blob/master/tensorflow/lite/toco/README.md)
+<   has been expanded, and the command line interface (AKA: `toco`, `tflite_convert`) is once again
+<   included in the standard `pip` installation.
+< * Improved data-loading and text processing with:
+<     * [`tf.decode_compressed`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/decode_compressed)
+<     * [`tf.string_strip`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/string_strip)
+<     * [`tf.strings.regex_full_match`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/strings/regex_full_match)
+< * Added experimental support for new pre-made Estimators:
+<   * [`tf.contrib.estimator.BaselineEstimator`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/contrib/estimator/BaselineEstimator)
+<   * [`tf.contrib.estimator.RNNClassifier`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/contrib/estimator/RNNEstimator)
+<   * [`tf.contrib.estimator.RNNEstimator`](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/contrib/estimator/RNNClassifier)
+< * The [distributions.Bijector](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/contrib/distributions/bijectors/Bijector)
+<   API supports broadcasting for Bijectors with new API changes.
+<   
+< ## Breaking Changes
+<   * If you're opening empty variable scopes; replace `variable_scope('', ...)` by
+<     `variable_scope(tf.get_variable_scope(), ...)`.
+<   * Headers used for building custom ops have been moved from site-packages/external into site-packages/tensorflow/include/external.
+< 
+< ## Bug Fixes and Other Changes
+< 
+< *   `tfe.Network` is deprecated. Please inherit from `tf.keras.Model`.
+< *   Layered variable names have changed in the following conditions:
+<     *   Using `tf.keras.layers` with custom variable scopes.
+<     *   Using `tf.layers` in a subclassed `tf.keras.Model` class. See
+<         [here](https://www.tensorflow.org/versions/r1.9/api_docs/python/tf/layers)
+<         for more details
+< *   `tf.data`:
+<     *   `Dataset.from_generator()` now accepts an `args` list, in order to
+<         create nested generators.
+<     *   `Dataset.list_files()` now produces deterministic results when
+<         `shuffle=False` or a `seed` is passed.
+<     *   `tf.contrib.data.sample_from_datasets()` and
+<         `tf.contrib.data.choose_from_datasets()` make it easier to sample or
+<         deterministically choose elements from multiple datasets.
+<     *   `tf.contrib.data.make_csv_dataset()` now supports line breaks in quoted
+<         strings, and two infrequently used arguments removed.
+<     *   (C++) `DatasetBase::DebugString()` is now `const`.
+<     *   (C++) `DatasetBase::MakeIterator()` has been renamed to
+<         `DatasetBase::MakeIteratorInternal()`.
+<     *   (C++) `IteratorBase::Initialize()` method was added to support raising
+<         errors during iterator construction.
+< *   Eager Execution:
+<     *   Added the ability to pause recording operations for gradient computation
+<         via `tf.GradientTape.stop_recording`.
+<     *   Updated documentation, introductory notebooks.
+< *   `tf.keras`:
+<     *   Move Keras code out of _impl folder and remove API files.
+<     *   `tf.keras.Model.save_weights` now saves in TensorFlow format by default.
+<     *   Enable dataset iterators to be passed to `tf.keras.Model` training/eval
+<         methods.
+< *   TensorFlow Debugger (tfdbg) CLI: fix an issue in which the TensorBoard
+<     Debugger Plugin could not handle total source file size exceeding gRPC
+<     message size limit (4 MB).
+< *   `tf.contrib`:
+<     *   `tf.contrib.framework.zero_initializer` supports ResourceVariable.
+<     *   Adding "constrained_optimization" to tensorflow/contrib.
+< *   Other:
+<     *   Add GCS Configuration Ops.
+<     *   Changing signature of `MakeIterator` to enable propagating error status.
+<     *   KL divergence for two Dirichlet distributions.
+<     *   More consistent GcsFileSystem behavior for certain reads past EOF.
+<     *   Update benchmark for tf.scan to match ranges across eager and graph
+<         modes.
+<     *   Fixed bug in `tf.reduce_prod gradient` for complex dtypes.
+<     *   Allow the use of '.' in variables (e.g. "hparams.parse('a.b=1.0')"),
+<         which would previously raise an error. This will correspond to an
+<         attribute name with an embedded '.' symbol (e.g. 'a.b'), which can only
+<         be accessed indirectly (e.g. through getattr and setattr). To set this
+<         up the user will first need to explicitly add the variable to the hparam
+<         object (e.g. "hparams.add_hparam(name='a.b', value=0.0)").
+<     *   Benchmark for tf.scan in graph and eager modes.
+<     *   Added complex128 support to FFT, FFT2D, FFT3D, IFFT, IFFT2D, and IFFT3D.
+<     *   Making ids unique in `nn.embedding_lookup_sparse`. This helps to reduce
+<         RPC calls for looking up the embeddings when there are repeated ids in
+<         the batch.
+<     *   Support indicator column in boosted trees.
+<     *   Prevent `tf.gradients()` from backpropagating through integer tensors.
+<     *   LinearOperator[1D,2D,3D]Circulant added to `tensorflow.linalg`.
+<     *   Conv3D, Conv3DBackpropInput, Conv3DBackpropFilter now supports
+<         arbitrary.
+<     *   Added `tf.train.Checkpoint` for reading/writing object-based
+<         checkpoints.
+<     *   Added LinearOperatorKronecker, a dense-free implementation of the
+<         Kronecker Product.
+<     *   Allow LinearOperator to broadcast.
+<     *   SavedModelBuilder will now deduplicate asset names that point to files
+<         with the same basename and the same contents. Note that this may result
+<         in new asset files included in SavedModels in cases where assets with
+<         the same name but different contents were previously overwriting each
+<         other.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< Abdullah Alrasheed, Achal Shah, Ad-530, ADiegoCAlonso, Aditya Yogi, Ag Ramesh, akindyakov, Andy Kernahan, Anya Petrova, Aurelien Geron, Ben, Ben Barsdell, Bhavani-Subramanian, braincodercn, Brett Koonce, Brian Nemsick, Brian Zier, Bryan Heden, candy.dc, cclauss, Clayne Robison, ctiijima, Dalmo Cirne, David Norman, David T.H. Kao, DosLin, ekelsen, Elson Rodriguez, Erik Smistad, Felix Abecassis, Fergal Cotter, fo40225, foo0x29a, Freedom" Koan-Sin Tan, FréDéRic Branchaud-Charron, gdh1995, Geoffrey Irving, Giuseppe, gracehoney, Guido Zuidhof, Guillaume Klein, Guozhong Zhuang, Haggai, Harald Husum, imsheridan, Ivan Zhang, Jan Zikes, Jayaram Bobba, Jesse Benson, Jesse Gumz, Jiajia Li, Jie, jinghuangintel, Jingwen, jjsjann123, Joe Yearsley, Joel Hestness, Joel Shor, josephyearsley, Junpeng Lao, Karol M. Langner, Kb Sriram, krantideep95, Krish Ravindranath, Letian Feng, Loo Rong Jie, Lukas Geiger, Maciej, Mahmoud Abuzaina, ManHyuk, Mark Ryan, mbhuiyan, Michal Turek, Mostafa Alaa, Myungsung Kwak, Nand Dalal, Nehal J Wani, Neil Tenenholtz, ngc92, Nicholas Nadeau, P.Eng., Avs, Niranjan Hasabnis, P-Hidringer, Paul Van Eck, Peng Yu, Qing Zhao, Qingying Chen, Quanlong, Rajendra Arora, Rholais Lii, rmanyari, Robin Richtsfeld, Russell Klopfer, Sagi, Sam Sendelbach, Sandeep N Gupta, Sandip Giri, Sarah Edkins, Scott Tseng, Sdalbsoo, Sergii Khomenko, Seungwoo Choi (Biggie), Seyed Majid Azimi, Shaoning Zeng, shengfuintel, Siu Kei, Muk, Smit Shilu, soonson, Stefan Schweter, Sukhwan Kim, Sunitha Kambhampati, Taehoon Lee, tamimaddari82, Tang, Wenyi, Ted Chang, u2takey, Utkarsh Upadhyay, Vadim Markovtsev, voegtlel, Wai Hon Law, wangsiyu, Wenhao Hu, wenhao.hu, William D. Irons, Yan Facai (颜发才), Yanbo Liang, Yihong Wang, Yilei (Dolee) Yang, Yong Tang, Yuan (Terry) Tang
+< 
+< # Release 1.8.0
+< 
+< ## Major Features And Improvements
+< * Can now pass `tf.contrib.distribute.MirroredStrategy()` to `tf.estimator.RunConfig()` to run an Estimator model on multiple GPUs on one machine.
+< * Add `tf.contrib.data.prefetch_to_device()`, which supports prefetching to GPU memory.
+< * Added Gradient Boosted Trees as pre-made Estimators: BoostedTreesClassifier, BoostedTreesRegressor.
+< * Add 3rd generation pipeline config for Cloud TPUs which improves performance and usability.
+< * `tf.contrib.bayesflow` is moving out to it's own repo.
+< * Added `tf.contrib.{proto,rpc}` to allow generic proto parsing and RPC communication<sup>[1](#rpc-issue)</sup>.
+< 
+< ## Bug Fixes and Other Changes
+< * `tf.data`:
+<   * Add `tf.contrib.data.prefetch_to_device`, which enables prefetching dataset elements to GPU memory.
+<   * Add `tf.contrib.data.AUTOTUNE`, which allows the tf.data runtime to automatically tune the prefetch buffer sizes based on your system and environment.
+<   * Add `tf.contrib.data.make_csv_dataset` for building datasets of CSV files.
+< * Eager Execution:
+<   * With eager execution Datasets can now be used as standard python iterators (`for batch in dataset:`). Both `Dataset.__iter__()` and `Dataset.make_one_shot_iterator()` can now be used to create iterators when eager execution is enabled.
+<   * Automatic device placement has been enabled (i.e., use a GPU if available automatically, without requiring an explicit `with tf.device(“/gpu:0”)`) (Fixes #14133)
+<   * `tf.GradientTape` has moved out of contrib.
+< * `tf.keras`:
+<   * Added the fashion mnist dataset.
+<   * New data preprocessing functions: `image/random_brightness`, `sequence/TimeseriesGenerator`, and `text/hashing_trick`.
+< * Accelerated Linear Algebra (XLA):
+<   * Select and scatter in reference util and evaluator now use lexicographical order to break ties.
+< * TensorFlow Debugger (tfdbg) CLI:
+<   * During tensor-filter operations, allow exclusion of nodes by regular expressions.
+<   * Fix spurious background colors in some text terminals.
+< * `tf.contrib`:
+<   * Add meta-distribution BatchReshape which reshapes batch dimensions.
+<   * `tf.contrib.layers.recompute_grad` works for explicit gradient checkpointing on TPU.
+<   * Add `tf.contrib.framework.argsort`.
+<   * Allow `DNNBoostedTreeCombinedEstimator` to work with core versions of feature columns and losses.
+<   * Add non-linear image warping ops: `tf.contrib.image.sparse_image_warp`, `tf.contrib.image.dense_image_warp`, and `tf.contrib.image.interpolate_spline`.
+<   * Fix bug in `tf.contrib.opt.MultitaskOptimizerWrapper` where types of tensors were mismatched.
+< * Other:
+<   * Low-level graph construction now calls the TensorFlow C API. This change should be invisible to most users, but can be disabled by setting the environment variable `TF_C_API_GRAPH_CONSTRUCTION=0` in this release. Future releases will remove the ability to disable this change. Please [file a bug](https://github.com/tensorflow/tensorflow/issues/new) if you find yourself using this escape hatch.
+<   * Add description of shapes and a pointer to tutorial notebook in `tf.distributions.Distribution`.
+<   * Update scatter operations:
+<     * Add `tf.scatter_min` and `tf.scatter_max`
+<     * Extend scatter operations to work with a scalar update parameter.
+<   * Move cuDNN RNN ops to core for use in TensorFlow codebase only.
+<   * Add `float64` support for `Conv2d`, `Conv2dBackpropInput`, and `Conv2dBackpropFilter`.
+<   * Add `float64` support for `AvgPool`/`AvgPoolGrad`.
+<   * Make graph name scope thread local so that they work correctly in multi-threaded environments.
+<   * Update nsync synchronization library to avoid slow primitives on Linux.
+<   * Removed need to put nsync/public on C include path when building custom ops.
+<   * Add `tf.image.psnr`, `tf.image.ssim`, `tf.image.ssim_multiscale`, `tf.image.image_gradients`, `tf.image.sobel_edges`.
+<   * Add links to https://js.tensorflow.org.
+<   * Fix non-uniformity of orthogonal matrices.
+<   * Fix bug where multi-image Estimator eval summaries were not displayed correctly.
+< 
+< <a name="rpc-issue"><sup>1</sup></a> The cancellation logic of the RPC op contains a concurrency error. A fix has been submitted to master and will be part of the next release.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< 4d55397500, Aghasy, Alan Du, Alan Lee, Alan Yee, Alex Wiltschko, Animesh Karnewar, Ankit Gupta, Anton Matosov, Aris L, Ben Barsdell, Brent Yi, Brett Koonce, Carl Thomé, cbockman, Chikanaga Tomoyuki, Chris Tava, CéDric Deltheil, Dahan Gong, Dalmo Cirne, Daniel Erenrich, David Norman, DavidNorman, Edd Wilder-James, Fanjin Zeng, Felix Abecassis, fo40225, George Sterpu, Giovanni Terlingen, Gor Baghdasaryan, Guillaume Klein, Hanchen Li, Ilya Polenov, Jakub Kolodziejczyk, Jason Sadler, Jayaram Bobba, Jerry Liu, jinghuangintel, Jiongyan Zhang (张炯衍), Joel Shor, Jong Wook Kim, Julian Eisenschlos, Karl Lessard, Krish Ravindranath, Loo Rong Jie, Lukas Geiger, Luke Iwanski, Mahmoud Abuzaina, ManHyuk, Marvin Richter, Maximilian Mitchell, Mohammad Ashraf Bhuiyan, msofka, Mustafa Kasap, Nathan Burnham, Nathan Luehr, Naveen Marri, ngc92, nio1814, Oleg Zabluda, Ou Changkun, Panos Ipeirotis, Paul Van Eck, Peter Lee, Piotr Czapla, qjivy, Rholais Lii, Rodrigo Formigone, Russell Klopfer, ryantimjohn, Sang Han, SebastiáN RamíRez, shengfuintel, Siby Jose Plathottam, Silver Chan, Stanislaw Antol, Taehoon Lee, Tarang Chugh, Ted Chang, Thomas Bastiani, Xian Xu, Xiaoming (Jason) Cui, Yan Facai (颜发才), yaox12, Yashal Shakti Kanungo, Yong Tang, Yuan (Terry) Tang, Yuxin Wu, Ziyue(Louis) Lu
+< 
+< # Release 1.7.0
+< 
+< ## Major Features And Improvements
+< * Eager mode is moving out of contrib, try `tf.enable_eager_execution()`.
+< * Graph rewrites emulating fixed-point quantization compatible with TensorFlow Lite, supported by new `tf.contrib.quantize` package.
+< * Easily customize gradient computation with `tf.custom_gradient`.
+< * [TensorBoard Debugger Plugin](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/plugins/debugger/README.md), the graphical user interface (GUI) of TensorFlow Debugger (tfdbg), is now in alpha.
+< * Experimental support for reading a sqlite database as a `Dataset` with new `tf.contrib.data.SqlDataset`.
+< * Distributed Mutex / CriticalSection added to `tf.contrib.framework.CriticalSection`.
+< * Better text processing with `tf.regex_replace`.
+< * Easy, efficient sequence input with `tf.contrib.data.bucket_by_sequence_length`
+< * Initial support for `tf.contrib.tensorrt` that enables native TensorRT in
+<   TensorFlow.
+< 
+< ## Bug Fixes and Other Changes
+< * Accelerated Linear Algebra (XLA):
+<   * Add `MaxPoolGradGrad` support for XLA
+<   * CSE pass from Tensorflow is now disabled in XLA.
+< * `tf.data`:
+<   * `tf.data.Dataset`
+<     * Add support for building C++ Dataset op kernels as external libraries, using the `tf.load_op_library()` mechanism.
+<     * `Dataset.list_files()` now shuffles its output by default.
+<     * `Dataset.shuffle(..., seed=tf.constant(0, dtype=tf.int64))` now yields the same sequence of elements as `Dataset.shuffle(..., seed=0)`.
+<   * Add `num_parallel_reads` argument to `tf.data.TFRecordDataset`.
+< * `tf.contrib`:
+<   * `tf.contrib.bayesflow.halton_sequence` now supports randomization.
+<   * Add support for scalars in `tf.contrib.all_reduce`.
+<   * Add `effective_sample_size` to `tf.contrib.bayesflow.mcmc_diagnostics`.
+<   * Add `potential_scale_reduction` to `tf.contrib.bayesflow.mcmc_diagnostics`.
+<   * Add `BatchNormalization`, `Kumaraswamy` bijectors.
+<   * Deprecate `tf.contrib.learn`. Please check contrib/learn/README.md for instructions on how to convert existing code.
+<   * `tf.contrib.data`
+<     * Remove deprecated `tf.contrib.data.Dataset`, `tf.contrib.data.Iterator`, `tf.contrib.data.FixedLengthRecordDataset`, `tf.contrib.data.TextLineDataset`, and `tf.contrib.data.TFRecordDataset` classes.
+<     * Added `bucket_by_sequence_length`, `sliding_window_batch`, and `make_batched_features_dataset`
+<   * Remove unmaintained `tf.contrib.ndlstm`. You can find it externally at https://github.com/tmbarchive/tfndlstm.
+<   * Moved most of `tf.contrib.bayesflow` to its own repo: `tfp`
+< * Other:
+<   * tf.py_func now reports the full stack trace if an exception occurs.
+<   * Integrate `TPUClusterResolver` with GKE's integration for Cloud TPUs.
+<   * Add a library for statistical testing of samplers.
+<   * Add Helpers to stream data from the GCE VM to a Cloud TPU.
+<   * Integrate ClusterResolvers with TPUEstimator.
+<   * Unify metropolis_hastings interface with HMC kernel.
+<   * Move LIBXSMM convolutions to a separate --define flag so that they are disabled by default.
+<   * Fix `MomentumOptimizer` lambda.
+<   * Reduce `tfp.layers` boilerplate via programmable docstrings.
+<   * Add `auc_with_confidence_intervals`, a method for computing the AUC and confidence interval with linearithmic time complexity.
+<   * `regression_head` now accepts customized link function, to satisfy the usage that user can define their own link function if the `array_ops.identity` does not meet the requirement.
+<   * Fix `initialized_value` and `initial_value` behaviors for `ResourceVariables` created from `VariableDef` protos.
+<   * Add TensorSpec to represent the specification of Tensors.
+<   * Constant folding pass is now deterministic.
+<   * Support `float16` `dtype` in `tf.linalg.*`.
+<   * Add `tf.estimator.export.TensorServingInputReceiver` that allows `tf.estimator.Estimator.export_savedmodel` to pass raw tensors to model functions.
+< 
+< ## Deprecations
+< 
+< * TensorFlow 1.7 may be the last time we support Cuda versions below 8.0.
+<   Starting with TensorFlow 1.8 release, 8.0 will be the minimum supported
+<   version.
+< * TensorFlow 1.7 may be the last time we support cuDNN versions below 6.0.
+<   Starting with TensorFlow 1.8 release, 6.0 will be the minimum supported
+<   version.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< 4d55397500, Abe, Alistair Low, Andy Kernahan, Appledore, Ben, Ben Barsdell, Boris Pfahringer, Brad Wannow, Brett Koonce, Carl Thomé, cclauss, Chengzhi Chen, Chris Drake, Christopher Yeh, Clayne Robison, Codrut Grosu, Daniel Trebbien, Danny Goodman, David Goodwin, David Norman, Deron Eriksson, Donggeon Lim, Donny Viszneki, DosLin, DylanDmitri, Francisco Guerrero, Fred Reiss, gdh1995, Giuseppe, Glenn Weidner, gracehoney, Guozhong Zhuang, Haichen "Hc" Li, Harald Husum, harumitsu.nobuta, Henry Spivey, hsm207, Jekyll Song, Jerome, Jiongyan Zhang, jjsjann123, John Sungjin Park, Johnson145, JoshVarty, Julian Wolff, Jun Wang, June-One, Kamil Sindi, Kb Sriram, Kdavis-Mozilla, Kenji, lazypanda1, Liang-Chi Hsieh, Loo Rong Jie, Mahesh Bhosale, MandarJKulkarni, ManHyuk, Marcus Ong, Marshal Hayes, Martin Pool, matthieudelaro, mdfaijul, mholzel, Michael Zhou, Ming Li, Minmin Sun, Myungjoo Ham, MyungsungKwak, Naman Kamra, Peng Yu, Penghao Cen, Phil, Raghuraman-K, resec, Rohin Mohanadas, Sandeep N Gupta, Scott Tseng, seaotterman, Seo Sanghyeon, Sergei Lebedev, Ted Chang, terrytangyuan, Tim H, tkunic, Tod, vihanjain, Yan Facai (颜发才), Yin Li, Yong Tang, Yukun Chen, Yusuke Yamada
+< 
+< 
+< 
+< # Release 1.6.0
+< 
+< ## Breaking Changes
+< * Prebuilt binaries are now built against CUDA 9.0 and cuDNN 7.
+< * Prebuilt binaries will use AVX instructions. This may break TF on older CPUs.
+< 
+< ## Major Features And Improvements
+< * New Optimizer internal API for non-slot variables. Descendants of AdamOptimizer that access _beta[12]_power will need to be updated.
+< * `tf.estimator.{FinalExporter,LatestExporter}` now export stripped SavedModels. This improves forward compatibility of the SavedModel.
+< * FFT support added to XLA CPU/GPU.
+< 
+< ## Bug Fixes and Other Changes
+< * Documentation updates:
+<   * Added a second version of Getting Started, which is aimed at ML
+< newcomers.
+<   * Clarified documentation on `resize_images.align_corners` parameter.
+<   * Additional documentation for TPUs.
+< * Google Cloud Storage (GCS):
+<   * Add client-side throttle.
+<   * Add a `FlushCaches()` method to the FileSystem interface, with an implementation for GcsFileSystem.
+< * Other:
+<   * Add `tf.contrib.distributions.Kumaraswamy`.
+<   * `RetryingFileSystem::FlushCaches()` calls the base FileSystem's `FlushCaches()`.
+<   * Add `auto_correlation` to distributions.
+<   * Add `tf.contrib.distributions.Autoregressive`.
+<   * Add SeparableConv1D layer.
+<   * Add convolutional Flipout layers.
+<   * When both inputs of `tf.matmul` are bfloat16, it returns bfloat16, instead of float32.
+<   * Added `tf.contrib.image.connected_components`.
+<   * Add `tf.contrib.framework.CriticalSection` that allows atomic variable access.
+<   * Output variance over trees predictions for classifications tasks.
+<   * For `pt` and `eval` commands, allow writing tensor values to filesystem as numpy files.
+<   * gRPC: Propagate truncated errors (instead of returning gRPC internal error).
+<   * Augment `parallel_interleave` to support 2 kinds of prefetching.
+<   * Improved XLA support for C64-related ops log, pow, atan2, tanh.
+<   * Add probabilistic convolutional layers.
+< 
+< ## API Changes
+< * Introducing `prepare_variance` boolean with default setting to False for backward compatibility.
+< * Move `layers_dense_variational_impl.py` to `layers_dense_variational.py`.
+< 
+< ## Known Bugs
+< * Using XLA:GPU with CUDA 9 and CUDA 9.1 results in garbage results and/or
+<   `CUDA_ILLEGAL_ADDRESS` failures.
+< 
+<   Google discovered in mid-December 2017 that the PTX-to-SASS compiler in CUDA 9
+<   and CUDA 9.1 sometimes does not properly compute the carry bit when
+<   decomposing 64-bit address calculations with large offsets (e.g. `load [x +
+<   large_constant]`) into 32-bit arithmetic in SASS.
+< 
+<   As a result, these versions of `ptxas` miscompile most XLA programs which use
+<   more than 4GB of temp memory.  This results in garbage results and/or
+<   `CUDA_ERROR_ILLEGAL_ADDRESS` failures.
+< 
+<   A fix in CUDA 9.1.121 is expected in late February 2018.  We do not expect a
+<   fix for CUDA 9.0.x.  Until the fix is available, the only workaround is to
+<   [downgrade](https://developer.nvidia.com/cuda-toolkit-archive) to CUDA 8.0.x
+<   or disable XLA:GPU.
+< 
+<   TensorFlow will print a warning if you use XLA:GPU with a known-bad version of
+<   CUDA; see e00ba24c4038e7644da417ddc639169b6ea59122.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< 4d55397500, Ag Ramesh, Aiden Scandella, Akimasa Kimura, Alex Rothberg, Allen Goodman,
+< amilioto, Andrei Costinescu, Andrei Nigmatulin, Anjum Sayed, Anthony Platanios,
+< Anush Elangovan, Armando Fandango, Ashish Kumar Ram, Ashwini Shukla, Ben, Bhavani Subramanian,
+< Brett Koonce, Carl Thomé, cclauss, Cesc, Changming Sun, Christoph Boeddeker, Clayne Robison,
+< Clemens Schulz, Clint (Woonhyuk Baek), codrut3, Cole Gerdemann, Colin Raffel, Daniel Trebbien,
+< Daniel Ylitalo, Daniel Zhang, Daniyar, Darjan Salaj, Dave Maclachlan, David Norman, Dong--Jian,
+< dongsamb, dssgsra, Edward H, eladweiss, elilienstein, Eric Lilienstein, error.d, Eunji Jeong, fanlu,
+< Florian Courtial, fo40225, Fred, Gregg Helt, Guozhong Zhuang, Hanchen Li, hsm207, hyunyoung2,
+< ImSheridan, Ishant Mrinal Haloi, Jacky Ko, Jay Young, Jean Flaherty, Jerome, JerrikEph, Jesse
+< Kinkead, jfaath, Jian Lin, jinghuangintel, Jiongyan Zhang, Joel Hestness, Joel Shor, Johnny Chan,
+< Julian Niedermeier, Julian Wolff, JxKing, K-W-W, Karl Lessard, Kasper Marstal, Keiji Ariyama,
+< Koan-Sin Tan, Loki Der Quaeler, Loo Rong Jie, Luke Schaefer, Lynn Jackson, ManHyuk, Matt Basta,
+< Matt Smith, Matthew Schulkind, Michael, michaelkhan3, Miguel Piedrafita, Mikalai Drabovich,
+< Mike Knapp, mjwen, mktozk, Mohamed Aly, Mohammad Ashraf Bhuiyan, Myungjoo Ham, Naman Bhalla,
+< Namrata-Ibm, Nathan Luehr, nathansilberman, Netzeband, Niranjan Hasabnis, Omar Aflak, Ozge
+< Yalcinkaya, Parth P Panchal, patrickzzy, Patryk Chrabaszcz, Paul Van Eck, Paweł Kapica, Peng Yu,
+< Philip Yang, Pierre Blondeau, Po-Hsien Chu, powderluv, Puyu Wang, Rajendra Arora, Rasmus, Renat
+< Idrisov, resec, Robin Richtsfeld, Ronald Eddy Jr, Sahil Singh, Sam Matzek, Sami Kama, sandipmgiri,
+< Santiago Castro, Sayed Hadi Hashemi, Scott Tseng, Sergii Khomenko, Shahid, Shengpeng Liu, Shreyash
+< Sharma, Shrinidhi Kl, Simone Cirillo, simsicon, Stanislav Levental, starsblinking, Stephen Lumenta,
+< Steven Hickson, Su Tang, Taehoon Lee, Takuya Wakisaka, Ted Chang, Ted Ying, Tijmen Verhulsdonck,
+< Timofey Kondrashov, vade, vaibhav, Valentin Khrulkov, vchigrin, Victor Costan, Viraj Navkal,
+< Vivek Rane, wagonhelm, Yan Facai (颜发才), Yanbo Liang, Yaroslav Bulatov, yegord, Yong Tang,
+< Yoni Tsafir, yordun, Yuan (Terry) Tang, Yuxin Wu, zhengdi, Zhengsheng Wei, 田传武
+< 
+< # Release 1.5.0
+< 
+< ## Breaking Changes
+< * Prebuilt binaries are now built against CUDA 9.0 and cuDNN 7.
+< * Starting from 1.6 release, our prebuilt binaries will use AVX instructions.
+<   This may break TF on older CPUs.
+< 
+< ## Major Features And Improvements
+< * [Eager execution](https://github.com/tensorflow/tensorflow/tree/r1.5/tensorflow/contrib/eager)
+<   preview version is now available.
+< * [TensorFlow Lite](https://github.com/tensorflow/tensorflow/tree/r1.5/tensorflow/lite)
+<   dev preview is now available.
+< * CUDA 9.0 and cuDNN 7 support.
+< * Accelerated Linear Algebra (XLA):
+<   * Add `complex64` support to XLA compiler.
+<   * `bfloat` support is now added to XLA infrastructure.
+<   * Make `ClusterSpec` propagation work with XLA devices.
+<   * Use a deterministic executor to generate XLA graph.
+< * `tf.contrib`:
+<   * `tf.contrib.distributions`:
+<     * Add `tf.contrib.distributions.Autoregressive`.
+<     * Make `tf.contrib.distributions` QuadratureCompound classes support batch
+<     * Infer `tf.contrib.distributions.RelaxedOneHotCategorical` `dtype` from arguments.
+<     * Make `tf.contrib.distributions` quadrature family parameterized by
+<       `quadrature_grid_and_prob` vs `quadrature_degree`.
+<     * `auto_correlation` added to `tf.contrib.distributions`
+<   * Add `tf.contrib.bayesflow.layers`, a collection of probabilistic (neural) layers.
+<   * Add `tf.contrib.bayesflow.halton_sequence`.
+<   * Add `tf.contrib.data.make_saveable_from_iterator.`
+<   * Add `tf.contrib.data.shuffle_and_repeat`.
+<   * Add new custom transformation: `tf.contrib.data.scan()`.
+<   * `tf.contrib.distributions.bijectors`:
+<     * Add `tf.contrib.distributions.bijectors.MaskedAutoregressiveFlow`.
+<     * Add `tf.contrib.distributions.bijectors.Permute`.
+<     * Add `tf.contrib.distributions.bijectors.Gumbel`.
+<     * Add `tf.contrib.distributions.bijectors.Reshape`.
+<     * Support shape inference (i.e., shapes containing -1) in the Reshape bijector.
+< * Add `streaming_precision_recall_at_equal_thresholds,` a method for computing
+<   streaming precision and recall with `O(num_thresholds + size of predictions)`
+<   time and space complexity.
+< * Change `RunConfig` default behavior to not set a random seed, making random
+<   behavior independently random on distributed workers. We expect this to
+<   generally improve training performance. Models that do rely on determinism
+<   should set a random seed explicitly.
+< * Replaced the implementation of `tf.flags` with `absl.flags`.
+< * Add support for `CUBLAS_TENSOR_OP_MATH` in fp16 GEMM
+< * Add support for CUDA on NVIDIA Tegra devices
+< 
+< ## Bug Fixes and Other Changes
+< * Documentation updates:
+<   * Clarified that you can only install TensorFlow on 64-bit machines.
+<   * Added a short doc explaining how `Estimator`s save checkpoints.
+<   * Add documentation for ops supported by the `tf2xla` bridge.
+<   * Fix minor typos in the doc of `SpaceToDepth` and `DepthToSpace`.
+<   * Updated documentation comments in `mfcc_mel_filterbank.h` and `mfcc.h` to
+<     clarify that the input domain is squared magnitude spectra and the weighting
+<     is done on linear magnitude spectra (sqrt of inputs).
+<   * Change `tf.contrib.distributions` docstring examples to use `tfd` alias
+<     rather than `ds`, `bs`.
+<   * Fix docstring typos in `tf.distributions.bijectors.Bijector`.
+<   * `tf.assert_equal` no longer raises `ValueError.` It now raises
+<     `InvalidArgumentError,` as documented.
+<   * Update Getting Started docs and API intro.
+< * Google Cloud Storage (GCS):
+<   * Add userspace DNS caching for the GCS client.
+<   * Customize request timeouts for the GCS filesystem.
+<   * Improve GCS filesystem caching.
+< * Bug Fixes:
+<   * Fix bug where partitioned integer variables got their wrong shapes. Before
+<   * Fix correctness bug in CPU and GPU implementations of Adadelta.
+<   * Fix a bug in `import_meta_graph`'s handling of partitioned variables when
+<     importing into a scope. WARNING: This may break loading checkpoints of
+<     graphs with partitioned variables saved after using `import_meta_graph` with
+<     a non-empty `import_scope` argument.
+<   * Fix bug in offline debugger which prevented viewing events.
+<   * Added the `WorkerService.DeleteWorkerSession` method to the gRPC interface,
+<     to fix a memory leak. Ensure that your master and worker servers are running
+<     the same version of TensorFlow to avoid compatibility issues.
+<   * Fix bug in peephole implementation of BlockLSTM cell.
+<   * Fix bug by casting dtype of `log_det_jacobian` to match `log_prob` in
+<     `TransformedDistribution`.
+<   * Fix a bug in `import_meta_graph`'s handling of partitioned variables when
+<   * Ensure `tf.distributions.Multinomial` doesn't underflow in `log_prob`.
+<     Before this change, all partitions of an integer variable were initialized
+<     with the shape of the unpartitioned variable; after this change they are
+<     initialized correctly.
+< * Other:
+<   * Add necessary shape util support for bfloat16.
+<   * Add a way to run ops using a step function to MonitoredSession.
+<   * Add `DenseFlipout` probabilistic layer.
+<   * A new flag `ignore_live_threads` is available on train. If set to `True`, it
+<     will ignore threads that remain running when tearing down infrastructure
+<     after successfully completing training, instead of throwing a RuntimeError.
+<   * Restandardize `DenseVariational` as simpler template for other probabilistic
+<     layers.
+<   * `tf.data` now supports `tf.SparseTensor` components in dataset elements.
+<   * It is now possible to iterate over `Tensor`s.
+<   * Allow `SparseSegmentReduction` ops to have missing segment IDs.
+<   * Modify custom export strategy to account for multidimensional sparse float
+<     splits.
+<   * `Conv2D`, `Conv2DBackpropInput`, `Conv2DBackpropFilter` now supports arbitrary
+<     dilations with GPU and cuDNNv6 support.
+<   * `Estimator` now supports `Dataset`: `input_fn` can return a `Dataset`
+<     instead of `Tensor`s.
+<   * Add `RevBlock`, a memory-efficient implementation of reversible residual layers.
+<   * Reduce BFCAllocator internal fragmentation.
+<   * Add `cross_entropy` and `kl_divergence` to `tf.distributions.Distribution`.
+<   * Add `tf.nn.softmax_cross_entropy_with_logits_v2` which enables backprop
+<     w.r.t. the labels.
+<   * GPU back-end now uses `ptxas` to compile generated PTX.
+<   * `BufferAssignment`'s protocol buffer dump is now deterministic.
+<   * Change embedding op to use parallel version of `DynamicStitch`.
+<   * Add support for sparse multidimensional feature columns.
+<   * Speed up the case for sparse float columns that have only 1 value.
+<   * Allow sparse float splits to support multivalent feature columns.
+<   * Add `quantile` to `tf.distributions.TransformedDistribution`.
+<   * Add `NCHW_VECT_C` support for `tf.depth_to_space` on GPU.
+<   * Add `NCHW_VECT_C` support for `tf.space_to_depth` on GPU.
+< 
+< ## API Changes
+< * Rename `SqueezeDims` attribute to `Axis` in C++ API for Squeeze op.
+< * `Stream::BlockHostUntilDone` now returns Status rather than bool.
+< * Minor refactor: move stats files from `stochastic` to `common` and remove
+<   `stochastic`.
+< 
+< ## Known Bugs
+< * Using XLA:GPU with CUDA 9 and CUDA 9.1 results in garbage results and/or
+<   `CUDA_ILLEGAL_ADDRESS` failures.
+< 
+<   Google discovered in mid-December 2017 that the PTX-to-SASS compiler in CUDA 9
+<   and CUDA 9.1 sometimes does not properly compute the carry bit when
+<   decomposing 64-bit address calculations with large offsets (e.g. `load [x +
+<   large_constant]`) into 32-bit arithmetic in SASS.
+< 
+<   As a result, these versions of `ptxas` miscompile most XLA programs which use
+<   more than 4GB of temp memory.  This results in garbage results and/or
+<   `CUDA_ERROR_ILLEGAL_ADDRESS` failures.
+< 
+<   A fix in CUDA 9.1.121 is expected in late February 2018.  We do not expect a
+<   fix for CUDA 9.0.x.  Until the fix is available, the only workaround is to
+<   [downgrade](https://developer.nvidia.com/cuda-toolkit-archive) to CUDA 8.0.x
+<   or disable XLA:GPU.
+< 
+<   TensorFlow will print a warning if you use XLA:GPU with a known-bad version of
+<   CUDA; see e00ba24c4038e7644da417ddc639169b6ea59122.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< Adam Zahran, Ag Ramesh, Alan Lee, Alan Yee, Alex Sergeev, Alexander, Amir H. Jadidinejad,
+< Amy, Anastasios Doumoulakis, Andrei Costinescu, Andrei Nigmatulin, Anthony Platanios,
+< Anush Elangovan, arixlin, Armen Donigian, ArtëM Sobolev, Atlas7, Ben Barsdell, Bill Prin,
+< Bo Wang, Brett Koonce, Cameron Thomas, Carl Thomé, Cem Eteke, cglewis, Changming Sun,
+< Charles Shenton, Chi-Hung, Chris Donahue, Chris Filo Gorgolewski, Chris Hoyean Song,
+< Chris Tava, Christian Grail, Christoph Boeddeker, cinqS, Clayne Robison, codrut3, concerttttt,
+< CQY, Dan Becker, Dan Jarvis, Daniel Zhang, David Norman, dmaclach, Dmitry Trifonov,
+< Donggeon Lim, dongpilYu, Dr. Kashif Rasul, Edd Wilder-James, Eric Lv, fcharras, Felix Abecassis,
+< FirefoxMetzger, formath, FredZhang, Gaojin Cao, Gary Deer, Guenther Schmuelling, Hanchen Li,
+< Hanmin Qin, hannesa2, hyunyoung2, Ilya Edrenkin, Jackson Kontny, Jan, Javier Luraschi,
+< Jay Young, Jayaram Bobba, Jeff, Jeff Carpenter, Jeremy Sharpe, Jeroen BéDorf, Jimmy Jia,
+< Jinze Bai, Jiongyan Zhang, Joe Castagneri, Johan Ju, Josh Varty, Julian Niedermeier,
+< JxKing, Karl Lessard, Kb Sriram, Keven Wang, Koan-Sin Tan, Kyle Mills, lanhin, LevineHuang,
+< Loki Der Quaeler, Loo Rong Jie, Luke Iwanski, LáSzló Csomor, Mahdi Abavisani, Mahmoud Abuzaina,
+< ManHyuk, Marek ŠUppa, MathSquared, Mats Linander, Matt Wytock, Matthew Daley, Maximilian Bachl,
+< mdymczyk, melvyniandrag, Michael Case, Mike Traynor, miqlas, Namrata-Ibm, Nathan Luehr,
+< Nathan Van Doorn, Noa Ezra, Nolan Liu, Oleg Zabluda, opensourcemattress, Ouwen Huang,
+< Paul Van Eck, peisong, Peng Yu, PinkySan, pks, powderluv, Qiao Hai-Jun, Qiao Longfei,
+< Rajendra Arora, Ralph Tang, resec, Robin Richtsfeld, Rohan Varma, Ryohei Kuroki, SaintNazaire,
+< Samuel He, Sandeep Dcunha, sandipmgiri, Sang Han, scott, Scott Mudge, Se-Won Kim, Simon Perkins,
+< Simone Cirillo, Steffen Schmitz, Suvojit Manna, Sylvus, Taehoon Lee, Ted Chang, Thomas Deegan,
+< Till Hoffmann, Tim, Toni Kunic, Toon Verstraelen, Tristan Rice, Urs KöSter, Utkarsh Upadhyay,
+< Vish (Ishaya) Abrams, Winnie Tsang, Yan Chen, Yan Facai (颜发才), Yi Yang, Yong Tang,
+< Youssef Hesham, Yuan (Terry) Tang, Zhengsheng Wei, zxcqwe4906, 张志豪, 田传武 
+< 
+< We are also grateful to all who filed issues or helped resolve them, asked and
+< answered questions, and were part of inspiring discussions.
+< 
+< # Release 1.4.1
+< 
+< ## Bug Fixes and Other Changes
+< * `LinearClassifier` fix.
+< 
+985,1037d3
+< * `tf.keras` is now part of the core TensorFlow API.
+< * [`tf.data`](http://tensorflow.org/guide/datasets) is now part of
+<   the core TensorFlow API.
+<   * The API is now subject to backwards compatibility guarantees.
+<   * For a guide to migrating from the `tf.contrib.data` API, see the
+<     [README](https://github.com/tensorflow/tensorflow/blob/r1.4/tensorflow/contrib/data/README.md).
+<   * Major new features include `Dataset.from_generator()` (for building an input
+<     pipeline from a Python generator), and the `Dataset.apply()` method for
+<     applying custom transformation functions.
+<   * Several custom transformation functions have been added, including
+<     `tf.contrib.data.batch_and_drop_remainder()` and
+<     `tf.contrib.data.sloppy_interleave()`.
+< * Add `train_and_evaluate` for simple distributed `Estimator` training.
+< * Add `tf.spectral.dct` for computing the DCT-II.
+< * Add Mel-Frequency Cepstral Coefficient support to `tf.contrib.signal`
+<   (with GPU and gradient support).
+< * Add a self-check on `import tensorflow` for Windows DLL issues.
+< * Add NCHW support to `tf.depth_to_space` on GPU.
+< * TensorFlow Debugger (tfdbg):
+<   * Add `eval` command to allow evaluation of arbitrary Python/numpy expressions
+<     in tfdbg command-line interface. See
+<     [Debugging TensorFlow Programs](https://www.tensorflow.org/guide/debugger)
+<     for more details.
+<   * Usability improvement: The frequently used tensor filter `has_inf_or_nan` is
+<     now added to `Session` wrappers and hooks by default. So there is no need
+<     for clients to call `.add_tensor_filter(tf_debug.has_inf_or_nan)` anymore.
+< * SinhArcsinh (scalar) distribution added to `contrib.distributions`.
+< * Make `GANEstimator` opensource.
+< * `Estimator.export_savedmodel()` now includes all valid serving signatures
+<   that can be constructed from the Serving Input Receiver and all available
+<   ExportOutputs. For instance, a classifier may provide regression- and
+<   prediction-flavored outputs, in addition to the classification-flavored one.
+<   Building signatures from these allows TF Serving to honor requests using the
+<   different APIs (Classify, Regress, and Predict). Furthermore,
+<   `serving_input_receiver_fn()` may now specify alternative subsets of nodes
+<   that may act as inputs. This allows, for instance, producing a prediction
+<   signature for a classifier that accepts raw `Tensors` instead of a serialized
+<   `tf.Example`.
+< * Add `tf.contrib.bayesflow.hmc`.
+< * Add `tf.contrib.distributions.MixtureSameFamily`.
+< * Make `Dataset.shuffle()` always reshuffles after each iteration by default.
+< * Add `tf.contrib.bayesflow.metropolis_hastings`.
+< * Add `log_rate` parameter to `tf.contrib.distributions.Poisson`.
+< * Extend `tf.contrib.distributions.bijector` API to handle some non-injective
+<   transforms.
+< * Java:
+<   * Generics (e.g., `Tensor<Integer>`) for improved type-safety
+<     (courtesy @andrewcmyers).
+<   * Support for multi-dimensional string tensors.
+<   * Support loading of custom operations (e.g. many in `tf.contrib`) on Linux
+<     and OS X
+< * All our prebuilt binaries have been built with CUDA 8 and cuDNN 6.
+<   We anticipate releasing TensorFlow 1.5 with CUDA 9 and cuDNN 7.
+1049,1108d14
+< * Fix `tf.contrib.distributions.Affine` incorrectly computing log-det-jacobian.
+< * Fix `tf.random_gamma` incorrectly handling non-batch, scalar draws.
+< * Resolved a race condition in TensorForest TreePredictionsV4Op.
+< * Google Cloud Storage file system, Amazon S3 file system, and Hadoop file
+<   system support are now default build options.
+< * Custom op libraries must link against libtensorflow_framework.so
+<   (installed at `tf.sysconfig.get_lib()`).
+< * Change `RunConfig` default behavior to not set a random seed, making random
+<   behavior independently random on distributed workers. We expect this to
+<   generally improve training performance. Models that do rely on determinism
+<   should set a random seed explicitly.
+< 
+< ## Breaking Changes to the API
+< * The signature of the `tf.contrib.data.rejection_resample()` function has been
+<   changed. It now returns a function that can be used as an argument to
+<   `Dataset.apply()`.
+< * Remove `tf.contrib.data.Iterator.from_dataset()` method. Use
+<   `Dataset.make_initializable_iterator()` instead.
+< * Remove seldom used and unnecessary `tf.contrib.data.Iterator.dispose_op()`.
+< * Reorder some TF-GAN loss functions in a non-backwards compatible way.
+< 
+< ## Known Issues
+< * In Python 3, `Dataset.from_generator()` does not support Unicode strings.
+<   You must convert any strings to bytes objects before yielding them from
+<   the generator.
+< 
+< ## Thanks to our Contributors
+< 
+< This release contains contributions from many people at Google, as well as:
+< 
+< 4d55397500, Abdullah Alrasheed, abenmao, Adam Salvail, Aditya Dhulipala, Ag Ramesh,
+< Akimasa Kimura, Alan Du, Alan Yee, Alexander, Amit Kushwaha, Amy, Andrei Costinescu,
+< Andrei Nigmatulin, Andrew Erlichson, Andrew Myers, Andrew Stepanov, Androbin, AngryPowman,
+< Anish Shah, Anton Daitche, Artsiom Chapialiou, asdf2014, Aseem Raj Baranwal, Ash Hall,
+< Bart Kiers, Batchu Venkat Vishal, ben, Ben Barsdell, Bill Piel, Carl Thomé, Catalin Voss,
+< Changming Sun, Chengzhi Chen, Chi Zeng, Chris Antaki, Chris Donahue, Chris Oelmueller,
+< Chris Tava, Clayne Robison, Codrut, Courtial Florian, Dalmo Cirne, Dan J, Darren Garvey,
+< David Kristoffersson, David Norman, David RöThlisberger, DavidNorman, Dhruv, DimanNe,
+< Dorokhov, Duncan Mac-Vicar P, EdwardDixon, EMCP, error.d, FAIJUL, Fan Xia,
+< Francois Xavier, Fred Reiss, Freedom" Koan-Sin Tan, Fritz Obermeyer, Gao, Xiang,
+< Guenther Schmuelling, Guo Yejun (郭叶军), Hans Gaiser, HectorSVC, Hyungsuk Yoon,
+< James Pruegsanusak, Jay Young, Jean Wanka, Jeff Carpenter, Jeremy Rutman, Jeroen BéDorf,
+< Jett Jones, Jimmy Jia, jinghuangintel, jinze1994, JKurland, Joel Hestness, joetoth,
+< John B Nelson, John Impallomeni, John Lawson, Jonas, Jonathan Dekhtiar, joshkyh, Jun Luan,
+< Jun Mei, Kai Sasaki, Karl Lessard, karl@kubx.ca, Kb Sriram, Kenichi Ueno, Kevin Slagle,
+< Kongsea, Lakshay Garg, lhlmgr, Lin Min, liu.guangcong, Loki Der Quaeler, Louie Helm,
+< lucasmoura, Luke Iwanski, Lyndon White, Mahmoud Abuzaina, Marcel Puyat, Mark Aaron Shirley,
+< Michele Colombo, MtDersvan, Namrata-Ibm, Nathan Luehr, Naurril, Nayana Thorat, Nicolas Lopez,
+< Niranjan Hasabnis, Nolan Liu, Nouce, Oliver Hennigh, osdamv, Patrik Erdes,
+< Patryk Chrabaszcz, Pavel Christof, Penghao Cen, postBG, Qingqing Cao, Qingying Chen, qjivy,
+< Raphael, Rasmi, raymondxyang, Renze Yu, resec, Roffel, Ruben Vereecken, Ryohei Kuroki,
+< sandipmgiri, Santiago Castro, Scott Kirkland, Sean Vig, Sebastian Raschka, Sebastian Weiss,
+< Sergey Kolesnikov, Sergii Khomenko, Shahid, Shivam Kotwalia, Stuart Berg, Sumit Gouthaman,
+< superzerg, Sven Mayer, tetris, Ti Zhou, Tiago Freitas Pereira, Tian Jin, Tomoaki Oiki,
+< Vaibhav Sood, vfdev, Vivek Rane, Vladimir Moskva, wangqr, Weber Xie, Will Frey,
+< Yan Facai (颜发才), yanivbl6, Yaroslav Bulatov, Yixing Lao, Yong Tang, youkaichao,
+< Yuan (Terry) Tang, Yue Zhang, Yuxin Wu, Ziming Dong, ZxYuan, 黄璞
+< 
+< We are also grateful to all who filed issues or helped resolve them, asked and
+< answered questions, and were part of inspiring discussions.
+1156c62
+< * Adds FULLY_CONNECTED Op to tensorflow/lite/schema.fbs
+---
+> * Adds FULLY_CONNECTED Op to tensorflow/contrib/lite/schema.fbs
+1293c199
+< * [`SavedModel CLI`](https://www.tensorflow.org/versions/master/guide/saved_model_cli) tool available to inspect and execute MetaGraph in SavedModel
+---
+> * [`SavedModel CLI`](https://www.tensorflow.org/versions/master/programmers_guide/saved_model_cli) tool available to inspect and execute MetaGraph in SavedModel
+1335c241
+< * Improving stability of GCS/BigQuery clients by a faster retrying of stale transmissions.
+---
+> * Improving stability of GCS/Bigquery clients by a faster retrying of stale transmissions.
+1478c384
+< Sergeev, Alexander Heinecke, Allen Guo, Andreas Madsen, Ankesh Anand, Anton
+---
+> Sergeev, Alexander Heinecke, Allen Guo, Andreas Madsen, Ankesh Anand, Anton 
+Only in VStore-Source/VStore-NoScope/tensorflow-noscope: scripts
+Only in tensorflow: SECURITY.md
+Common subdirectories: tensorflow/tensorflow and VStore-Source/VStore-NoScope/tensorflow-noscope/tensorflow
+Only in VStore-Source/VStore-NoScope/tensorflow-noscope: .tf_configure.bazelrc
+Common subdirectories: tensorflow/third_party and VStore-Source/VStore-NoScope/tensorflow-noscope/third_party
+Common subdirectories: tensorflow/tools and VStore-Source/VStore-NoScope/tensorflow-noscope/tools
+Only in VStore-Source/VStore-NoScope/tensorflow-noscope: util
+diff tensorflow/WORKSPACE VStore-Source/VStore-NoScope/tensorflow-noscope/WORKSPACE
+3,4d2
+< load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+< 
+7,8c5,6
+<     sha256 = "e0a111000aeed2051f29fcc7a3f83be3ad8c6c93c186e64beb1ad313f0c7f9f9",
+<     strip_prefix = "rules_closure-cf1e44edb908e9616030cc83d085989b8e6cd6df",
+---
+>     sha256 = "25f5399f18d8bf9ce435f85c6bbf671ec4820bc4396b3022cc5dc4bc66303609",
+>     strip_prefix = "rules_closure-0.4.2",
+10,11c8,9
+<         "http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz",
+<         "https://github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz",  # 2019-04-04
+---
+>         "http://mirror.bazel.build/github.com/bazelbuild/rules_closure/archive/0.4.2.tar.gz",  # 2017-08-29
+>         "https://github.com/bazelbuild/rules_closure/archive/0.4.2.tar.gz",
+19,85d16
+< load("//third_party/toolchains/preconfig/generate:archives.bzl",
+<      "bazel_toolchains_archive")
+< 
+< bazel_toolchains_archive()
+< 
+< load(
+<     "@bazel_toolchains//repositories:repositories.bzl",
+<     bazel_toolchains_repositories = "repositories",
+< )
+< 
+< bazel_toolchains_repositories()
+< 
+< load(
+<     "@io_bazel_rules_docker//repositories:repositories.bzl",
+<     container_repositories = "repositories",
+< )
+< 
+< container_repositories()
+< 
+< load("//third_party/toolchains/preconfig/generate:workspace.bzl",
+<      "remote_config_workspace")
+< 
+< remote_config_workspace()
+< 
+< # Apple and Swift rules.
+< http_archive(
+<     name = "build_bazel_rules_apple",
+<     sha256 = "23792cd999f97fc97284d1c44cb1324bfdd0bc54aa68ad513fa3705aca3b1f9e",
+<     urls = ["https://github.com/bazelbuild/rules_apple/releases/download/0.15.0/rules_apple.0.15.0.tar.gz"],
+< )  # https://github.com/bazelbuild/rules_apple/releases
+< http_archive(
+<     name = "build_bazel_apple_support",
+<     sha256 = "7356dbd44dea71570a929d1d4731e870622151a5f27164d966dda97305f33471",
+<     urls = ["https://github.com/bazelbuild/apple_support/releases/download/0.6.0/apple_support.0.6.0.tar.gz"],
+< )  # https://github.com/bazelbuild/apple_support/releases
+< http_archive(
+<     name = "bazel_skylib",
+<     sha256 = "2ef429f5d7ce7111263289644d233707dba35e39696377ebab8b0bc701f7818e",
+<     urls = ["https://github.com/bazelbuild/bazel-skylib/releases/download/0.8.0/bazel-skylib.0.8.0.tar.gz"],
+< )  # https://github.com/bazelbuild/bazel-skylib/releases
+< http_archive(
+<     name = "build_bazel_rules_swift",
+<     sha256 = "9efe9699e9765e6b4a5e063e4a08f6b163cccaf0443f775d935baf5c3cd6ed0e",
+<     urls = ["https://github.com/bazelbuild/rules_swift/releases/download/0.9.0/rules_swift.0.9.0.tar.gz"],
+< )  # https://github.com/bazelbuild/rules_swift/releases
+< http_archive(
+<     name = "com_github_apple_swift_swift_protobuf",
+<     type = "zip",
+<     strip_prefix = "swift-protobuf-1.5.0/",
+<     urls = ["https://github.com/apple/swift-protobuf/archive/1.5.0.zip"],
+< )  # https://github.com/apple/swift-protobuf/releases
+< http_file(
+<     name = "xctestrunner",
+<     executable = 1,
+<     urls = ["https://github.com/google/xctestrunner/releases/download/0.2.7/ios_test_runner.par"],
+< )  # https://github.com/google/xctestrunner/releases
+< # Use `swift_rules_dependencies` to fetch the toolchains. With the
+< # `git_repository` rules above, the following call will skip redefining them.
+< load("@build_bazel_rules_swift//swift:repositories.bzl", "swift_rules_dependencies")
+< swift_rules_dependencies()
+< 
+< # We must check the bazel version before trying to parse any other BUILD
+< # files, in case the parsing of those build files depends on the bazel
+< # version we require here.
+< load("//tensorflow:version_check.bzl", "check_bazel_version_at_least")
+< check_bazel_version_at_least("0.19.0")
+< 
+88,91c19,38
+< load("//third_party/android:android_configure.bzl", "android_configure")
+< android_configure(name="local_config_android")
+< load("@local_config_android//:android.bzl", "android_workspace")
+< android_workspace()
+---
+> # Uncomment and update the paths in these entries to build the Android demo.
+> #android_sdk_repository(
+> #    name = "androidsdk",
+> #    api_level = 23,
+> #    # Ensure that you have the build_tools_version below installed in the
+> #    # SDK manager as it updates periodically.
+> #    build_tools_version = "25.0.2",
+> #    # Replace with path to Android SDK on your system
+> #    path = "<PATH_TO_SDK>",
+> #)
+> #
+> #android_ndk_repository(
+> #    name="androidndk",
+> #    path="<PATH_TO_NDK>",
+> #    # This needs to be 14 or higher to compile TensorFlow.
+> #    # Please specify API level to >= 21 to build for 64-bit
+> #    # archtectures or the Android NDK will automatically select biggest
+> #    # API level that it supports without notice.
+> #    # Note that the NDK version is not the API level.
+> #    api_level=14)
+96,99c43,46
+< http_archive(
+<     name = "inception_v1",
+<     build_file = "//:models.BUILD",
+<     sha256 = "7efe12a8363f09bc24d7b7a450304a15655a57a7751929b2c1593a71183bb105",
+---
+> new_http_archive(
+>     name = "inception5h",
+>     build_file = "models.BUILD",
+>     sha256 = "d13569f6a98159de37e92e9c8ec4dae8f674fbf475f69fe6199b514f756d4364",
+101,102c48,49
+<         "http://storage.googleapis.com/download.tensorflow.org/models/inception_v1.zip",
+<         "http://download.tensorflow.org/models/inception_v1.zip",
+---
+>         "http://storage.googleapis.com/download.tensorflow.org/models/inception5h.zip",
+>         "http://download.tensorflow.org/models/inception5h.zip",
+106c53
+< http_archive(
+---
+> new_http_archive(
+108c55
+<     build_file = "//:models.BUILD",
+---
+>     build_file = "models.BUILD",
+116c63
+< http_archive(
+---
+> new_http_archive(
+118c65
+<     build_file = "//:models.BUILD",
+---
+>     build_file = "models.BUILD",
+126c73
+< http_archive(
+---
+> new_http_archive(
+128c75
+<     build_file = "//:models.BUILD",
+---
+>     build_file = "models.BUILD",
+136c83
+< http_archive(
+---
+> new_http_archive(
+138c85
+<     build_file = "//:models.BUILD",
+---
+>     build_file = "models.BUILD",

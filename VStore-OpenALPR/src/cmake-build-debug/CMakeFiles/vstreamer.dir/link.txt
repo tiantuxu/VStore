@@ -1,2 +1,0 @@
-/usr/bin/ar qc libvstreamer.a  CMakeFiles/vstreamer.dir/measure.c.o CMakeFiles/vstreamer.dir/mm.cpp.o CMakeFiles/vstreamer.dir/mydecoder.cpp.o CMakeFiles/vstreamer.dir/rxtx.cpp.o CMakeFiles/vstreamer.dir/lmdb-if.cpp.o CMakeFiles/vstreamer.dir/stream-info.cpp.o
-/usr/bin/ranlib libvstreamer.a

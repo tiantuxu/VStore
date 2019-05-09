@@ -1,0 +1,683 @@
+Only in VStore-NoScope/vstore/: backup-repo.sh
+Common subdirectories: openalpr/src/bindings and VStore-NoScope/vstore/bindings
+Only in VStore-NoScope/vstore/: CallBackTimer.h
+diff openalpr/src/CMakeLists.txt VStore-NoScope/vstore/CMakeLists.txt
+1d0
+< project(src)
+3,4d1
+< set(CMAKE_BUILD_TYPE RelWithDebugInfo)
+< #set(CMAKE_BUILD_TYPE Debug)
+6c3
+< cmake_minimum_required (VERSION 2.6)
+---
+> cmake_minimum_required(VERSION 2.8.9)
+8,171c5,42
+< # Set the OpenALPR version in cmake, and also add it as a DEFINE for the code to access
+< SET(OPENALPR_MAJOR_VERSION "2")
+< SET(OPENALPR_MINOR_VERSION "3")
+< SET(OPENALPR_PATCH_VERSION "0")
+< SET(OPENALPR_VERSION ${OPENALPR_MAJOR_VERSION}.${OPENALPR_MINOR_VERSION}.${OPENALPR_PATCH_VERSION})
+< 
+< add_definitions( -DOPENALPR_MAJOR_VERSION=${OPENALPR_MAJOR_VERSION})
+< add_definitions( -DOPENALPR_MINOR_VERSION=${OPENALPR_MINOR_VERSION})
+< add_definitions( -DOPENALPR_PATCH_VERSION=${OPENALPR_PATCH_VERSION})
+< 
+< SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules/")
+< 
+< add_definitions( -DINSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
+< 
+< # TODO: switch to http://www.cmake.org/cmake/help/v2.8.5/cmake.html#module:GNUInstallDirs ?
+< IF (NOT CMAKE_INSTALL_SYSCONFDIR) 
+<   SET(CMAKE_INSTALL_SYSCONFDIR "/etc")
+< ENDIF()
+< IF (NOT CMAKE_INSTALL_VARDIR) 
+<   SET(CMAKE_INSTALL_VARDIR "${CMAKE_INSTALL_PREFIX}/var")
+< ENDIF()
+< 
+< IF ( NOT DEFINED WITH_DAEMON )
+<   SET(WITH_DAEMON ON)
+< ENDIF()
+< 
+< IF ( NOT DEFINED WITH_STATEDETECTION )
+<   SET(WITH_STATEDETECTION OFF)
+< ENDIF()
+< 
+< if ( NOT DEFINED WITH_GPU_DETECTOR )
+<   SET(WITH_GPU_DETECTOR OFF)
+< ENDIF()
+< 
+< if ( NOT DEFINED WITH_TESTS )
+<   SET(WITH_TESTS ON)
+< ENDIF()
+< 
+< if ( NOT DEFINED WITH_BINDING_JAVA )
+<   SET(WITH_BINDING_JAVA ON)
+< ENDIF()
+< 
+<           
+< if ( NOT DEFINED WITH_BINDING_PYTHON )
+<   SET(WITH_BINDING_PYTHON ON)
+< ENDIF()
+< 
+< if ( NOT DEFINED WITH_BINDING_GO )
+<   SET(WITH_BINDING_GO ON)
+< ENDIF()
+< 
+< if ( NOT DEFINED WITH_UTILITIES )
+<   SET(WITH_UTILITIES ON)
+< ENDIF()
+< 
+< IF (WIN32 AND WITH_DAEMON) 
+<   MESSAGE(WARNING "Skipping alprd daemon installation, as it is not supported in Windows.")
+<   SET(WITH_DAEMON OFF)
+< ENDIF()
+< 
+< IF (WIN32 AND WITH_TESTS) 
+<   MESSAGE(WARNING "Skipping unit tests, as it is not supported in Windows.")
+<   SET(WITH_TESTS OFF)
+< ENDIF()
+< 
+< IF(Tesseract_FRAMEWORK_PATH AND Leptonica_FRAMEWORK_PATH) 
+<   MESSAGE(STATUS "Using Tesseract iOS framework: ${Tesseract_FRAMEWORK_PATH}")
+<   MESSAGE(STATUS "Using Leptonica iOS framework: ${Leptonica_FRAMEWORK_PATH}")
+<   # http://www.vtk.org/Wiki/CMake:HowToUseExistingOSXFrameworks
+<   SET(Tesseract_LIBRARIES "${Tesseract_FRAMEWORK_PATH};${Leptonica_FRAMEWORK_PATH}")
+<   SET(Tesseract_INCLUDE_DIRS "${Tesseract_FRAMEWORK_PATH}/Headers")
+< ELSE()
+<   FIND_PACKAGE( Tesseract REQUIRED )
+< ENDIF()
+< 
+< include_directories(${Tesseract_INCLUDE_DIRS})
+< 
+< IF(OpenCV_FRAMEWORK_PATH)
+<   MESSAGE(STATUS "Using OpenCV iOS framework: ${OpenCV_FRAMEWORK_PATH}")
+<   SET(OpenCV_INCLUDE_DIRS "${OpenCV_FRAMEWORK_PATH}/Headers")
+<   SET(OpenCV_LIBS ${OpenCV_FRAMEWORK_PATH})
+< 
+<   # OpenCV's released framework has this disabled, so we must too.
+<   # http://stackoverflow.com/a/32710441/868173
+<   SET(CMAKE_XCODE_ATTRIBUTE_ENABLE_BITCODE NO)
+< ELSE()
+<   # Discover OpenCV directory automatically
+<   find_path(OpenCV_DIR
+<     NAMES OpenCVConfig.cmake
+<     HINTS ${CMAKE_SOURCE_DIR}/../libraries/opencv/
+<     /storage/projects/alpr/libraries/opencv/
+<     )
+<   # Opencv Package
+<   FIND_PACKAGE( OpenCV REQUIRED )
+< ENDIF()
+< 
+< IF (${OpenCV_VERSION} VERSION_LESS 2.4.7)
+< 	MESSAGE(FATAL_ERROR "OpenCV version is not compatible : ${OpenCV_VERSION}")
+< ENDIF()
+< 
+< include_directories(${OpenCV_INCLUDE_DIRS})
+< 
+< add_definitions( -DOPENCV_MAJOR_VERSION=${OpenCV_VERSION_MAJOR})
+< 
+< 
+< include_directories(./openalpr )
+< 
+< IF (WIN32)
+< 	add_definitions( -DWINDOWS)
+< 	add_definitions( -DNOMINMAX)
+< 
+< 	# Extra linker dependencies for Windows
+< 	SET (Tesseract_LIBRARIES
+< 		${Tesseract_LIBRARIES}
+< 		ws2_32.lib
+< 	)
+< ELSE()
+< 
+< 	SET (Extra_LIBS
+< 		pthread
+< 	)
+< 
+< ENDIF()
+< 
+< 
+< set(CMAKE_CSS_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall ")
+< if (NOT IOS)
+<   ADD_EXECUTABLE( alpr  main.cpp )
+< ENDIF()
+< 
+< if (WIN32) 
+<    SET(OPENALPR_LIB openalpr-static)
+< ELSE()
+<    SET(OPENALPR_LIB openalpr)
+< ENDIF()
+< 
+< IF (WITH_STATEDETECTION)
+<   SET(STATE_DETECTION_LIB statedetection)
+<   add_subdirectory(statedetection)
+< ELSE()
+<   SET(STATE_DETECTION_LIB "")
+<   add_definitions( -DSKIP_STATE_DETECTION=1 )
+< ENDIF()
+< 
+< if (NOT IOS)
+<   TARGET_LINK_LIBRARIES(alpr
+<     ${OPENALPR_LIB}
+<     ${STATE_DETECTION_LIB}
+<     support
+<     video
+<     ${OpenCV_LIBS}
+<     ${Tesseract_LIBRARIES}
+<     ${Extra_LIBS}
+<   )
+< ENDIF()
+< 
+< 
+< # Compile the alprd library on Unix-based OS
+< IF (WITH_DAEMON)
+<   ADD_EXECUTABLE( alprd  
+<     daemon.cpp 
+<     daemon/daemonconfig.cpp 
+<     daemon/beanstalk.c 
+<     daemon/beanstalk.cc 
+---
+> project(video-streamer)
+> 
+> set(deploy_include_path "/shared/include")
+> 
+> ################################
+> #  toolchain, dependency, etc.
+> ################################
+> 
+> SET( CMAKE_CXX_COMPILER "/usr/bin/g++-5"  )
+> SET( CMAKE_C_COMPILER "gcc"  )
+> #SET( CMAKE_CXX_COMPILER "icc" )
+> 
+> SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fdiagnostics-color=auto")
+> 
+> SET(CMAKE_CXX_FLAGS_DEBUG
+> 		"${CMAKE_CXX_FLAGS_DEBUG} -std=c++11 -g -O0 -Wall -Wfatal-errors")
+> SET(CMAKE_CXX_FLAGS_RELEASE "-std=c++11 -g -Wall -O3 -DHAVE_NUMA")
+> 
+> SET(CMAKE_C_FLAGS_DEBUG
+> 		"${CMAKE_C_FLAGS_DEBUG} -std=gnu11 -g -O0 -Wall -Wfatal-errors")
+> SET(CMAKE_C_FLAGS_RELEASE
+> 		"${CMAKE_C_FLAGS_RELEASE} -std=gnu11 -g -O3 -Wall -Wfatal-errors")
+> 
+> set(deploy_target_path "localhost:/tmp/$ENV{USER}")
+> 
+> ################################
+> #  headers, source
+> ################################
+> 
+> # add required libraries
+> # all libraries are in /shared/hikey
+> include_directories(
+>         ./
+>         /shared/ffmpeg/include
+>         /shared/libzmq/include
+>         #/usr/local/include
+> 		#/home/teddyxu/opencvlib/include
+> 		/usr/include/opencv2
+174,175c45,51
+<   FIND_PACKAGE( CURL REQUIRED )
+<   FIND_PACKAGE( log4cplus REQUIRED )
+---
+> link_directories(
+>         /shared/ffmpeg/lib
+>         /shared/libzmq/lib
+> 		#/usr/local/lib
+> 		#/home/teddyxu/opencvlib/lib
+> 		/usr/lib
+> )
+177,270d52
+<   TARGET_LINK_LIBRARIES(alprd
+<       ${OPENALPR_LIB}
+< 	  support
+<       video
+< 	  curl
+< 	  ${OpenCV_LIBS}
+< 	  ${Tesseract_LIBRARIES}
+< 	  ${log4cplus_LIBRARIES}
+<       ${Extra_LIBS}
+<     )
+< 	
+< ENDIF()
+< 
+< if(WITH_UTILITIES)
+< add_subdirectory(misc_utilities)
+< ENDIF()
+< 
+< if (WITH_TESTS)  
+< add_subdirectory(tests)
+< ENDIF()
+< 
+< add_subdirectory(openalpr)
+< add_subdirectory(video)
+< 
+< if (WITH_BINDING_JAVA) 
+< add_subdirectory(bindings/java)
+< ENDIF()
+< 
+< if (WITH_BINDING_PYTHON)
+< add_subdirectory(bindings/python)
+< ENDIF()
+<         
+< 
+< if (WITH_BINDING_GO)
+<     set(OPENALPR_LIB_GO openalprgo)
+<     set(TAG_OPENALPR_LIB_GO "-l${OPENALPR_LIB_GO}")
+<     add_subdirectory(bindings/go)
+< ENDIF()
+< 
+< if (NOT IOS)
+<   install (TARGETS    alpr DESTINATION   ${CMAKE_INSTALL_PREFIX}/bin)
+<   install (FILES      ${CMAKE_SOURCE_DIR}/../doc/man/alpr.1 DESTINATION       ${CMAKE_INSTALL_PREFIX}/share/man/man1 COMPONENT doc)
+< ENDIF()
+< install (DIRECTORY  ${CMAKE_SOURCE_DIR}/../runtime_data DESTINATION         ${CMAKE_INSTALL_PREFIX}/share/openalpr)
+< 
+< # set runtime_data to reflect the current CMAKE_INSTALL_PREFIX
+< CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/../config/openalpr.conf.user ${CMAKE_CURRENT_BINARY_DIR}/config/openalpr.conf)
+< install (FILES      ${CMAKE_CURRENT_BINARY_DIR}/config/openalpr.conf DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/openalpr/      COMPONENT config)
+< 
+< CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/../config/openalpr.conf.defaults ${CMAKE_CURRENT_BINARY_DIR}/share/openalpr/config/openalpr.defaults.conf)
+< install (FILES      ${CMAKE_CURRENT_BINARY_DIR}/share/openalpr/config/openalpr.defaults.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/share/openalpr/config      COMPONENT config)
+< 
+< IF (WITH_DAEMON)
+<   CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/../config/alprd.conf.user ${CMAKE_CURRENT_BINARY_DIR}/config/alprd.conf)
+<   install (FILES      ${CMAKE_CURRENT_BINARY_DIR}/config/alprd.conf DESTINATION ${CMAKE_INSTALL_SYSCONFDIR}/openalpr/      COMPONENT config)
+< 
+<   CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/../config/alprd.conf.defaults ${CMAKE_CURRENT_BINARY_DIR}/share/openalpr/config/alprd.defaults.conf)
+<   install (FILES      ${CMAKE_CURRENT_BINARY_DIR}/share/openalpr/config/alprd.defaults.conf DESTINATION ${CMAKE_INSTALL_PREFIX}/share/openalpr/config      COMPONENT config)
+< 
+<   install (TARGETS    alprd DESTINATION  ${CMAKE_INSTALL_PREFIX}/bin)
+< ENDIF()
+< 
+< 
+< SET (CPACK_PACKAGE_VERSION ${OPENALPR_VERSION})
+< SET (CPACK_SET_DESTDIR "on")
+< SET (CPACK_GENERATOR "DEB;TGZ")
+< SET (CPACK_PACKAGE_NAME "openalpr")
+< SET (CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_SOURCE_DIR}/build;src;ALL;/")
+< SET (CPACK_CMAKE_GENERATOR "Unix Makefiles")
+< 
+< SET (CPACK_STRIP_FILES "1")
+< SET (CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+< SET (CPACK_DEBIAN_PACKAGE_SECTION "video")
+< SET (CPACK_DEBIAN_ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+< SET (CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.1.3), libgcc1 (>= 4.1.1), libtesseract3 (>= 3.0.3), libopencv-core2.4 (>= 2.4.8), libopencv-objdetect2.4 (>= 2.4.8), libopencv-highgui2.4 (>= 2.4.8), libopencv-imgproc2.4 (>= 2.4.8), libopencv-flann2.4 (>= 2.4.8), libopencv-features2d2.4 (>= 2.4.8), libopencv-video2.4 (>= 2.4.8), libopencv-gpu2.4 (>=2.4.8), liblog4cplus-1.0-4, libcurl3, beanstalkd")
+< 
+< SET (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/../LICENSE")
+< SET (CPACK_PACKAGE_DESCRIPTION "OpenALPR - Open Source Automatic License Plate Recognition")
+< SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "OpenALPR is an open source Automatic License Plate Recognition library written in C++.  The library analyzes images and identifies license plates. The output is the text representation of any license plate characters found in the image.  Check out a live online demo here: http://www.openalpr.com/demo.html" )
+< SET (CPACK_PACKAGE_CONTACT "Matt Hill <matt@ndu.com>")
+< SET (CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}_${CPACK_DEBIAN_ARCHITECTURE}")
+< 
+< SET (CPACK_COMPONENTS_ALL Libraries ApplicationData)
+< 
+< INCLUDE(CPack)
+< 
+< # ----------------------------------------------------------------------------
+< # Uninstall target, for "make uninstall"
+< # http://www.cmake.org/Wiki/CMake_FAQ#Can_I_do_.22make_uninstall.22_with_CMake.3F
+< # ----------------------------------------------------------------------------
+< CONFIGURE_FILE(
+<   "${CMAKE_MODULE_PATH}/templates/cmake_uninstall.cmake.in"
+<   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+<   @ONLY)
+272c54,373
+< ADD_CUSTOM_TARGET(uninstall COMMAND ${CMAKE_COMMAND} -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+---
+> file (GLOB HEADERS
+>         *.h
+> 		include/*.h
+> 		include/mm/*.h
+> 		include/xplane/*.h
+> )
+> 
+> #SET(SOURCE
+> #    measure.c
+> #    mm.cpp
+> #    lmdb-if.cpp
+> #    ${HEADERS}
+> #    )
+> 
+> file (GLOB LIB_SOURCES
+>         ${HEADERS}
+>         measure.c
+>         mm.cpp
+>         mydecoder.cpp
+>         #        mydecoder_sw.cpp       # obsoleted
+>         rxtx.cpp
+>         lmdb-if.cpp
+>         stream-info.cpp
+>         )
+> 
+> if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+> 	#add_definitions(-D_GLIBCXX_DEBUG) # if the compliation unit use boost::, it's gonna break.
+> 	add_definitions(-DCONFIG_KAGE_GLOBAL_DEBUG_LEVEL=30)
+>     add_definitions(-DDEBUG)
+> endif ()
+> 
+> if (CMAKE_BUILD_TYPE STREQUAL "Release")
+> 	add_definitions(-DCONFIG_KAGE_GLOBAL_DEBUG_LEVEL=50)
+> 	add_definitions(-DNDEBUG)
+> endif ()
+> 
+> ###########################
+> # libs
+> # singling these out as their compliation is slow.
+> ###########################
+> add_library(vstreamer STATIC
+>     ${LIB_SOURCES})
+> 
+> SET (FFMPEG_LIBS
+>         avdevice
+>         avfilter
+>         avformat
+>         avcodec
+>         swresample
+>         swscale
+>         avutil
+> 		postproc
+> 		#X11 va-x11 va-drm  va # intel's video accel lib etc
+> 		vdpau  # nvidia decoding & presentation
+>         )
+> 
+> SET (COMMON_LIBS
+>         m
+>         xcb
+>         xcb-shm
+>         xcb-shape
+>         dl
+>         bz2
+>         z
+>         pthread
+>         lzma
+>         boost_program_options
+>         boost_serialization
+>         X11
+> 		opencv_core
+> 		opencv_highgui
+> 		opencv_imgproc
+>         )
+> 
+> find_package(OpenMP)
+> if (OPENMP_FOUND)
+> 	set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+> 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+> 	set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+> endif()
+> 
+> #ADD_LIBRARY(gompdebug STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(gompdebug PROPERTIES IMPORTED_LOCATION /usr/lib/debug/usr/lib/x86_64-linux-gnu/libgomp.so.1.0.0)
+> 
+> #ADD_LIBRARY(myomp STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(myomp PROPERTIES IMPORTED_LOCATION /usr/lib/x86_64-linux-gnu/libgomp.so.1)
+> ###########################
+> 
+> #SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/library")
+> #SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/library")
+> # for store static library to diff directory
+> SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/lib")
+> 
+> #SET(CMAKE_C_FLAGS	"${CMAKE_C_FLAGS} -finline-functions")
+> 
+> #SET(CMAKE_EXE_LINKER_FLAGS	)
+> 
+> #FIND_LIBRARY(test NAMES libtest.a PATHS .)
+> 
+> #add_custom_command(TARGET xplane POST_BUILD
+> #		COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/lib/libxplane.a ${deploy_target_path}/lib/libxplane-${CMAKE_BUILD_TYPE}.a
+> #		COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/include/xplane_lib.h ${deploy_include_path}
+> #		COMMAND cp -r ${CMAKE_CURRENT_SOURCE_DIR}/include/xplane/* ${deploy_include_path}/xplane/
+> #		)
+> #ADD_LIBRARY(opencv_core24 STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(opencv_core24 PROPERTIES IMPORTED_LOCATION /home/teddyxu/opencvlib/lib/libopencv_core.so)
+> #SET (COMMON_LIB ${COMMON_LIB} opencv_core)
+> 
+> #ADD_LIBRARY(opencv_highgui24 STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(opencv_highgui24 PROPERTIES IMPORTED_LOCATION /home/teddyxu/opencvlib/lib/libopencv_highgui.so)
+> #SET (COMMON_LIB ${COMMON_LIB} opencv_highgui)
+> 
+> #ADD_LIBRARY(opencv_imgproc24 STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(opencv_imgproc24 PROPERTIES IMPORTED_LOCATION /home/teddyxu/opencvlib/lib/libopencv_imgproc.so)
+> #SET (COMMON_LIB ${COMMON_LIB} opencv_imgproc)
+> 
+> #ADD_LIBRARY(myopenalpr STATIC IMPORTED)
+> #SET_TARGET_PROPERTIES(myopenalpr PROPERTIES IMPORTED_LOCATION /home/teddyxu/openalprlib/lib/libopenalpr.so)
+> #SET (COMMON_LIB ${COMMON_LIB} opencv_imgproc)
+> 
+> ########################################
+> # Test
+> ########################################
+> 
+> ########################################
+> add_executable(hw_decode.bin
+> 		examples/hw_decode.c
+> 		)
+> TARGET_LINK_LIBRARIES(hw_decode.bin
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+> 		)
+> ########################################
+> add_executable(demuxing_decoding.bin
+>         examples/demuxing_decoding.c
+> 		)
+> TARGET_LINK_LIBRARIES(demuxing_decoding.bin
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         )
+> ########################################
+> add_executable(decode_video.bin
+>         examples/decode_video.c
+>         )
+> TARGET_LINK_LIBRARIES(decode_video.bin
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         )
+> ########################################
+> add_executable(taskvent.bin
+>         examples/taskvent.cpp
+>         )
+> TARGET_LINK_LIBRARIES(taskvent.bin
+>         zmq
+>         )
+> ########################################
+> add_executable(taskwork2.bin
+>         examples/taskwork2.cpp
+>         )
+> TARGET_LINK_LIBRARIES(taskwork2.bin
+>         zmq
+>         )
+> ########################################
+> #SET(PROGRAM test-sink)
+> #add_executable(${PROGRAM}.bin
+> #        test/${PROGRAM}.cpp
+> #        )
+> #TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+> #        vstreamer
+> #        ${FFMPEG_LIBS}
+> #        ${COMMON_LIBS}
+> #        lmdb
+> #        zmq
+> #		openalpr
+> #		openalpr-static
+> #		opencv_core
+> #		opencv_highgui
+> #		opencv_imgproc
+> #        )
+> #add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+> #        COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+> #        )
+> ########################################
+> SET(BINARY test-source.bin)
+> add_executable(${BINARY}
+>         test/test-source.cpp
+>         )
+> TARGET_LINK_LIBRARIES(${BINARY}
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+> 		opencv_core
+> 		opencv_highgui
+> 		opencv_imgproc
+>         )
+> add_custom_command(TARGET ${BINARY} POST_BUILD
+>         COMMAND scp ${BINARY} ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(BINARY test-chunk-puller.bin)
+> add_executable(${BINARY}
+>         test/test-chunk-puller.cpp)
+> TARGET_LINK_LIBRARIES(${BINARY}
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+>         )
+> add_custom_command(TARGET ${BINARY} POST_BUILD
+>         COMMAND scp ${BINARY} ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(PROGRAM decode-serv)
+> add_executable(${PROGRAM}.bin
+>         decode-serv.cpp
+>         )
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+>         )
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+>         COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(PROGRAM test-fb-sender)
+> add_executable(${PROGRAM}.bin
+>         test/${PROGRAM}.cpp
+>         )
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+>         )
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+>         COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(PROGRAM test-fb-recver)
+> add_executable(${PROGRAM}.bin
+>         test/${PROGRAM}.cpp
+>         )
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+>         )
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+>         COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(PROGRAM test-decoder)
+> add_executable(${PROGRAM}.bin
+>         test/${PROGRAM}.cpp
+>         )
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+>         vstreamer
+>         ${FFMPEG_LIBS}
+>         ${COMMON_LIBS}
+>         lmdb
+>         zmq
+>         )
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+>         COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+>         )
+> ########################################
+> SET(PROGRAM test-db-build)
+> add_executable(${PROGRAM}.bin
+> 		test/${PROGRAM}.cpp
+> 		)
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+> 		vstreamer
+> 		${FFMPEG_LIBS}
+> 		${COMMON_LIBS}
+> 		lmdb
+> 		zmq
+> 		)
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+> 		COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+> 		)
+> ########################################
+> SET(PROGRAM test-rt-scheduler)
+> add_executable(${PROGRAM}.bin
+> 		test/${PROGRAM}.cpp
+> 		)
+> TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+> 		vstreamer
+> 		${FFMPEG_LIBS}
+> 		${COMMON_LIBS}
+> 		lmdb
+> 		zmq
+> 		)
+> add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+> 		COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+> 		)
+> ########################################
+> #SET(PROGRAM test-migrate)
+> #add_executable(${PROGRAM}.bin
+> #		test/${PROGRAM}.cpp
+> #		)
+> #TARGET_LINK_LIBRARIES(${PROGRAM}.bin
+> #		vstreamer
+> #		${FFMPEG_LIBS}
+> #		${COMMON_LIBS}
+> #		lmdb
+> #		zmq
+> #		)
+> #add_custom_command(TARGET ${PROGRAM}.bin POST_BUILD
+> #		COMMAND scp ${PROGRAM}.bin ${deploy_target_path}/${CMAKE_BUILD_TYPE}/
+> #		)
+> ########################################
+Only in openalpr/src: cmake_modules
+Only in VStore-NoScope/vstore/: config.h
+Common subdirectories: openalpr/src/daemon and VStore-NoScope/vstore/daemon
+Only in VStore-NoScope/vstore/: decode-serv.cpp
+Only in VStore-NoScope/vstore/: env-teddy.sh
+Only in VStore-NoScope/vstore/: examples
+Only in VStore-NoScope/vstore/: .gitignore
+Only in VStore-NoScope/vstore/: in
+Common subdirectories: openalpr/src/inc and VStore-NoScope/vstore/inc
+Only in VStore-NoScope/vstore/: lmdb-if.cpp
+Only in VStore-NoScope/vstore/: log.h
+Only in openalpr/src: main.cpp
+Only in VStore-NoScope/vstore/: measure.c
+Only in VStore-NoScope/vstore/: measure.h
+Only in VStore-NoScope/vstore/: micro
+Common subdirectories: openalpr/src/misc_utilities and VStore-NoScope/vstore/misc_utilities
+Only in VStore-NoScope/vstore/: mm.cpp
+Only in VStore-NoScope/vstore/: mm.h
+Only in VStore-NoScope/vstore/: mydecoder.cpp
+Only in VStore-NoScope/vstore/: mydecoder.h
+Only in VStore-NoScope/vstore/: mydecoder_sw.cpp
+Common subdirectories: openalpr/src/openalpr and VStore-NoScope/vstore/openalpr
+Only in openalpr/src: plate_push.py
+Only in VStore-NoScope/vstore/: README.md
+Only in VStore-NoScope/vstore/: rt-config.h
+Only in VStore-NoScope/vstore/: RxManager.h
+Only in VStore-NoScope/vstore/: rxtx.cpp
+Only in VStore-NoScope/vstore/: rxtx.h
+Only in VStore-NoScope/vstore/: StatCollector.h
+Common subdirectories: openalpr/src/statedetection and VStore-NoScope/vstore/statedetection
+Only in VStore-NoScope/vstore/: stream-info.cpp
+Common subdirectories: openalpr/src/tclap and VStore-NoScope/vstore/tclap
+Only in VStore-NoScope/vstore/: test
+Common subdirectories: openalpr/src/tests and VStore-NoScope/vstore/tests
+Common subdirectories: openalpr/src/video and VStore-NoScope/vstore/video
+Only in VStore-NoScope/vstore/: vs-types.h
+Only in VStore-NoScope/vstore/: zhelpers.hpp
