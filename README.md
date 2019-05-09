@@ -5,6 +5,7 @@ and visit out [website](https://thexsel.github.io/p/vstore/).
 
 ## Overview
 This source code implements VStore's query platform based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope). Starting from video footage storage, the source code provides the features of video retrieval (source) and video consumption (sink).
+VStore's configuration, including the derivation of consumption formats, storage formats, and data erosion is not included.
 
 ## Build VStore
 #### 1. VStore Requirements
