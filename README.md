@@ -4,7 +4,7 @@ Please read our paper in EuroSys '19: [VStore: A Data Store for Analytics on Lar
 and visit out [website](https://thexsel.github.io/p/vstore/) for more details.
 
 ## Overview
-This source code orchestrates VStore's ingestion, storage, retrieval and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
+This source code orchestrates VStore's ingestion, storage, retrieval, and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 VStore's configurations, including the derivation of consumption formats, the derivation of storage formats, and data erosion planning are not included.
 
 ## Build VStore
