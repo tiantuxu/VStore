@@ -7,6 +7,8 @@ and visit out [website](https://thexsel.github.io/p/vstore/) for more details.
 This source code orchestrates VStore's ingestion, storage, retrieval, and consumption based on 2 modern computer vision pipelines, [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope).
 VStore's configurations, including the derivation of consumption formats, the derivation of storage formats, and data erosion are not included.
 
+**In this repo, the source codebases inherited from third-parties, i.e., [OpenALPR](https://github.com/openalpr/openalpr) and [NoScope](https://github.com/stanford-futuredata/noscope), are NOT provided.**
+
 ## Build VStore
 #### 1. VStore Requirements
 To build VStore, you need the following to be installed
